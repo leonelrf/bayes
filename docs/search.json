@@ -1,0 +1,604 @@
+[
+  {
+    "objectID": "Bayes.html#liens-dintérêt",
+    "href": "Bayes.html#liens-dintérêt",
+    "title": "Statistique Bayésienne",
+    "section": "Liens d’intérêt",
+    "text": "Liens d’intérêt\n\n\nDepuis Mars 2023, Lionel Riou França est employé par Aixial Group.\n\nLes opinions exprimées dans cette présentation n’engagent que l’orateur. Elles ne correspondent pas nécessairement à celles d’Aixial Group."
+  },
+  {
+    "objectID": "Bayes.html#la-probabilité-définition-fréquentiste",
+    "href": "Bayes.html#la-probabilité-définition-fréquentiste",
+    "title": "Statistique Bayésienne",
+    "section": "La Probabilité : Définition fréquentiste",
+    "text": "La Probabilité : Définition fréquentiste\n\n\n\n\n\n\\(P(X=s)\\)\n\n\nProportion de patients guéris sur une infinité de patients traités.\n\\[P(X=s)=\\frac{\\textrm{Nombre guéris}}{\\textrm{Nombre traités}}\\]"
+  },
+  {
+    "objectID": "Bayes.html#la-probabilité-approche-bayésienne",
+    "href": "Bayes.html#la-probabilité-approche-bayésienne",
+    "title": "Statistique Bayésienne",
+    "section": "La Probabilité : Approche bayésienne",
+    "text": "La Probabilité : Approche bayésienne\n\n\n\n\n\nProbabilité objective d’un événement n’existe pas\nProbabilité = Croyance subjective\nMesure d’incertitude\nObéit aux axiomes du calcul des probabilités"
+  },
+  {
+    "objectID": "Bayes.html#probabilités-conditionnelles-test-de-dépistage",
+    "href": "Bayes.html#probabilités-conditionnelles-test-de-dépistage",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilités conditionnelles : test de dépistage",
+    "text": "Probabilités conditionnelles : test de dépistage\n\nMammographie et cancer du sein\n\nSensibilité = 75 % = \\(P\\left(T^+ | M^+ \\right)\\)\nSpécificité = 99 % = \\(P\\left(T^- | M^- \\right)\\)\n\nPrévalence du cancer dans la population dépistée : 3 ‰\n\n\nLors d’un dépistage, le test est positif.\nProbabilité d’avoir un cancer (Valeur Prédictive Positive) ?"
+  },
+  {
+    "objectID": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-1",
+    "href": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-1",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilités conditionnelles : test de dépistage",
+    "text": "Probabilités conditionnelles : test de dépistage\nSupposons une population de 4 000 personnes\n\n\n\n\n\n\n\n\n\n\nM+ (Malade)\nM- (Sain)\nTotal\n\n\n\n\nT+ (Test positif)\n\n\n\n\n\nT- (Test négatif)\n\n\n\n\n\nTotal\n\n\n4 000"
+  },
+  {
+    "objectID": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-2",
+    "href": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-2",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilités conditionnelles : test de dépistage",
+    "text": "Probabilités conditionnelles : test de dépistage\nPrévalence : 3 ‰\n\n\n\n\n\n\n\n\n\n\nM+ (Malade)\nM- (Sain)\nTotal\n\n\n\n\nT+ (Test positif)\n\n\n\n\n\nT- (Test négatif)\n\n\n\n\n\nTotal\n12\n3988\n4 000\n\n\n\n\n\n\\(n_{M^+} = 4000*3/1000 = 12\\)"
+  },
+  {
+    "objectID": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-3",
+    "href": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-3",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilités conditionnelles : test de dépistage",
+    "text": "Probabilités conditionnelles : test de dépistage\nSensibilité \\(P\\left(T^+ | M^+ \\right)\\) : 75%\n\n\n\n\n\n\n\n\n\n\nM+ (Malade)\nM- (Sain)\nTotal\n\n\n\n\nT+ (Test positif)\n9\n\n\n\n\nT- (Test négatif)\n3\n\n\n\n\nTotal\n12\n3988\n4 000\n\n\n\n\n\n\\(n_{M^+, T^+} = 12*75/100 = 9\\)"
+  },
+  {
+    "objectID": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-4",
+    "href": "Bayes.html#probabilités-conditionnelles-test-de-dépistage-4",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilités conditionnelles : test de dépistage",
+    "text": "Probabilités conditionnelles : test de dépistage\nSpécificité \\(P\\left(T^- | M^- \\right)\\) : 99%\n\n\n\n\n\n\n\n\n\n\nM+ (Malade)\nM- (Sain)\nTotal\n\n\n\n\nT+ (Test positif)\n9\n40\n49\n\n\nT- (Test négatif)\n3\n3 948\n3 951\n\n\nTotal\n12\n3 988\n4 000\n\n\n\n\n\n\\(n_{M^-, T^-} = (4000-12)*99/100 = 3988*0,99 = 3948\\)"
+  },
+  {
+    "objectID": "Bayes.html#théorème-de-bayes",
+    "href": "Bayes.html#théorème-de-bayes",
+    "title": "Statistique Bayésienne",
+    "section": "Théorème de Bayes",
+    "text": "Théorème de Bayes\n\n\n\n\nM+ (Malade)\nM- (Sain)\nTotal\n\n\n\n\nT+ (Test positif)\n9\n40\n49\n\n\nT- (Test négatif)\n3\n3 948\n3 951\n\n\nTotal\n12\n3 988\n4 000\n\n\n\n\\[\n\\begin{align}\nP(M^+|T^+)\n&= \\frac{\\color{#ED4F33}{P(T^+ | M^+)} \\color{#F5B12E}{P(M^+)}}{\\color{#ADD2D8}{P(T^+)}} \\\\\n&\\class{fragment}{= \\frac{{\\color{#ED4F33}{9/12}} * \\color{#F5B12E}{12/4000}}{\\color{#ADD2D8}{49/4000}}} \\class{fragment}{= \\frac{9}{49} = 18~\\%}\n\\end{align}\n\\]"
+  },
+  {
+    "objectID": "Bayes.html#efficacité-dun-traitement",
+    "href": "Bayes.html#efficacité-dun-traitement",
+    "title": "Statistique Bayésienne",
+    "section": "Efficacité d’un traitement",
+    "text": "Efficacité d’un traitement\n\n\n\\(n=10\\) patients traités, \\(k=7\\) guéris\nComment estimer \\(\\theta\\), probabilité de guérison ?\n\nEstimateur du maximum de vraisemblance (EMV) :\n\nVraisemblance, loi binomiale : \\(P(D=k) = {n\\choose k} \\theta^k (1-\\theta)^{n-k}\\)\n\n\\({n\\choose k} = \\frac{n!}{k!(n-k)!}\\)\n\nEMV=\\(k/n\\) = 0,70"
+  },
+  {
+    "objectID": "Bayes.html#théorème-de-bayes-appliqué-à-des-paramètres",
+    "href": "Bayes.html#théorème-de-bayes-appliqué-à-des-paramètres",
+    "title": "Statistique Bayésienne",
+    "section": "Théorème de Bayes appliqué à des paramètres",
+    "text": "Théorème de Bayes appliqué à des paramètres\n\\[\n\\begin{align}\n\\color{#2E2963}{\\underbrace{P(\\theta | D)}}   \\ \\ \\ & = & \\color{#ED4F33}{\\underbrace{P(D | \\theta)}}  \\ \\ \\ \\ \\  & &  \\color{#F5B12E}{\\underbrace{P(\\theta)}}  \\ \\ \\  & / & \\color{#ADD2D8}{\\underbrace{P(D)}}  \\ \\  \\\\\n\\color{#2E2963}{\\textrm{a posteriori}}      & = & \\color{#ED4F33}{\\textrm{vraisemblance}} & & \\color{#F5B12E}{\\textrm{a priori}} \\ \\  & / & \\color{#ADD2D8}{\\textrm{données}}\n\\end{align}\n\\]\n\n\n\n\\(\\theta\\) discret\n\\(\\color{#ADD2D8}{P(D)} = \\displaystyle\\sum_{\\theta} \\color{#ED4F33}{P(D|\\theta)} \\color{#F5B12E}{P(\\theta)}\\)\n\n\n\\(\\theta\\) continu\n\\(\\color{#ADD2D8}{P(D)} = \\int \\color{#ED4F33}{P(D|\\theta)} \\color{#F5B12E}{P(\\theta)} \\textrm{d}\\theta\\)"
+  },
+  {
+    "objectID": "Bayes.html#approximation-par-grille",
+    "href": "Bayes.html#approximation-par-grille",
+    "title": "Statistique Bayésienne",
+    "section": "Approximation par grille",
+    "text": "Approximation par grille\n\n\nLister un nombre fini de valeurs du/des paramètre(s) \\(\\theta\\) à estimer\nLeur donner une probabilité a priori \\(\\color{#F5B12E}{P(\\theta)}\\)\nCalculer la vraisemblance \\(\\color{#ED4F33}{P(D|\\theta)}\\) des données observées pour chacune des valeurs possibles de \\(\\theta\\)\nFaire le produit de la vraisemblance et de l’a priori \\(\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) pour chaque valeur de \\(\\theta\\)\nLa somme de ces produits \\(\\sum_\\theta \\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) donne la constante de normalisation \\(\\color{#ADD2D8}{P(D)}\\)\nEn déduire l’a posteriori \\(\\color{#2E2963}{P(\\theta | D)} = \\frac{\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}}{\\color{#ADD2D8}{P(D)}}\\) pour les valeurs choisies"
+  },
+  {
+    "objectID": "Bayes.html#approximation-par-grille-1",
+    "href": "Bayes.html#approximation-par-grille-1",
+    "title": "Statistique Bayésienne",
+    "section": "Approximation par grille",
+    "text": "Approximation par grille\n\\(n=10\\) patients traités, \\(k=7\\) guéris\n\\(\\color{#ED4F33}{P(D|\\theta)} = P(D=7/10|\\theta) = {10\\choose 7} \\theta^7 (1-\\theta)^{3}\\)\n\n\n\n\n\n\n\n\n\n\n\\(\\theta\\)\n\\(\\color{#F5B12E}{P(\\theta)}\\)\n\\(\\color{#ED4F33}{P(D|\\theta)}\\)\n\\(\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\)\n\\(\\color{#2E2963}{P(\\theta|D)} = \\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)} / \\color{#ADD2D8}{P(D)}\\)\n\n\n\n\n0 %\n1/11=9,1 %\n0,000 %\n0,000000\n0,000 %\n\n\n…\n…\n…\n…\n…\n\n\n70 %\n9,1 %\n26,683 %1\n0,024257\n29,322 %\n\n\n…\n…\n…\n…\n…\n\n\n100 %\n9,1 %\n0,000 %\n0,000000\n0,000 %\n\n\nSomme\n100 %\n\n\\(\\color{#ADD2D8}{P(D)}\\) = 0,0827\n100 %\n\n\n\n\nEstimateur bayésien de \\(\\theta\\) (probabilité de guérison) : \\(E\\left[\\color{#2E2963}{P(\\theta|D)} \\right] = \\sum_\\theta \\theta \\color{#2E2963}{P(\\theta|D)}\\) = 67%\nDans R : dbinom(x=7, size=10, prob=0.7)"
+  },
+  {
+    "objectID": "Bayes.html#estimation-par-lois-conjuguées-loi-de-probabilité-bêta",
+    "href": "Bayes.html#estimation-par-lois-conjuguées-loi-de-probabilité-bêta",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation par lois conjuguées : loi de probabilité bêta",
+    "text": "Estimation par lois conjuguées : loi de probabilité bêta\n\n\n\\(\\theta \\sim\\) beta(a, b), a&gt;0, b&gt;0\n dbeta(x,shape1=a,shape2=b)\n\\(P(\\theta | a, b) = \\\\ \\frac{\\Gamma(a+b)}{\\Gamma(a)\\Gamma(b)} \\theta^{a-1} (1-\\theta)^{b-1} I_{\\left\\{ 0\\leq \\theta \\leq 1 \\right\\}}(\\theta)\\)\n\\(E(\\theta) = \\frac{a}{a+b}\\)\nEffective sample size = a+b\nSi a&gt;1, b&gt;1, mode : \\(\\frac{a-1}{a+b-2}\\)"
+  },
+  {
+    "objectID": "Bayes.html#estimation-bayésienne-dune-proportion-distribution-conjuguée",
+    "href": "Bayes.html#estimation-bayésienne-dune-proportion-distribution-conjuguée",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation bayésienne d’une proportion : distribution conjuguée",
+    "text": "Estimation bayésienne d’une proportion : distribution conjuguée\nLa loi bêta est conjuguée avec une vraisemblance binomiale :\n\n\\(\\color{#F5B12E}{P(\\theta) \\sim \\textrm{beta}(a,b)}\\)\n\\(\\color{#ED4F33}{P(D|\\theta) \\sim \\textrm{binom}(n,\\theta)}\\) avec \\(k\\) succès\n\\(\\color{#2E2963}{P(\\theta|D) \\sim \\textrm{beta}(} \\color{#ED4F33}{k}+\\color{#F5B12E}{a},\\color{#ED4F33}{(n-k)}+\\color{#F5B12E}{b}\\color{#2E2963}{)}\\)\n\n\na posteriori : compromis entre a priori et vraisemblance"
+  },
+  {
+    "objectID": "Bayes.html#estimation-bayésienne-dune-proportion-distribution-conjuguée-1",
+    "href": "Bayes.html#estimation-bayésienne-dune-proportion-distribution-conjuguée-1",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation bayésienne d’une proportion : distribution conjuguée",
+    "text": "Estimation bayésienne d’une proportion : distribution conjuguée"
+  },
+  {
+    "objectID": "Bayes.html#intervalles-de-crédibilité",
+    "href": "Bayes.html#intervalles-de-crédibilité",
+    "title": "Statistique Bayésienne",
+    "section": "Intervalles de crédibilité",
+    "text": "Intervalles de crédibilité\n\\((i,s)\\) tel que \\(\\theta\\) a \\((1-\\alpha)\\) % de chances d’être compris dans l’intervalle\n\n\n\n\n\n\n\n\n\n\n\nHighest Density Interval (HDI/HPD) : Largeur minimale\n\n\n\n\n\n\n\n\n\n\n\nEqual-tailed Interval : défini par les quantiles (e.g. 2.5 % et 97.5 %) de la distribution"
+  },
+  {
+    "objectID": "Bayes.html#mcmc-markov-chain-monte-carlo",
+    "href": "Bayes.html#mcmc-markov-chain-monte-carlo",
+    "title": "Statistique Bayésienne",
+    "section": "MCMC : Markov Chain Monte Carlo",
+    "text": "MCMC : Markov Chain Monte Carlo\n\nMonte Carlo\n\ncar estimation d’une grandeur complexe (intégrale) par simulation.\n\nMarkov Chain\n\ncar l’état du système au temps \\(t\\) ne dépend que de \\(t-1\\).\n\n\nL’algorithme de Metropolis-Hastings ou l’échantillonage de Gibbs garantissent la convergence vers la distribution cible après un temps de chauffe (“burn-in”)"
+  },
+  {
+    "objectID": "Bayes.html#algorithme-de-metropolis-hastings-version-simple",
+    "href": "Bayes.html#algorithme-de-metropolis-hastings-version-simple",
+    "title": "Statistique Bayésienne",
+    "section": "Algorithme de Metropolis-Hastings (version simple)",
+    "text": "Algorithme de Metropolis-Hastings (version simple)\n\n\n\n\n\nInférence Bayésienne\n\n\n\\[\\color{#2E2963}{P(\\theta|D)} = \\frac{\\color{#ED4F33}{P(D|\\theta)} \\color{#F5B12E}{P(\\theta)}}{\\color{#ADD2D8}{\\int P(D|\\theta) P(\\theta) \\textrm{d}\\theta}}\\]\n\n\n\nComment estimer des intégrales complexes?\n\nBut : estimer \\(f(\\theta)\\), à partir d’une forme + simple \\(g(\\theta) \\propto f(\\theta)\\).\n\nDépart de \\(\\theta_0\\)\nTirer \\(\\theta^* \\sim \\textrm{N}\\left(\\theta_{\\textrm{actuel}},\\sigma^2\\right)\\)\nAdopter \\(\\theta^*\\) avec probabilité \\(\\min \\left(1, \\frac{g(\\theta^*)}{g(\\theta_{\\textrm{actuel}})}\\right)\\)\n\nCette chaîne de Markov convergera vers la distribution cible \\(f(\\theta)\\)."
+  },
+  {
+    "objectID": "Bayes.html#application-probabilité-de-guérison",
+    "href": "Bayes.html#application-probabilité-de-guérison",
+    "title": "Statistique Bayésienne",
+    "section": "Application : probabilité de guérison",
+    "text": "Application : probabilité de guérison\n\\[\n\\begin{align}\nf(\\theta) = \\color{#2E2963}{P(\\theta | D)}\n&\\propto \\color{#ED4F33}{P(D | \\theta)} \\color{#F5B12E}{P(\\theta)} \\\\\n&\\propto \\color{#ED4F33}{\\theta^k(1-\\theta)^{n-k}} \\color{#F5B12E}{\\theta^{a-1}(1-\\theta)^{b-1}} \\\\\n&\\propto \\theta^{k+a-1}(1-\\theta)^{n-k+b-1}\n\\end{align}\n\\] Données : n=10 patients, k=7 guérisons.\nA priori uniforme beta(1,1).\n\\[g(\\theta) = \\theta^7 (1-\\theta)^3 \\textrm{I}_{0 \\leq \\theta \\leq 1}(\\theta)\\]"
+  },
+  {
+    "objectID": "Bayes.html#programation-dans",
+    "href": "Bayes.html#programation-dans",
+    "title": "Statistique Bayésienne",
+    "section": "Programation dans ",
+    "text": "Programation dans \n\n# Programmation de g\ng &lt;- function(theta) {\n      theta^7*(1-theta)^3*(theta&gt;=0 & theta&lt;=1)\n}"
+  },
+  {
+    "objectID": "Bayes.html#programation-dans-1",
+    "href": "Bayes.html#programation-dans-1",
+    "title": "Statistique Bayésienne",
+    "section": "Programation dans ",
+    "text": "Programation dans \n\n# Algorithme de Metropolis-Hastings\nmh &lt;- function(nIter,thetaInit,candSD) {\n  # Initialisation\n  thetaOut &lt;- numeric(nIter) ; accept &lt;- 0 \n  thetaActuel &lt;- thetaInit ; gActuel &lt;- g(thetaActuel)\n  # Itérations\n  for (i in 1:nIter) {\n    thetaCand &lt;- rnorm(n=1,mean=thetaActuel,sd=candSD) # Tirer 1 candidat\n    gCand &lt;- g(theta=thetaCand) # Evaluer g avec le candidat\n    ratio &lt;- gCand/gActuel # Ratio\n    u &lt;- runif(n=1) # u sera inf à ratio avec probabilité=ratio\n    if (u&lt;ratio){ # alors candidat accepté\n      thetaActuel &lt;- thetaCand ; gActuel &lt;- gCand\n      accept &lt;- accept+1 # monitorer combien de candidats sont acceptés\n      }\n    # Collecter les résultats\n    thetaOut[i] &lt;- thetaActuel\n    }\n  list(theta=thetaOut,accept=accept/nIter)\n}"
+  },
+  {
+    "objectID": "Bayes.html#application-écart-type-inapproprié",
+    "href": "Bayes.html#application-écart-type-inapproprié",
+    "title": "Statistique Bayésienne",
+    "section": "Application : Écart-type inapproprié",
+    "text": "Application : Écart-type inapproprié\nTrop faible\n\nsimul1 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.02)\nsimul1$accept # La plupart des propositions sont acceptées\n\n[1] 0.9511\n\nsummary(simul1$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.05232 0.55573 0.67106 0.64950 0.75470 0.96494 \n\n\n\nTrop élevé\n\nsimul2 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 2.00)\nsimul2$accept # La plupart des propositions sont rejetées\n\n[1] 0.0828\n\nsummary(simul2$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.0100  0.5854  0.6612  0.6670  0.7627  0.9605"
+  },
+  {
+    "objectID": "Bayes.html#trace-plots",
+    "href": "Bayes.html#trace-plots",
+    "title": "Statistique Bayésienne",
+    "section": "Trace plots",
+    "text": "Trace plots"
+  },
+  {
+    "objectID": "Bayes.html#écart-type-approprié",
+    "href": "Bayes.html#écart-type-approprié",
+    "title": "Statistique Bayésienne",
+    "section": "Écart-type approprié",
+    "text": "Écart-type approprié\n\nsimul3 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.30)\nsimul3$accept # Environ 50 % des propositions sont acceptées\n\n[1] 0.4652\n\nsummary(simul3$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.1813  0.5802  0.6747  0.6653  0.7612  0.9750"
+  },
+  {
+    "objectID": "Bayes.html#distribution-a-posteriori",
+    "href": "Bayes.html#distribution-a-posteriori",
+    "title": "Statistique Bayésienne",
+    "section": "Distribution a posteriori",
+    "text": "Distribution a posteriori"
+  },
+  {
+    "objectID": "Bayes.html#échantillonage-de-gibbs",
+    "href": "Bayes.html#échantillonage-de-gibbs",
+    "title": "Statistique Bayésienne",
+    "section": "Échantillonage de Gibbs",
+    "text": "Échantillonage de Gibbs\nPlusieurs paramètres \\(\\theta_i\\) à estimer: Metropolis-Hastings inefficient (ou difficultés à connaître la distribution complète)\nAlternative : Gibbs\n\nÉchantillonnage alterné des \\(\\theta_i\\) à partir de \\(P\\left( \\theta_i | \\theta_{j \\neq i, D} \\right)\\)\nExemple : paramètres \\(\\mu\\) et \\(\\sigma\\) d’une loi normale\n\nau temps \\(t\\), tirer \\(\\mu^t\\) à partir de \\(P\\left( \\mu | \\sigma^{\\color{#ED4F33}{t-1}}, D \\right)\\)\npuis tirer \\(\\sigma^t\\) à partir de \\(P\\left( \\sigma | \\mu^{\\color{#ED4F33}{t}}, D \\right)\\)"
+  },
+  {
+    "objectID": "Bayes.html#vérification-de-la-convergence",
+    "href": "Bayes.html#vérification-de-la-convergence",
+    "title": "Statistique Bayésienne",
+    "section": "Vérification de la convergence",
+    "text": "Vérification de la convergence\nMCMC : convergence avec \\(n=\\infty\\) itérations.\n\n\n\n\n\nDiagnostic de convergence\n\n\n\nGraphiquement : trace plots, chaînes multiples\nIndicateurs numériques : Gelman & Rubin\n\n\n\n\n\n\n\n\nDiagnostic de précision/stabilité\n\n\n\nGraphiquement : trace plots, chaînes multiples\nIndicateurs numériques : autocorrélation, effective sample size, Raftery & Lewis"
+  },
+  {
+    "objectID": "Bayes.html#trace-plots-distribution-non-stationnaire",
+    "href": "Bayes.html#trace-plots-distribution-non-stationnaire",
+    "title": "Statistique Bayésienne",
+    "section": "Trace plots & distribution non stationnaire",
+    "text": "Trace plots & distribution non stationnaire\n\n# itérations avec écart-type trop faible\nchaine1 &lt;- mh(nIter = 500, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 500, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 500, thetaInit = 0.50, candSD = 0.015)$theta\n\nlibrary(ggplot2)\nggplot() + ylim(0,1) +\n  geom_line(aes(x=1:500,y=chaine1), color=1, linewidth=1) + \n  geom_line(aes(x=1:500,y=chaine2), color=2, linewidth=1) + \n  geom_line(aes(x=1:500,y=chaine3), color=3, linewidth=1) + \n  labs(x=\"Itération\", y=expression(theta)) +\n  theme_grey(base_size=25)"
+  },
+  {
+    "objectID": "Bayes.html#trace-plots-distribution-non-stationnaire-output",
+    "href": "Bayes.html#trace-plots-distribution-non-stationnaire-output",
+    "title": "Statistique Bayésienne",
+    "section": "Trace plots & distribution non stationnaire",
+    "text": "Trace plots & distribution non stationnaire"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-de-gelman-rubin",
+    "href": "Bayes.html#diagnostic-de-gelman-rubin",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic de Gelman & Rubin",
+    "text": "Diagnostic de Gelman & Rubin\n\n\n\n\n\nCompare la variance inter-chaînes \\(B\\) à la variance intra-chaînes (\\(W\\))\nSi distribution stationnaire, la différence moyenne entre les chaînes devrait correspondre à la différence moyenne intra-chaîne\nPotential Scale Reduction Factor (PSRF) / Shrink Factor : implique le ratio entre la variance poolée et la variance intra-chaînes\n\\(\\textrm{PSRF} &gt; 1.2\\) ou \\(1.1\\) est signe de non-convergence"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-de-gelman-rubin---500-itérations",
+    "href": "Bayes.html#diagnostic-de-gelman-rubin---500-itérations",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic de Gelman & Rubin - 500 itérations",
+    "text": "Diagnostic de Gelman & Rubin - 500 itérations\n\nlibrary(coda)\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1),as.mcmc(chaine2),as.mcmc(chaine3))\n\n# 500 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.53       3.09\n\n\nConvergence non atteinte."
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-de-gelman-rubin---5000-itérations",
+    "href": "Bayes.html#diagnostic-de-gelman-rubin---5000-itérations",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic de Gelman & Rubin - 5000 itérations",
+    "text": "Diagnostic de Gelman & Rubin - 5000 itérations\n\nchaine1 &lt;- mh(nIter = 5000, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 5000, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 5000, thetaInit = 0.50, candSD = 0.015)$theta\n\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1),as.mcmc(chaine2),as.mcmc(chaine3))\n\n# 5000 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.18       1.51"
+  },
+  {
+    "objectID": "Bayes.html#précision-autocorrélation",
+    "href": "Bayes.html#précision-autocorrélation",
+    "title": "Statistique Bayésienne",
+    "section": "Précision : Autocorrélation",
+    "text": "Précision : Autocorrélation\n\n\n\n\n\nMesure le degré de dépendance entre \\(\\theta_t\\) et les valeurs passées (lags) \\(\\theta_{k}\\)\nMesure de la quantité d’information disponible dans la chaîne\nEffective Sample Size : nombre de réalisations indépendantes de l’a posteriori nécessaires pour avoir une information équivalente à celle de la chaîne"
+  },
+  {
+    "objectID": "Bayes.html#autocorrélation",
+    "href": "Bayes.html#autocorrélation",
+    "title": "Statistique Bayésienne",
+    "section": "Autocorrélation",
+    "text": "Autocorrélation\n\n\n\nautocorr.plot(as.mcmc(chaine3),lag.max=200,lwd=2)\n\n\n\n\n\n\n\n\n\n\nautocorr.diag(as.mcmc(chaine3))\n\n            [,1]\nLag 0  1.0000000\nLag 1  0.9895226\nLag 5  0.9473690\nLag 10 0.8911419\nLag 50 0.5387291"
+  },
+  {
+    "objectID": "Bayes.html#ess-raftery-lewis",
+    "href": "Bayes.html#ess-raftery-lewis",
+    "title": "Statistique Bayésienne",
+    "section": "ESS, Raftery & Lewis",
+    "text": "ESS, Raftery & Lewis\n\n\nESS\n\neffectiveSize(as.mcmc(chaine3))\n\n    var1 \n26.32621 \n\n\nLes 5 000 itérations correspondent à 26 réalisations indépendantes de l’a posteriori.\n\n\nUn IC equal-tailed va demander une connaissance précise des queues de distribution.\nRaftery & Lewis estime le nombre d’itérations nécessaires pour l’estimation.\n\nraftery.diag(as.mcmc(chaine3))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                       \n Burn-in  Total Lower bound  Dependence\n (M)      (N)   (Nmin)       factor (I)\n 75       74586 3746         19.9      \n\n\nIl faut 3 746 réalisations indépendantes de l’a posteriori pour estimer un \\(IC_{95\\%}\\) avec une précision de \\(\\pm 0.005\\) sur les bornes, soit 74 586 itérations en tenant compte de l’autocorrélation."
+  },
+  {
+    "objectID": "Bayes.html#logiciels-dinférence-bayésienne-dans",
+    "href": "Bayes.html#logiciels-dinférence-bayésienne-dans",
+    "title": "Statistique Bayésienne",
+    "section": "Logiciels d’inférence Bayésienne dans ",
+    "text": "Logiciels d’inférence Bayésienne dans \n\nBUGS : Bayesian inference Using Gibbs Sampling\n\nWinBUGS (R2WinBUGS), OpenBUGS (BRugs, R2OpenBUGS), MultiBUGS\n\nExtensions de BUGS :\n\nJAGS : Just Another Gibbs Sampler (rjags / R2jags, runjags)\nNIMBLE : intégré à R, plusieurs algorithmes d’estimation possibles\n\nStan (nommé en référence à Stanislaw Ulam) (rstan, rstanarm, brms), basé essentiellement sur du Hamiltonian Monte Carlo (HMC)\nINLA : Integrated Nested Laplace Approximation, alternative plus rapide au MCMC pour une large famille de modèles"
+  },
+  {
+    "objectID": "Bayes.html#estimation-conjuguée-de-theta",
+    "href": "Bayes.html#estimation-conjuguée-de-theta",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation conjuguée de \\(\\theta\\)",
+    "text": "Estimation conjuguée de \\(\\theta\\)\n\n\n\n\n\n\\(n=10\\) patients, \\(k=7\\) guéris\nPour chaque patient \\(i\\), la guérison suit une loi de Bernoulli : \\(\\color{#ED4F33}{P(y_i=1|\\theta)} = \\theta^{y_i} (1-\\theta)^{1-y_i}\\)\nA priori \\(\\color{#F5B12E}{P(\\theta)} \\sim \\textrm{beta}(a,b)\\)"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-données",
+    "href": "Bayes.html#probabilité-theta-de-guérison-données",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : données",
+    "text": "Probabilité \\(\\theta\\) de guérison : données\nLes données sont fournies sous forme de liste.\n\ny &lt;- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès\nn &lt;- length(y)\n\ndonnees &lt;- list(y = y,\n                nbsuj = n)"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-modèle",
+    "href": "Bayes.html#probabilité-theta-de-guérison-modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : modèle",
+    "text": "Probabilité \\(\\theta\\) de guérison : modèle\n\nJAGS BernouilliJAGS binomialStan\n\n\n\nmodeleJAGS1 &lt;- \n1\"\n model {\n2  for (i in 1:nbsuj) {\n   y[i] ~ dbern(theta)\n  }\n3  theta ~ dbeta(1, 1)\n }\n\"\n\n\n1\n\nDéfinir le modèle comme chaîne de caractères\n\n2\n\nDéfinir la vraisemblance (Bernouilli) pour les \\(y_i\\)\n\n3\n\nDéfinir l’a priori pour \\(\\theta\\)\n\n\n\n\n\n\nDe façon équivalente à partir de la distribution binomiale :\n\nmodeleJAGS2 &lt;- \n\"             \n data {\n  nbgueri &lt;- sum(y)             # Nombre de guérisons\n }\n \n model {\n  nbgueri ~ dbinom(theta,nbsuj) # Vraisemblance (binomiale)\n  theta ~ dbeta(1, 1)           # a priori\n } \n\"\n\n\n\n\n\nPlusieurs blocs :\n\nDonnées (obligatoire)\nDonnées transformées\nParamètres (obligatoire)\nParamètres transformés\nModèle (obligatoire)\nQuantités générées\n\n\n\nmodeleStan &lt;-\n\"\ndata {\n  int&lt;lower=0&gt; nbsuj;             // nombre de patients\n  int&lt;lower=0, upper=1&gt; y[nbsuj]; // résultats\n}\n\nparameters {\n  real&lt;lower=0, upper=1&gt; theta;   // chances de guérison\n}\n\nmodel {\n  theta ~ beta(1, 1);             // a priori\n  y ~ bernoulli(theta);           // vraisemblance\n}\n\""
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-valeurs-initiales",
+    "href": "Bayes.html#probabilité-theta-de-guérison-valeurs-initiales",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : valeurs initiales",
+    "text": "Probabilité \\(\\theta\\) de guérison : valeurs initiales\nRecommandé avec JAGS pour :\n\nvérifier la convergence en partant de valeurs différentes de \\(\\theta_0\\) ou\nles modèles complexes (meilleures performances en partant d’une valeur à haute probabilité a posteriori)\n\n\nLes valeurs initiales sont fournies sous forme de liste :\n\ninits &lt;- function() {\n  resampleY &lt;- sample(y , replace=TRUE)      # Rééchantillonage des y\n  theta0 &lt;- sum(resampleY)/length(resampleY) # EMV\n  theta0 &lt;- 0.001 + 0.998*theta0             # Eviter des valeurs de 0 ou 1\n  return(list(theta=theta0))\n}\nunlist(replicate(5, inits()))                # Exemple : 5 tirages de inits()\n\n theta  theta  theta  theta  theta \n0.5000 0.5998 0.6996 0.5000 0.8992"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-initialisation-du-modèle",
+    "href": "Bayes.html#probabilité-theta-de-guérison-initialisation-du-modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : initialisation du modèle",
+    "text": "Probabilité \\(\\theta\\) de guérison : initialisation du modèle\n\nJAGSStan\n\n\n\nlibrary(\"rjags\") \n## Initialisation du modèle\nmodJ1 &lt;- jags.model(file=textConnection(modeleJAGS1), # Modèle\n                    data=donnees,                     # Données\n                    inits=inits,                      # valeurs initiales (optionnel)\n                    n.chains=3)                       # Nombre de chaînes\n\nCompiling model graph\n   Resolving undeclared variables\n   Allocating nodes\nGraph information:\n   Observed stochastic nodes: 10\n   Unobserved stochastic nodes: 1\n   Total graph size: 13\n\nInitializing model\n\n## Burn-in\nupdate(modJ1, n.iter = 500)                           # 500 itérations de burn-in\n\n\n\n\nlibrary(\"rstan\") \n## Compile le modèle en C++ puis crée un dynamic shared object (DSO)\nmodS &lt;- stan_model(model_code = modeleStan, model_name = \"modeleStan\")\n\nAvec Stan, il est possible de définir le burn-in (nommé warmup) directement à l’étape suivante."
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-simulations",
+    "href": "Bayes.html#probabilité-theta-de-guérison-simulations",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : simulations",
+    "text": "Probabilité \\(\\theta\\) de guérison : simulations\n\nJAGSStan\n\n\nUne fois le burn-in effectué, on échantillonne l’a posteriori à partir de la fonction coda.samples.\n\nmodJ1_sim &lt;- coda.samples(model=modJ1,               # modèle compilé\n                          variable.names=c(\"theta\"), # variables à conserver, sous forme de vecteur\n                          n.iter=3500)               # nombre d'itérations par chaîne\n\n\n\nOn échantillonne l’a posteriori à partir de la fonction sampling, en définissant le burn-in.\n\nmodS_sim &lt;- sampling(object=modS,  # DSO compilé\n                     data=donnees, # données\n                     chains=3,     # nombre de chaînes (4 par défaut)\n                     iter=4000,    # nombre total de réalisations (inclant le burn-in)\n                     warmup=500)   # nombre d'itérations pour le burn-in (iter/2 par défaut)"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-trace-plot",
+    "href": "Bayes.html#diagnostic-trace-plot",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : trace plot",
+    "text": "Diagnostic : trace plot\n\nJAGSStan\n\n\n\nlibrary(ggmcmc)\nSJ1 &lt;- ggs(modJ1_sim) \nggs_traceplot(SJ1, greek = TRUE) + theme_grey(base_size=25) \n\n\n\n\n\n\n\n\n\n\n\nlibrary(ggmcmc)\nSS &lt;- ggs(modS_sim) \nggs_traceplot(SS, greek = TRUE) + theme_grey(base_size=25)"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-densité",
+    "href": "Bayes.html#diagnostic-densité",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : densité",
+    "text": "Diagnostic : densité\n\nJAGSStan\n\n\n\n\nggs_density(SJ1, \n            greek = TRUE) +\n  xlim(0,1) +\n  theme_grey(base_size=25) \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggs_density(SS, \n            greek = TRUE) +\n  xlim(0,1) +\n  theme_grey(base_size=25)"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-convergence-hatr",
+    "href": "Bayes.html#diagnostic-convergence-hatr",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : convergence (\\(\\hat{R}\\))",
+    "text": "Diagnostic : convergence (\\(\\hat{R}\\))\n\nJAGSStan\n\n\n\nggs_diagnostics(SJ1, version_rhat = \"BG98\") %&gt;% # Version de Brooks & Gelman utilisée dans coda\n  filter(Diagnostic==\"Rhat\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter value\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta      1.00\n\ngelman.diag(modJ1_sim)\n\nPotential scale reduction factors:\n\n      Point est. Upper C.I.\ntheta          1          1\n\n\n\n\n\nggs_diagnostics(SS, version_rhat = \"BG98\") %&gt;% # Version de Brooks & Gelman utilisée dans coda\n  filter(Diagnostic==\"Rhat\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter value\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta      1.00"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-autocorrélation-et-ess",
+    "href": "Bayes.html#diagnostic-autocorrélation-et-ess",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : autocorrélation et ESS",
+    "text": "Diagnostic : autocorrélation et ESS\n\nJAGSStan\n\n\n\nggs_autocorrelation(SJ1, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) \n\n\n\n\n\n\n\nggs_diagnostics(SJ1, proportion=FALSE) %&gt;% filter(Diagnostic==\"Effective\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter  value\n  &lt;fct&gt;      &lt;dbl&gt;\n1 theta     10820.\n\n\n\n\n\nggs_autocorrelation(SS, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) \n\n\n\n\n\n\n\nggs_diagnostics(SS, proportion=FALSE) %&gt;% filter(Diagnostic==\"Effective\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter value\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta     4186."
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-précision-pour-lhdi",
+    "href": "Bayes.html#diagnostic-précision-pour-lhdi",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : précision pour l’HDI",
+    "text": "Diagnostic : précision pour l’HDI\n\nJAGSStan\n\n\nIl faut fusionner les réalisations des 3 chaînes pour ne pas obtenir un diagnostic par chaîne.\n\nraftery.diag(as.mcmc(do.call(rbind, modJ1_sim)))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                             \n       Burn-in  Total Lower bound  Dependence\n       (M)      (N)   (Nmin)       factor (I)\n theta 2        3826  3746         1.02      \n\n\n\n\nIl faut convertir au format coda (As.mcmc.list) puis fusionner les réalisations des 3 chaînes.\n\nraftery.diag(as.mcmc(do.call(rbind, As.mcmc.list(modS_sim))))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                             \n       Burn-in  Total Lower bound  Dependence\n       (M)      (N)   (Nmin)       factor (I)\n theta 8        9560  3746         2.55      \n lp__  6        7127  3746         1.90"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-estimations",
+    "href": "Bayes.html#probabilité-theta-de-guérison-estimations",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : estimations",
+    "text": "Probabilité \\(\\theta\\) de guérison : estimations\n\nJAGSStan\n\n\n\nsummary(modJ1_sim)\n\n\nIterations = 501:4000\nThinning interval = 1 \nNumber of chains = 3 \nSample size per chain = 3500 \n\n1. Empirical mean and standard deviation for each variable,\n   plus standard error of the mean:\n\n          Mean             SD       Naive SE Time-series SE \n      0.663950       0.130396       0.001273       0.001260 \n\n2. Quantiles for each variable:\n\n  2.5%    25%    50%    75%  97.5% \n0.3936 0.5779 0.6716 0.7608 0.8889 \n\n\n\n\n\nmodS_sim\n\nInference for Stan model: modeleStan.\n3 chains, each with iter=4000; warmup=500; thin=1; \npost-warmup draws per chain=3500, total post-warmup draws=10500.\n\n       mean se_mean   sd   2.5%   25%   50%   75% 97.5% n_eff Rhat\ntheta  0.66    0.00 0.13   0.39  0.57  0.67  0.76  0.89  4358    1\nlp__  -8.15    0.01 0.73 -10.27 -8.32 -7.87 -7.69 -7.64  3791    1\n\nSamples were drawn using NUTS(diag_e) at Tue Feb 27 00:41:06 2024.\nFor each parameter, n_eff is a crude measure of effective sample size,\nand Rhat is the potential scale reduction factor on split chains (at \nconvergence, Rhat=1)."
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-hdi",
+    "href": "Bayes.html#probabilité-theta-de-guérison-hdi",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : HDI",
+    "text": "Probabilité \\(\\theta\\) de guérison : HDI\n\nJAGSStan\n\n\n\nHPDinterval(as.mcmc(do.call(rbind, modJ1_sim)))\n\n          lower     upper\ntheta 0.4090384 0.8995242\nattr(,\"Probability\")\n[1] 0.95\n\n\n\n\n\nHPDinterval(as.mcmc(do.call(rbind, As.mcmc.list(modS_sim))))\n\n           lower      upper\ntheta  0.4141155  0.9065491\nlp__  -9.5984857 -7.6381700\nattr(,\"Probability\")\n[1] 0.95"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-theta-de-guérison-histogramme",
+    "href": "Bayes.html#probabilité-theta-de-guérison-histogramme",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité \\(\\theta\\) de guérison : Histogramme",
+    "text": "Probabilité \\(\\theta\\) de guérison : Histogramme\n\nJAGSStan"
+  },
+  {
+    "objectID": "Bayes.html#données",
+    "href": "Bayes.html#données",
+    "title": "Statistique Bayésienne",
+    "section": "Données",
+    "text": "Données\n\n\n\n\n\nTraitement\nSuccès\nÉchecs\nTotal\n\n\n\n\nPlacebo\n47\n96\n143\n\n\nCrème\n55\n75\n130\n\n\nTotal\n102\n171\n273\n\n\n\n\n\n\n\nsource: Agresti 2002, Categorical Data Analysis"
+  },
+  {
+    "objectID": "Bayes.html#modèle-concept",
+    "href": "Bayes.html#modèle-concept",
+    "title": "Statistique Bayésienne",
+    "section": "Modèle : concept",
+    "text": "Modèle : concept\n\n\n\n\n\n\n\ny\nt\n\n\n\n\n1\n1 (crème)\n\n\n0\n1 (crème)\n\n\n1\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n1\n1 (crème)\n\n\n…\n…\n\n\n\n\n\nModèle GLM basé sur le lien \\(\\textrm{logit}(P) = \\log\\left(\\frac{P}{1-P}\\right)\\)\n\\(\\color{#ED4F33}{P(y_{i|t}=1|\\beta_0, \\beta_1)} = \\frac{1}{1+\\exp(-\\mu_i)}\\)\n\\(\\mu_i = \\beta_0 + \\beta_1 t_i\\)\na prioris \\(\\color{#F5B12E}{P(\\beta_j)} \\sim \\textrm{norm}(\\mu,\\sigma)\\)\nJAGS paramétrise la loi normale à partir de la précision (inverse de la variance)\nJAGS : fonctions logit et ilogit (loi logistique)"
+  },
+  {
+    "objectID": "Bayes.html#modèle",
+    "href": "Bayes.html#modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Modèle",
+    "text": "Modèle\n\nJAGSStan\n\n\n\nmodeleJAGSL &lt;- \n \" \n  model {\n    for (i in 1:nbsuj) {\n      y[i] ~ dbern(mu[i]) \n      mu[i] = ilogit(beta0 + beta1*t[i])\n      # ou : logit(mu[i]) = beta0 + beta1*t[i]\n    }\n    \n    # A prioris\n      beta0 ~ dnorm(0, 1/100^2) \n      beta1 ~ dnorm(0, 1/100^2) \n  }\n\" \n\n\n\n\nmodeleStanL &lt;-\n\"\ndata {\n  int&lt;lower=0&gt; nbsuj;              // nombre de patients\n  int&lt;lower=0, upper=1&gt; y[nbsuj];  // résultats\n  vector[nbsuj] t;                 // traitement\n}\nparameters {\n  real beta0;                      // intercept\n  real beta1;                      // log-OR\n}\nmodel {\n  beta0 ~ normal(0, 100);                 // a priori\n  beta1 ~ normal(0, 100);                 // a priori\n  y ~ bernoulli_logit(beta0 + beta1 * t); // vraisemblance\n}\n\""
+  },
+  {
+    "objectID": "Bayes.html#résultats",
+    "href": "Bayes.html#résultats",
+    "title": "Statistique Bayésienne",
+    "section": "Résultats",
+    "text": "Résultats\n\nJAGSStan\n\n\n\n\n\nIterations = 2501:12500\nThinning interval = 1 \nNumber of chains = 3 \nSample size per chain = 10000 \n\n1. Empirical mean and standard deviation for each variable,\n   plus standard error of the mean:\n\n         Mean     SD Naive SE Time-series SE\nbeta0 -0.7203 0.1794 0.001036       0.002251\nbeta1  0.4081 0.2536 0.001464       0.003242\n\n2. Quantiles for each variable:\n\n          2.5%     25%     50%     75%   97.5%\nbeta0 -1.07439 -0.8398 -0.7189 -0.5994 -0.3731\nbeta1 -0.09109  0.2384  0.4090  0.5791  0.9091\n\n\n\n\n\n\nInference for Stan model: modeleStanL.\n3 chains, each with iter=11500; warmup=1500; thin=1; \npost-warmup draws per chain=10000, total post-warmup draws=30000.\n\n         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff Rhat\nbeta0   -0.72    0.00 0.18   -1.07   -0.84   -0.72   -0.60   -0.38  9980    1\nbeta1    0.40    0.00 0.25   -0.09    0.23    0.41    0.58    0.90 10100    1\nlp__  -180.11    0.01 0.99 -182.76 -180.49 -179.80 -179.41 -179.14 11447    1\n\nSamples were drawn using NUTS(diag_e) at Tue Feb 27 00:42:06 2024.\nFor each parameter, n_eff is a crude measure of effective sample size,\nand Rhat is the potential scale reduction factor on split chains (at \nconvergence, Rhat=1)."
+  },
+  {
+    "objectID": "Bayes.html#grandeurs-dérivées",
+    "href": "Bayes.html#grandeurs-dérivées",
+    "title": "Statistique Bayésienne",
+    "section": "Grandeurs dérivées",
+    "text": "Grandeurs dérivées\nIl est possible d’estimer d’autres grandeurs à partir des simulations :\n\n# Mise en commun des simulations\nmodLJ_csim &lt;- as.mcmc(do.call(rbind, modLJ_sim))\n# probabilité de guérison, placebo\np0 &lt;- 1/(1+exp(-modLJ_csim[,\"beta0\"]))\n# probabilité de guérison, crème\np1 &lt;- 1/(1+exp(-(modLJ_csim[,\"beta0\"]+modLJ_csim[,\"beta1\"])))\n# Probabilité a posteriori que crème&gt;placebo\n(Psup &lt;- mean(p1&gt;p0)) # équivalent à mean(modLJ_csim[,\"beta1\"]&gt;0)\n\n[1] 0.9458\n\n# Absolute Risk Difference\nARD &lt;- p1-p0 ; mean(ARD)\n\n[1] 0.09464863\n\n# RR\nRR &lt;- p1/p0 ; mean(RR)\n\n[1] 1.307047\n\n# OR\nOR &lt;- mean(exp(modLJ_csim[,\"beta1\"])) # équivalent à mean((p1/(1-p1))/(p0/(1-p0)))"
+  },
+  {
+    "objectID": "Bayes.html#distribution-a-posteriori-1",
+    "href": "Bayes.html#distribution-a-posteriori-1",
+    "title": "Statistique Bayésienne",
+    "section": "Distribution a posteriori",
+    "text": "Distribution a posteriori"
+  },
+  {
+    "objectID": "Bayes.html#données-1",
+    "href": "Bayes.html#données-1",
+    "title": "Statistique Bayésienne",
+    "section": "Données",
+    "text": "Données\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n1\nCrème\n11\n25\n\n\n1\nPlacebo\n10\n27\n\n\n2\nCrème\n16\n4\n\n\n2\nPlacebo\n22\n10\n\n\n3\nCrème\n14\n5\n\n\n3\nPlacebo\n7\n12\n\n\n4\nCrème\n2\n14\n\n\n4\nPlacebo\n1\n16\n\n\n\n\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n5\nCrème\n6\n11\n\n\n5\nPlacebo\n0\n12\n\n\n6\nCrème\n1\n10\n\n\n6\nPlacebo\n0\n10\n\n\n7\nCrème\n1\n4\n\n\n7\nPlacebo\n1\n8\n\n\n8\nCrème\n4\n2\n\n\n8\nPlacebo\n6\n1\n\n\n\n\n\n\n\n\n\nsource : Agresti 2002, Categorical Data Analysis"
+  },
+  {
+    "objectID": "Bayes.html#format-des-données-pour-lanalyse",
+    "href": "Bayes.html#format-des-données-pour-lanalyse",
+    "title": "Statistique Bayésienne",
+    "section": "Format des données pour l’analyse",
+    "text": "Format des données pour l’analyse\n\n\n\n\n\n\n\nc\nt\ny\n\n\n\n\n1\n0\n0\n\n\n1\n1\n0\n\n\n8\n0\n1\n\n\n3\n0\n0\n\n\n7\n1\n0\n\n\n2\n0\n0\n\n\n2\n0\n0\n\n\n4\n1\n0\n\n\n\n\n\n\n\nc\n\nIdentifiant du centre (de 1 à 8)\n\nt\n\nIdentifiant du traitement (0 : placebo, 1 : crème)\n\ny\n\nidentifiant de la guérison (0 : non, 1 : oui)"
+  },
+  {
+    "objectID": "Bayes.html#stratégies-danalyse",
+    "href": "Bayes.html#stratégies-danalyse",
+    "title": "Statistique Bayésienne",
+    "section": "Stratégies d’analyse",
+    "text": "Stratégies d’analyse\n\nIgnorer le centre : précision ↑, mais risque de biais\nEstimer un effet par centre : sans biais mais précision ↓\nModèle hiérarchique\n\nLes effets centre ont 1 distribution commune (dépendance d’1 paramètre sur les autres)\nL’effet de chaque centre bénéficie de l’information des autres centres via les hyper-paramètres\n\\(\\textrm{logit}(P)= \\beta_{0c} + \\beta_{1c} t\\) avec \\(\\beta_{jc} \\sim \\textrm{norm}(\\mu_j,\\sigma)\\)"
+  },
+  {
+    "objectID": "Bayes.html#code",
+    "href": "Bayes.html#code",
+    "title": "Statistique Bayésienne",
+    "section": "Code",
+    "text": "Code\n\nJAGSStan\n\n\n\nmodeleHLJ &lt;- \" \n  model {\n    for (i in 1:nbsuj) {                                 # N patients\n      y[i] ~ dbern(theta[i])                             # Vraisemblance, selon un ...\n      theta[i] = ilogit(beta0[c[i]] + beta1[c[i]]*t[i])  # modèle logistique, coefficents aléatoires \n    }\n    for (j in 1:nbcentres) {        # N centres   \n      beta0[j] ~ dnorm(mu0,prec0)   # A prioris pour beta0 (autant qu'il y a de centres)\n      beta1[j] ~ dnorm(mu1,prec1)   # A prioris pour beta1 (autant qu'il y a de centres)\n    }\n    mu0 ~ dnorm(0, 1/100^2)      # a prioris pour les hyper-paramètres\n    mu1 ~ dnorm(0, 1/100^2)\n    prec0 ~ dgamma(0.001,0.001) \n    prec1 ~ dgamma(0.001,0.001) \n    sig0 = sqrt(1/prec0)         # calcul de l'écart-type à partir de la précision\n    sig1 = sqrt(1/prec1)\n  } \" \n\n\n\nStan adpaté aux modèles complexes, mais avec syntaxe peu intuitive. Manuel de Stan sur ce type de modèle : https://mc-stan.org/docs/stan-users-guide/hierarchical-logistic-regression.html\nPackages pour générer du code Stan avec une syntaxe similaire à R :\n\nrstanarm : modèles précompilés (gain de temps)\nbrms : pas de précompilation, ce qui permet plus de flexibilité"
+  },
+  {
+    "objectID": "Bayes.html#résultats-1",
+    "href": "Bayes.html#résultats-1",
+    "title": "Statistique Bayésienne",
+    "section": "Résultats",
+    "text": "Résultats\n\n\n\n\n\n\n\n\n\n\n\n\nCoefficient\nTaille Centre\nlog-OR brut\nlog-OR estimé\n95 % HDI\n\n\n\n\n\\(\\beta_1(c_1)\\)\n73\n0.1723\n0.6400\n(-0.1624 , 1.4047)\n\n\n\\(\\beta_1(c_2)\\)\n52\n0.5978\n0.7810\n(-0.0145 , 1.5817)\n\n\n\\(\\beta_1(c_3)\\)\n38\n1.5686\n0.9454\n( 0.0915 , 1.8523)\n\n\n\\(\\beta_1(c_4)\\)\n33\n0.8267\n0.7514\n(-0.1862 , 1.7174)\n\n\n\\(\\beta_1(c_5)\\)\n29\n2.6483\n0.9703\n( 0.0125 , 2.1792)\n\n\n\\(\\beta_1(c_6)\\)\n21\n1.0986\n0.7784\n(-0.2286 , 1.8559)\n\n\n\\(\\beta_1(c_7)\\)\n14\n0.6931\n0.7618\n(-0.2329 , 1.8090)\n\n\n\\(\\beta_1(c_8)\\)\n13\n-1.0986\n0.6925\n(-0.4003 , 1.6368)"
+  },
+  {
+    "objectID": "Bayes.html#shrinkage-retrécissement",
+    "href": "Bayes.html#shrinkage-retrécissement",
+    "title": "Statistique Bayésienne",
+    "section": "Shrinkage (retrécissement)",
+    "text": "Shrinkage (retrécissement)"
+  },
+  {
+    "objectID": "Bayes.html#shrinkage-retrécissement-1",
+    "href": "Bayes.html#shrinkage-retrécissement-1",
+    "title": "Statistique Bayésienne",
+    "section": "Shrinkage (retrécissement)",
+    "text": "Shrinkage (retrécissement)\n\n\n\n\n\nModèle hiérarchique (e.g. multiniveaux, à effets aléatoires)\nEstimations de bas niveau se rapprochent du(des) mode(s) du groupe (e.g. log-ORs des centres)\n\n↓ d’estimations extrêmes (outliers)\nRéduit le risque de faux positifs\nEstimations plus précises pour les petits groupes (borrowing strength)"
+  },
+  {
+    "objectID": "Bayes.html#deviance-information-criterion",
+    "href": "Bayes.html#deviance-information-criterion",
+    "title": "Statistique Bayésienne",
+    "section": "Deviance Information Criterion",
+    "text": "Deviance Information Criterion\n\n\n\n\n\nMesure de l’ajustement des données implémentée depuis BUGS\nDIC = Déviance D = \\(-2 \\log\\left(\\color{#ED4F33}{P(D|\\theta)}\\right)\\) pénalisée de la complexité\nLe modèle avec le DIC le plus faible est favorisé\nD’autres approches plus récentes (wAIC, LOO) adoptées pour Stan mais non implémentées en routine pour JAGS"
+  },
+  {
+    "objectID": "Bayes.html#comparaison-de-modèles-dic",
+    "href": "Bayes.html#comparaison-de-modèles-dic",
+    "title": "Statistique Bayésienne",
+    "section": "Comparaison de modèles : DIC",
+    "text": "Comparaison de modèles : DIC\n\n# Modèle sans effet centre\n(dic0 &lt;- dic.samples(modLJ,n.iter = 10000))\n\nMean deviance:  360.2 \npenalty 1.973 \nPenalized deviance: 362.2 \n\n# Modèle avec effet centre (hiérarchique)\n(dic1 &lt;- dic.samples(modLHF,n.iter = 10000))\n\nMean deviance:  285.1 \npenalty 9.628 \nPenalized deviance: 294.8 \n\n# Différences\ndiffdic(dic0, dic1)\n\nDifference: 67.43693\nSample standard error: 18.65602"
+  },
+  {
+    "objectID": "Bayes.html#approche-fréquentiste-p-value",
+    "href": "Bayes.html#approche-fréquentiste-p-value",
+    "title": "Statistique Bayésienne",
+    "section": "Approche fréquentiste : p-value",
+    "text": "Approche fréquentiste : p-value\nProbabilité d’obtenir un effet ≥ à celui observé si l’hypothèse testée est vraie et si les conditions de validité utilisées pour son calcul sont respectées1\n\nIntroduite par Karl Pearson en 1900\nPopularisée par Ronald Fisher en 1925\n\npar exemple, échantillonnage aléatoire parfait (pas de biais de sélection), modèle sous-jacent correctement spécifié (linéarité, additivité, distribution des erreurs, absence de facteur de confusion non ajusté, absence d’intermédiaires entre l’exposition et la réponse …), pas de violation de protocole, erreurs de mesure et sélection du modèle parfaitement pris en compte…"
+  },
+  {
+    "objectID": "Bayes.html#le-test-dhyptothèse-de-neyman-pearson",
+    "href": "Bayes.html#le-test-dhyptothèse-de-neyman-pearson",
+    "title": "Statistique Bayésienne",
+    "section": "Le test d’hyptothèse de Neyman-Pearson",
+    "text": "Le test d’hyptothèse de Neyman-Pearson\n\n\n\n\n\n\n\n\nRésultat de l’expérience\nLa vérité\n\n\n\\(H_0\\) est vraie\n\\(H_0\\) est fausse\n\n\n\n\nRejet de \\(H_0\\)\nErreur de type I (\\(\\alpha\\))\nPuissance (\\(1-\\beta\\))\n\n\nConservation de \\(H_0\\)\n\nErreur de type II (\\(\\beta\\))\n\n\n\n\nApproche décisionnelle, avec \\(\\alpha\\) et \\(\\beta\\) fixés à l’avance\nConçu pour la standardisation industrielle et le contrôle qualité"
+  },
+  {
+    "objectID": "Bayes.html#probabilité-de-préférer-le-traitement-a",
+    "href": "Bayes.html#probabilité-de-préférer-le-traitement-a",
+    "title": "Statistique Bayésienne",
+    "section": "Probabilité de préférer le traitement A",
+    "text": "Probabilité de préférer le traitement A\n\n2 traitements A et B testés tous 2 sur 6 patients\n1 patient préfère B, 5 patients préfèrent A\n\n\nPeut-on en conclure que P(A préféré) &gt; P(B préféré) ?\n\n\n\nTiré de Goodman 1999, Toward Evidence-Based Medical Statistics, Ann Intern Med"
+  },
+  {
+    "objectID": "Bayes.html#approche-fréquentiste",
+    "href": "Bayes.html#approche-fréquentiste",
+    "title": "Statistique Bayésienne",
+    "section": "Approche fréquentiste",
+    "text": "Approche fréquentiste\n\nRevient à tester \\(H_0\\) : P(A préféré) = \\(\\theta\\) = 0.5\nProbabilité d’observer une difference \\(\\geq\\) que celle observée, si \\(H_0\\) vraie\nLa p-value dépend des intentions \\(I\\) de l’expérimentateur\np-value = \\(P(D_{\\theta, I} \\geq D_{observé} | \\theta, I)\\)"
+  },
+  {
+    "objectID": "Bayes.html#intention-de-fixer-n-à-6",
+    "href": "Bayes.html#intention-de-fixer-n-à-6",
+    "title": "Statistique Bayésienne",
+    "section": "Intention de fixer N à 6",
+    "text": "Intention de fixer N à 6\nRésultats plus extrêmes que 5/6 préférant A possibles :\n\nA préféré 6 fois, AAAAAA, avec probabilité \\(P(6A) = \\left(\\frac{1}{2}\\right)^6\\) sous \\(H_0\\)\nA préféré 0 fois : probabilité égale à P(6A)\npréféré 5 fois, AAAAAB ou AAAABA ou …, \\(P(5A) = 6 \\left(\\frac{1}{2}\\right)^1 \\left(\\frac{1}{2}\\right)^5\\)\nA préféré 1 fois : probabilité égale à P(5A)\n\np-value = \\({\\small P(6A|\\theta=0.5)+P(5A|\\theta=0.5)+P(1A|\\theta=0.5)+P(0A|\\theta=0.5)}\\) = \\(\\left(\\frac{1}{2}\\right)^6 + 6 \\left(\\frac{1}{2}\\right)^5 \\left(\\frac{1}{2}\\right)^1 + 6 \\left(\\frac{1}{2}\\right)^1 \\left(\\frac{1}{2}\\right)^5 + \\left(\\frac{1}{2}\\right)^6\\) = 0.21875"
+  },
+  {
+    "objectID": "Bayes.html#intention-de-sarrêter-au-1er-patient-préférant-b-ou-à-n6",
+    "href": "Bayes.html#intention-de-sarrêter-au-1er-patient-préférant-b-ou-à-n6",
+    "title": "Statistique Bayésienne",
+    "section": "Intention de s’arrêter au 1er patient préférant B ou à N=6",
+    "text": "Intention de s’arrêter au 1er patient préférant B ou à N=6\n\n\\(P(6A) = \\left(\\frac{1}{2}\\right)^6\\)\nA préféré 5 fois implique obligatoirement AAAAAB, \\(P(5A)=P(6A)\\)\nA préféré &lt; 5 fois impossible\n\np-value = \\(\\left(\\frac{1}{2}\\right)^6 + \\left(\\frac{1}{2}\\right)^5 \\left(\\frac{1}{2}\\right)^1\\) = 0.03125\nImpact de l’intention : principe de vraisemblance1 violé.\nLes vraisemblances de D sous les hypothèses contiennent toute l’information qui peut être extraite des données"
+  },
+  {
+    "objectID": "Bayes.html#le-facteur-de-bayes",
+    "href": "Bayes.html#le-facteur-de-bayes",
+    "title": "Statistique Bayésienne",
+    "section": "Le facteur de Bayes",
+    "text": "Le facteur de Bayes\n\n\nSous le principe de vraisemblance, le facteur de Bayes permet de choisir entre deux modèles.\nPour \\(H_1\\) vs \\(H_0\\) :\n\\[BF_{10} = \\frac{P\\left(D|H_1\\right)}{P\\left(D|H_0\\right)}\\]\n\nSelon Jeffreys :\n\n\n\n\\(BF_{10}\\)\nForce de la preuve contre \\(H_0\\)\n\n\n\n\n&gt; 100\nDécisive\n\n\n32 - 100\nTrès forte\n\n\n10 - 32\nForte\n\n\n3,2 - 10\nSubstantielle\n\n\n1 - 3,2\nNe méritant pas plus que sa mention\n\n\n\nBF peut être approché par le BIC."
+  },
+  {
+    "objectID": "Bayes.html#retour-à-lexemple",
+    "href": "Bayes.html#retour-à-lexemple",
+    "title": "Statistique Bayésienne",
+    "section": "Retour à l’exemple",
+    "text": "Retour à l’exemple\n\\(H_0\\) : P(A préféré)=1/2, \\(H_1\\) : P(A préféré)=5/6.\n\\[BF_{exp_1} = \\frac{6 \\left(\\frac{1}{6}\\right)^1 \\left(\\frac{5}{6}\\right)^5}{6 \\left(\\frac{1}{2}\\right)^1 \\left(\\frac{1}{2}\\right)^5} = 4,29\\] \\[BF_{exp_2} = BF_{exp_1} = \\frac{\\left(\\frac{1}{6}\\right)^1 \\left(\\frac{5}{6}\\right)^5}{\\left(\\frac{1}{2}\\right)^1 \\left(\\frac{1}{2}\\right)^5} = 4,29\\] Petit niveau de preuve en faveur de \\(H_1\\) (et respect du principe de vraisemblance)."
+  },
+  {
+    "objectID": "Bayes.html#plus-formellement-approche-conjuguée",
+    "href": "Bayes.html#plus-formellement-approche-conjuguée",
+    "title": "Statistique Bayésienne",
+    "section": "Plus formellement : approche conjuguée",
+    "text": "Plus formellement : approche conjuguée\nSous \\(H_0\\), \\(\\color{#ED4F33}{P(D|\\theta_{H_0})} = \\theta_{H_0}^{k} (1-\\theta_{H_0})^{n-k} = \\left(\\frac{1}{2}\\right)^5 \\left(\\frac{1}{2}\\right)^1\\)\n\nSous \\(H_1\\), \\(\\theta_{H_1}\\) peut prendre n’importe quelle valeur.\nAvec \\(\\color{#F5B12E}{P(\\theta)}=\\textrm{beta}(a,b)\\),\n\\[BF = \\frac{\\textrm{B}(k+a,n-k+b)/\\textrm{B}(a,b)}{\\theta_{H_0}^{k} (1-\\theta_{H_0})^{n-k}}\\]\n\n\n\\(\\textrm{B(a,b)} = \\frac{\\Gamma(a)\\Gamma(b)}{\\Gamma(a+b)}\\)"
+  },
+  {
+    "objectID": "Bayes.html#application",
+    "href": "Bayes.html#application",
+    "title": "Statistique Bayésienne",
+    "section": "Application",
+    "text": "Application\n\nBFprop &lt;- function(k,n,ph0,a,b) {\n      vh0 &lt;- ph0^k*(1-ph0)^(n-k)\n      vh1 &lt;- exp( lbeta(k+a,n-k+b) - lbeta(a,b) )\n      return(vh1/vh0)\n}\n\nBFprop(k=5, n=6, ph0=1/2, a=1, b=1) # a priori uniforme\n\n[1] 1.52381\n\nBFprop(k=5, n=6, ph0=1/2, a=0.5, b=0.5) # a priori de Jeffreys\n\n[1] 1.3125\n\nBFprop(k=5, n=6, ph0=1/2, a=0.1, b=0.1) # a priori type Haldane\n\n[1] 0.5092147\n\nBFprop(k=5, n=6, ph0=1/2, a=0.01, b=0.01) # encore plus extrême\n\n[1] 0.0624439"
+  },
+  {
+    "objectID": "Bayes.html#importance-du-choix-de-la-priori",
+    "href": "Bayes.html#importance-du-choix-de-la-priori",
+    "title": "Statistique Bayésienne",
+    "section": "Importance du choix de l’a priori",
+    "text": "Importance du choix de l’a priori\n\nSauf cas extrêmes, \\(\\color{#2E2963}{P(\\theta|D)}\\) peu influencé par le choix de \\(\\color{#F5B12E}{P(\\theta)}\\)\nMais le BF l’est :\n\nA priori trop vague : \\(P(D|H_1) \\approx 0\\) \\(\\forall \\theta\\) \\(\\Rightarrow\\) \\(H_0\\) favorisé\nValeur observée proche de \\(H_0\\) : \\(H_0\\) favorisé même si estimation imprécise1\n\nCertains bayésiens recommandent plutôt des approches de type région d’équivalence\n\nAccepter \\(H_0\\) si l’HDI de \\(\\theta\\) est inclus dans la région\nRejetter \\(H_0\\) si en dehors\nNon concluant si l’HDI recoupe la région\n\n\n3/6 patients préfèrent A \\(\\Rightarrow\\) BF=2.2 en faveur de \\(H_0\\) avec a priori uniforme"
+  },
+  {
+    "objectID": "Bayes.html#le-paradoxe-de-lindley",
+    "href": "Bayes.html#le-paradoxe-de-lindley",
+    "title": "Statistique Bayésienne",
+    "section": "Le “paradoxe” de Lindley",
+    "text": "Le “paradoxe” de Lindley\nTests d’hypothèses fréquentiste bayésien peuvent diverger.\nExemple : valeurs du \\(BF_{10}\\)1 pour un test \\(t\\) donnant \\(p=0.05\\) en fréquentiste, selon la taille d’échantillon\n\n\n\n\n\n\n\n\n\nMalgré la significativité statistique,\n\npour auncune taille d’échantillon \\(BF_{10} &gt; 3.2\\) (\\(H_1\\) jamais confirmée)\nà partir de \\(n \\approx 1180\\) patients par groupe, \\(BF_{10} &gt; \\frac{1}{3.2}\\) (\\(H_0\\) confirmée).\n\nEn employant la fonction ttest.tstat du package BayesFactor avec son a priori par défaut"
+  },
+  {
+    "objectID": "Bayes.html#le-test-dhypothèse-comme-rituel",
+    "href": "Bayes.html#le-test-dhypothèse-comme-rituel",
+    "title": "Statistique Bayésienne",
+    "section": "Le test d’hypothèse comme rituel",
+    "text": "Le test d’hypothèse comme rituel\n“Null ritual” : mélange des idées de Fisher et Neyman-Pearson :\n\nDéfinir une \\(H_0\\) d’absence de différence, sans préciser les prédictions de l’hypothèse de recherche ou une hypothèse alternative substantive\nUtiliser 5 % comme seuil de rejet de \\(H_0\\).\nToujours utiliser cette procédure.\n\n\n\nElements of social rituals include (a) the repetition of the same action, (b) a focus on special numbers or colors, (c) fears about serious sanctions for rule violations, and (d) wishful thinking and delusions that virtually eliminate critical thinking (Gigerenzer et al. 2004)"
+  },
+  {
+    "objectID": "Bayes.html#les-problèmes-avec-la-p-value",
+    "href": "Bayes.html#les-problèmes-avec-la-p-value",
+    "title": "Statistique Bayésienne",
+    "section": "Les problèmes avec la p-value",
+    "text": "Les problèmes avec la p-value\n\nNe permet pas de quantifier les preuves en faveur de \\(H_0\\), mais…\nMal interprétée. Les résultats statistiquement non significatifs sont notamment interprétés comme preuve d’équivalence (i.e. confirmation de \\(H_0\\))\n\nDéjà problématique pour l’efficacité1\nMais plus encore pour les risques2\n\nNe distingue pas taille d’effet et précision (telle qu’employée classiquement)\nPeut surestimer le degré de preuve\nNe respecte pas le principe de vraisemblance (dépend de données imaginaires, car quantifie la probabilité de l’observé ou plus extrême - cela la rend particulièrement vulnérable à des manipulations, tels que changements de protocole ou de plan d’analyse post-hoc)\n\ne.g. communication FDA sur un médicament avec une taille d’effet cliniquement pertinente mais \\(p=0.06\\) : Treatment (…) similar to the improvement seen with the other therapye.g. article concluant que exposure compared with no exposure was not associated with autism spectrum disorder sur la base d’un HR de 1.61 [95% CI, 0.997-2.59] (10.1001/jama.2017.3415)"
+  },
+  {
+    "objectID": "Bayes.html#asa-statement-on-p-values",
+    "href": "Bayes.html#asa-statement-on-p-values",
+    "title": "Statistique Bayésienne",
+    "section": "ASA statement on p-values",
+    "text": "ASA statement on p-values\n\nP-values can indicate how incompatible the data are with a specified statistical model.\nP-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone.\nScientific conclusions and business or policy decisions should not be based only on whether a p-value passes a specific threshold.\nProper inference requires full reporting and transparency.\nA p-value, or statistical significance, does not measure the size of an effect or the importance of a result.\nBy itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.\n\n\n\nhttps://www.amstat.org/asa/files/pdfs/P-ValueStatement.pdf (2016-03-07)"
+  },
+  {
+    "objectID": "Bayes.html#pratiques",
+    "href": "Bayes.html#pratiques",
+    "title": "Statistique Bayésienne",
+    "section": "Pratiques",
+    "text": "Pratiques\n\nInférence Bayésienne et Fréquentiste donnent des résultats similaires (généralement)\nTest d’hypothèse Bayésien et Fréquentiste peuvent différer\nSi possible, privilégier l’estimation des paramètres et de l’incertitude aux tests\nChoix de l’approche\n\n\\(n\\) petit, modèles complexes : Bayésien parfois la seule option\nInnovative trial designs (master protocols, external controls, adaptative trials) : place plus importante du Bayésien\n\nLe choix de l’a priori n’est pas nécessairement non informatif\nTendance émergente à considérer weakly informative &gt; uninformative\nL’élicitation et intégration des a prioris (e.g. Si des données historiques existent, avis d’experts, …) reste un champ de recherche actif\nNe pas négliger les analyses de sensibilité"
+  },
+  {
+    "objectID": "Bayes.html#pourquoi-la-statistique-bayésienne",
+    "href": "Bayes.html#pourquoi-la-statistique-bayésienne",
+    "title": "Statistique Bayésienne",
+    "section": "Pourquoi la statistique Bayésienne ?",
+    "text": "Pourquoi la statistique Bayésienne ?\n\n\n\nIntuitif\nFlexible\nRépond aux bonnes questions (e.g. \\(P(H_0)\\))\n\\(\\theta\\) complexe\n\\(n\\) petit\nsparse data bias\nEfficient (et donc éthique) si information a priori existante\n\n\n\nContrôle des faux positifs\nModélisation et intégration des biais\nGestion d’outliers par modèles robustes\nGestion de la multiplicité ou de l’arrêt optionnel\nGestion des prédicteurs multiples\nApproche intégrée"
+  },
+  {
+    "objectID": "Bayes.html#une-popularité-croissante",
+    "href": "Bayes.html#une-popularité-croissante",
+    "title": "Statistique Bayésienne",
+    "section": "Une popularité croissante",
+    "text": "Une popularité croissante"
+  },
+  {
+    "objectID": "Bayes.html#pour-aller-plus-loin",
+    "href": "Bayes.html#pour-aller-plus-loin",
+    "title": "Statistique Bayésienne",
+    "section": "Pour aller plus loin",
+    "text": "Pour aller plus loin\n\nLivres\n\nSpiegelhalter et al. 2004. Bayesian Approaches to Clinical Trials and Health-Care Evaluation. Wiley\nKruschke 2015. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan, 2nd Edition. Elsevier\nMcElreath 2020. Statistical Rethinking: A Bayesian Course with Examples in R and STAN, 2nd Edition. Chapman and Hall/CRC\n\nMOOCs\n\nBayesian statistics specialization sur coursera et d’autres cours sur la même plateforme\nCours sur d’autres plateformes datacamp, edX, …\n\nDocumentation, forums, manuels des différents logiciels"
+  },
+  {
+    "objectID": "Bayes.html#section",
+    "href": "Bayes.html#section",
+    "title": "Statistique Bayésienne",
+    "section": "",
+    "text": "Bayesian statistics is difficult in the sense\n\n\nthat thinking is difficult.\n\n\n\n\n\n\n\n\n\nDonald A. Berry\n‘Teaching Elementary Bayesian Statistics with Real Applications in Science’"
+  }
+]
