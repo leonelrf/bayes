@@ -1,0 +1,307 @@
+## Modèles Stan {.smaller}
+
+Stan, comme JAGS, emploie des blocs de code:
+
+1. (optionnel) **functions** : fonctions définies par l'utilisateur·rice
+2. **data** : les données, pré-spécifiées et fixes
+3. (optionnel) **transformed data** : permet de transformer les variables issues des données
+4. **parameters** : les paramètres inconnus que Stan va devoir échantillonner ; demandent des a prioris explicites
+5. (optionnel) **transformed parameters** : valeurs dépendant des paramètres requises pour les calculs de vraisemblance
+6. **model** : Le modèle, sous form d'a priori et de vraisemblance
+7. (optionnel) **generated quantities** : permet de calculer des quantités qu'on voudrait voir apparaître dans les résultats
+
+## Le modèle {.smaller}
+
+```{.stan}
+{{< include /models/modele_Stan.stan >}}
+```
+
+Ajouter une ligne vide en fin de ficher permet d'éviter des messages tels que "`incomplete final line found`".
+
+Les modèles ont l'extension `*.stan`. Comme pour JAGS, ils peuvent aussi être créés directement dans `R` sous forme de chaîne de caractères.
+
+## Choix de l'interface
+
+Pour utiliser Stan dans `R`, il existe plusieurs *packages* :
+
+- Faisant appel à Stan directement :
+  - `rstan` peut être installé depuis le CRAN, la version de Stan résultante sera moins à jour
+  - `cmdstanr` est une interface légère à Stan, mais non disponible sur le CRAN
+- Servant d'interface à Stan (permet de définir les modèles en langage `R`) : `rstanarm`, `brms`, ...
+
+## Charger Stan
+
+Les modèles Stan sont compilés en C++, ce qui peut prendre du temps.
+
+La commande `rstan_options(auto_write = TRUE)` sauvegarde les modèles compilés sur le disque dur, permettant le plus souvent d'éviter une recompilation à chaque nouvel usage du modèle (possiblement avec d'autres données).
+
+La commande `options(mc.cores = parallel::detectCores())` permet d'employer plusieurs noyaux du processeur pour faire tourner en parallèle plusieurs chaines MCMC.  
+
+```{r}
+#| label: stan_launch
+#| echo: true
+
+library(rstan)
+
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+# Pour plus de contrôle :
+# options(mc.cores = min(4, parallel::detectCores()))
+```
+
+
+## Compiler le modèle
+
+`stan_model()` traduit le modèle Stan en C++ puis compile le code C++ et le charge.
+
+```{r}
+#| label: Prob_Gue_Com_S
+#| echo: true
+#| message: false
+#| warning: false
+#| cache: true
+
+## Compile le modèle en C++ puis crée un dynamic shared object (DSO)
+modS <- stan_model(file = "models/modele_Stan.stan", model_name = "probabilité binomiale")
+# Si le modèle était un objet R de type chaîne de caractères :
+# modS <- stan_model(model_code = modeleStan, model_name = "probabilité binomiale")
+```
+
+Avec Stan, il est possible de définir le *burn-in* (nommé *warmup*) directement à l'étape suivante.
+
+## Les données
+
+Les données sont fournies à Stan sous forme de liste.
+
+```{r}
+#| label: Prob_Gue_Data_S
+#| echo: true
+
+y <- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès
+n <- length(y)
+
+donnees <- list(y = y,
+                nb_sujets = n)
+```
+
+## Simulations de l'a posteriori
+
+On échantillonne l'a posteriori à partir de la fonction `sampling`, en définissant le *burn-in*.
+
+```{r}
+#| label: Prob_Gue_Sim_S
+#| echo: true
+#| message: false
+#| warning: false
+#| output: false
+#| cache: true
+#| dependson: "Prob_Gue_Com_S"
+
+modS_sim <- sampling(object = modS,  # DSO compilé
+                     data = donnees, # données
+                     chains = 3,     # nombre de chaînes (4 par défaut)
+                     iter = 4500,    # nombre total de réalisations (inclant le burn-in)
+                     warmup = 500)   # nombre d'itérations pour le burn-in (iter/2 par défaut)
+```
+
+## Inférence
+
+L'objet obtenu fournit assez de statistiques pour dériver des dérivations ponctuelles (`mean`) et des intervalles de crédibilité à 95 % *equal-tailed*  (`2.5%` et `97.5%`), ainsi que quelques diagnostics de convergence (`Rhat`) et précision (`n.eff`).
+
+```{r }
+#| label: stan_fit
+#| echo: true
+
+modS_sim
+```
+
+## Traitements postérieurs
+
+Les échantillons peuvent être récupérés sous forme de jeu de données pour un traitement facilité par d'autres *packages* :
+
+
+```{r }
+#| label: stan_post_process_01
+#| echo: true
+
+mes_tirages <- tidybayes::tidy_draws(modS_sim)
+mes_tirages
+```
+
+## Sans tidybayes
+
+Le *package* `rstan` dispose de ses outils propres, comme `extract()` pour obtenir une liste des tirages des paramètres du modèle ou `as.data.frame()` pour obtenir les tirages sous ce format :
+
+```{r }
+#| label: stan_post_process_02
+#| echo: true
+
+extract(modS_sim) |> str()
+as.data.frame(modS_sim) |> str()
+```
+
+## Estimations ponctuelles et IC {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+#| label: stan_peci_01
+#| echo: true
+
+# Moyenne et ETI 
+mes_tirages |> tidybayes::mean_qi(theta) 
+mean(mes_tirages$theta)
+quantile(mes_tirages$theta, c(0.025, 0.975))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| label: stan_peci_02
+#| echo: true
+
+# Médiane et HDI
+mes_tirages |> tidybayes::median_hdi(theta) 
+median(mes_tirages$theta)
+coda::HPDinterval(coda::as.mcmc(mes_tirages$theta))
+```
+
+:::
+
+::::
+
+::: aside
+Les fonctions median_hdi() et HPDinterval() n'emploient pas la même procédure pour estimer l'HDI (distribution estimée vs distribution empirique). Les différences seront surtout visibles sur des distributions multimodales. 
+:::
+
+## Visualisation
+
+```{r}
+#| label: Prob_Gue_Hist_S
+#| fig-height: 7
+#| fig-width: 20
+#| out-width: "95%"
+
+taille <- c(25, 1.5, 8)
+
+as.data.frame(modS_sim) |> ggplot() + geom_histogram(aes(x = theta, y = after_stat(density)), 
+                                                     bins = 50, fill = BlClSq, color = "black") +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 3.5)) +
+  labs(x = expression(theta), y = expression(paste("P(", theta, "|D)"))) +
+  stat_function(linewidth = taille[2], color = BlFoSq,
+                                 fun = dbeta, args = list(shape1 = 8, shape2 = 4)) +
+  annotate("text", x = 0.75, y = 3, color = BlFoSq, 
+           size = taille[3], hjust = "left", label = "Beta(8,4)") +
+  theme_grey(base_size=taille[1]) 
+```
+
+## Diagnostics
+
+Avant d'exploiter les résultats, la convergence vers l'a posteriori et tout problème dans les calculs doivent être évalués. Certains outils ont déjà été vus avec JAGS, d'autres sont propres au mode d'échantillonnage (HMC) employé avec Stan :
+
+- Inspections visuellles (mélange des chaînes et problèmes évidents)
+- $\hat{R}$ (convergence / accord entre les chaînes)
+- *Effective sample size* (autocorrélation & précision)
+- *Divergent transitions* (convergence)
+- BFMI (*Bayesian Fraction of Missing Information* : déplacements dans l'a posteriori problématiques)
+- *Maximum tree depth* (efficience)
+
+## Diagnostic : trace plot
+
+```{r}
+#| label: traceplot_s
+#| fig-width: 10
+#| fig-height: 4
+#| fig-align: center
+#| echo: true
+
+rstan::traceplot(modS_sim, pars = "theta", inc_warmup = TRUE)
+```
+
+Des *packages* comme `bayesplot` donnent accès à des visualisations plus avancées.
+
+## Diagnostic : convergence
+
+On s'intéresse à $\hat{R}$ :
+
+```{r}
+#| label: Prob_Gue_Rhat_S
+#| echo: true
+#| output-location: default
+
+mes_tirages$theta |> rstan::Rhat()
+modS_sim |> ggmcmc::ggs() |> ggmcmc::ggs_Rhat(version_rhat = "BG98", plot = FALSE)
+```
+
+## Diagnostic : ESS {.smaller}
+
+Les développeur·ses Stan recommandent $\textrm{n_eff} \geq 100$, y compris pour les queues de distribution, comme seuil pour considérer les estimations comme fiables :
+
+```{r}
+#| label: stan_ess
+#| echo: true
+
+# Les calculs demandent de préserver la structure par chaîne
+theta_draws_array <- as.array(modS_sim, pars = "theta")[, , "theta"]
+theta_draws_array[1:2,]
+theta_draws_array |> ess_bulk() # moyennes/médianes
+theta_draws_array |> ess_tail() # quantiles (ETI)
+theta_draws_array |> monitor(warmup = 0)
+```
+
+## Diagnostics spécifiques
+
+Stan emploie par défaut du Hamiltonian Monte Carlo / NUTS (*no U-turn sampling*) pour lequel des diagnostics spécifiques sont disponibles :
+
+```{r}
+#| label: hmc_diagnostics
+#| echo: true
+#| message: true
+
+rstan::check_hmc_diagnostics(modS_sim)
+```
+
+Il arrive que Stan renvoie des *warnings* en estimant un modèle.
+
+## Divergent transitions {.smaller}
+
+Exemple : "`There were 15 divergent transitions after warmup`".
+
+À prendre au **sérieux** : elles suggèrent que l'algorithme pourrait ne pas explorer certaines parties de l'a posteriori. 
+On les rencontre souvent dans le cas de géométries de l'a posteriori problématiques : distributions multimodales, identification faible, corrélations élevées, formes en entonnoir (fréquentes dans les modèles multiniveaux), non-linéarité, a prioris trop vagues, peu de données, mauvaise spécification du modèle.
+
+Une "**divergence**" a lieu lorsque la simulation des dynamiques Hamiltoniennes devient peu fiable, typiquement parce que l'a posteriori a des régions à forte courbure ou une forme changeant rapidement.
+
+Voir [ici](https://www.martinmodrak.cz/2018/02/19/taming-divergences-in-stan-models/) pour une discussion non technique ou [ici](https://betanalpha.github.io/assets/case_studies/identifiability.html) pour en savoir plus.
+
+## Comment réagir {.smaller}
+
+La solution la plus *rapide* est d'augmenter le paramètre `adapt_delta` (e.g. `sampling(..., control = list(adapt_delta = 0.99))`), la *meilleure* reste souvent de modifier le modèle, ses a prioris, ou l'échelle de mesure des variables. 
+
+`adapt_delta` joue sur la probabilité cible d'accepter la cible : des valeurs plus fortes induisent des mouvements plus faibles. Cela augmentera le temps de calcul. 
+
+La valeur par défaut est de 0.80, il n'est pas attendu de bénéfice au-delà de 0.99.
+
+Une façon de vérifier si le problème vient des données est d'estimer le modèle à partir de données simulées par le mécanisme générateur de données supposé par le modèle.
+
+Certaines anciennes écoles d'estimation Bayésienne défendaient l'usage d'a prioris non informatifs / vagues (pour que les a posterioris soient dominés par les données). Des a prioris faiblement informatifs (*weakly informative*) peuvent améliorer la convergence.
+
+## Faible BFMI
+
+Exemple : "`The E-BFMI 0.2786 is below the nominal threshold of 0.3 which suggests that HMC may have trouble exploring the target distribution`".
+
+Un BFMI faible peut indiquer un problème d'adaptation de l’algorithme, ou des queues épaisses de l'a posteriori qui n'ont pas été correctement explorées. Il peut aussi être dû à une mauvaise échelle des variables, des problèmes d'identification, ou des géométries de l'a posteriori problématiques.
+
+Augmenter le *warmup* ou les itérations peut parfois aider. Si le problème persiste, il faudra évaluer les a prioris, la complexité du modèle, et sa paramétrisation. 
+
+## Maximum treedepth
+
+Exemple : "`There were 8 transitions after warmup that exceeded the maximum treedepth.`".
+
+Ces *warnings* indiquent généralement un échantillonnage inefficient, demandant des trajectoires plus longues que permis. C'est moins problématique qu'un *warning* sur la divergence, mais peut quand même indiquer une géométrie posterieure problématique ou une mauvaise paramétrisation du modèle.
+
+On peut augmenter la *treedepth* maximale : `control = list(max_treedepth = 12)` ; cela augmentera le temps de calcul et n'est [pas recommandé](https://mc-stan.org/learn-stan/diagnostics-warnings.html#maximum-treedepth) par les développeur·ses Stan. Il est rarement utile de dépasser 12.

@@ -1,0 +1,6 @@
+model {
+  for (i in 1:nb_sujets) {
+    y[i] ~ dbern(theta) # vraisemblance (Bernoulli)
+  }
+  theta ~ dbeta(1, 1)   # a priori (uniforme)
+}

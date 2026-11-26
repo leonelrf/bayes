@@ -81,7 +81,7 @@
     "href": "Bayes.html#approximation-par-grille",
     "title": "Statistique Bayésienne",
     "section": "Approximation par grille",
-    "text": "Approximation par grille\n\n\nLister un nombre fini de valeurs du/des paramètre(s) \\(\\theta\\) à estimer\nLeur donner une probabilité a priori \\(\\color{#F5B12E}{P(\\theta)}\\)\nCalculer la vraisemblance \\(\\color{#ED4F33}{P(D|\\theta)}\\) des données observées pour chacune des valeurs possibles de \\(\\theta\\)\nFaire le produit de la vraisemblance et de l’a priori \\(\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) pour chaque valeur de \\(\\theta\\)\nLa somme de ces produits \\(\\sum_\\theta \\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) donne la constante de normalisation \\(\\color{#ADD2D8}{P(D)}\\)\nEn déduire l’a posteriori \\(\\color{#2E2963}{P(\\theta | D)} = \\frac{\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}}{\\color{#ADD2D8}{P(D)}}\\) pour les valeurs choisies"
+    "text": "Approximation par grille\n\nLister un nombre fini de valeurs du/des paramètre(s) \\(\\theta\\) à estimer\n\n\nLeur donner une probabilité a priori \\(\\color{#F5B12E}{P(\\theta)}\\)\nCalculer la vraisemblance \\(\\color{#ED4F33}{P(D|\\theta)}\\) des données observées pour chacune des valeurs possibles de \\(\\theta\\)\nFaire le produit de la vraisemblance et de l’a priori \\(\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) pour chaque valeur de \\(\\theta\\)\nLa somme de ces produits \\(\\sum_\\theta \\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}\\) donne la constante de normalisation \\(\\color{#ADD2D8}{P(D)}\\)\nEn déduire l’a posteriori \\(\\color{#2E2963}{P(\\theta | D)} = \\frac{\\color{#ED4F33}{P(D|\\theta)}*\\color{#F5B12E}{P(\\theta)}}{\\color{#ADD2D8}{P(D)}}\\) pour les valeurs choisies"
   },
   {
     "objectID": "Bayes.html#approximation-par-grille-1",
@@ -158,7 +158,7 @@
     "href": "Bayes.html#application-écart-type-inapproprié",
     "title": "Statistique Bayésienne",
     "section": "Application : Écart-type inapproprié",
-    "text": "Application : Écart-type inapproprié\nTrop faible\n\nsimul1 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.02)\nsimul1$accept # La plupart des propositions sont acceptées\n\n[1] 0.9511\n\nsummary(simul1$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.05232 0.55573 0.67106 0.64950 0.75470 0.96494 \n\n\n\nTrop élevé\n\nsimul2 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 2.00)\nsimul2$accept # La plupart des propositions sont rejetées\n\n[1] 0.0828\n\nsummary(simul2$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.0100  0.5854  0.6612  0.6670  0.7627  0.9605"
+    "text": "Application : Écart-type inapproprié\nTrop faible\n\nsimul1 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.02)\nsimul1$accept # La plupart des propositions sont acceptées\n\n[1] 0.9572\n\nsummary(simul1$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.01207 0.59017 0.68867 0.67442 0.77117 0.95674 \n\n\n\nTrop élevé\n\nsimul2 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 2.00)\nsimul2$accept # La plupart des propositions sont rejetées\n\n[1] 0.0812\n\nsummary(simul2$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.0100  0.5835  0.6784  0.6679  0.7647  0.9681"
   },
   {
     "objectID": "Bayes.html#trace-plots",
@@ -172,7 +172,7 @@
     "href": "Bayes.html#écart-type-approprié",
     "title": "Statistique Bayésienne",
     "section": "Écart-type approprié",
-    "text": "Écart-type approprié\n\nsimul3 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.30)\nsimul3$accept # Environ 50 % des propositions sont acceptées\n\n[1] 0.4652\n\nsummary(simul3$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.1813  0.5802  0.6747  0.6653  0.7612  0.9750"
+    "text": "Écart-type approprié\n\nsimul3 &lt;- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.30)\nsimul3$accept # Environ 50 % des propositions sont acceptées\n\n[1] 0.4651\n\nsummary(simul3$theta)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n 0.0100  0.5736  0.6764  0.6645  0.7659  0.9658"
   },
   {
     "objectID": "Bayes.html#distribution-a-posteriori",
@@ -200,7 +200,7 @@
     "href": "Bayes.html#trace-plots-distribution-non-stationnaire",
     "title": "Statistique Bayésienne",
     "section": "Trace plots & distribution non stationnaire",
-    "text": "Trace plots & distribution non stationnaire\n\n# itérations avec écart-type trop faible\nchaine1 &lt;- mh(nIter = 500, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 500, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 500, thetaInit = 0.50, candSD = 0.015)$theta\n\nlibrary(ggplot2)\nggplot() + ylim(0,1) +\n  geom_line(aes(x=1:500,y=chaine1), color=1, linewidth=1) + \n  geom_line(aes(x=1:500,y=chaine2), color=2, linewidth=1) + \n  geom_line(aes(x=1:500,y=chaine3), color=3, linewidth=1) + \n  labs(x=\"Itération\", y=expression(theta)) +\n  theme_grey(base_size=25)"
+    "text": "Trace plots & distribution non stationnaire\n\n# itérations avec écart-type trop faible\nchaine1 &lt;- mh(nIter = 500, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 500, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 500, thetaInit = 0.50, candSD = 0.015)$theta\n\nlibrary(ggplot2)\ndata.frame(iteration = rep(1:length(chaine1), times = 3),\n           theta = c(chaine1, chaine2, chaine3), \n           chaine = factor(rep(1:3, each = length(chaine1)))) |&gt; ggplot() +\n  aes(x = iteration, y = theta, colour = chaine, group = chaine) +\n  geom_line(linewidth = 1) +\n  coord_cartesian(ylim = c(0,1)) +\n  labs(x = \"Itération\", y = expression(theta)) +\n  theme_grey(base_size = 25) + \n  guides(color = \"none\")"
   },
   {
     "objectID": "Bayes.html#trace-plots-distribution-non-stationnaire-output",
@@ -214,21 +214,21 @@
     "href": "Bayes.html#diagnostic-de-gelman-rubin",
     "title": "Statistique Bayésienne",
     "section": "Diagnostic de Gelman & Rubin",
-    "text": "Diagnostic de Gelman & Rubin\n\n\n\n\n\nCompare la variance inter-chaînes \\(B\\) à la variance intra-chaînes (\\(W\\))\nSi distribution stationnaire, la différence moyenne entre les chaînes devrait correspondre à la différence moyenne intra-chaîne\nPotential Scale Reduction Factor (PSRF) / Shrink Factor : implique le ratio entre la variance poolée et la variance intra-chaînes\n\\(\\textrm{PSRF} &gt; 1.2\\) ou \\(1.1\\) est signe de non-convergence"
+    "text": "Diagnostic de Gelman & Rubin\n\n\n\n\n\nCompare la variance inter-chaînes \\(B\\) à la variance intra-chaînes (\\(W\\))\nSi distribution stationnaire, la différence moyenne entre les chaînes devrait correspondre à la différence moyenne intra-chaîne\nPotential Scale Reduction Factor (PSRF) / Shrink Factor : implique le ratio entre la variance poolée et la variance intra-chaînes\n\\(\\textrm{PSRF} &gt; 1.2\\) ou \\(1.1\\) est signe de non-convergence\nLes développeurs de Stan recommandent même 1.05 voire 1.01"
   },
   {
     "objectID": "Bayes.html#diagnostic-de-gelman-rubin---500-itérations",
     "href": "Bayes.html#diagnostic-de-gelman-rubin---500-itérations",
     "title": "Statistique Bayésienne",
     "section": "Diagnostic de Gelman & Rubin - 500 itérations",
-    "text": "Diagnostic de Gelman & Rubin - 500 itérations\n\nlibrary(coda)\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1),as.mcmc(chaine2),as.mcmc(chaine3))\n\n# 500 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.53       3.09\n\n\nConvergence non atteinte."
+    "text": "Diagnostic de Gelman & Rubin - 500 itérations\n\nlibrary(coda)\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1), as.mcmc(chaine2), as.mcmc(chaine3))\n\n# 500 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.18       1.58\n\n\nConvergence non atteinte."
   },
   {
     "objectID": "Bayes.html#diagnostic-de-gelman-rubin---5000-itérations",
     "href": "Bayes.html#diagnostic-de-gelman-rubin---5000-itérations",
     "title": "Statistique Bayésienne",
     "section": "Diagnostic de Gelman & Rubin - 5000 itérations",
-    "text": "Diagnostic de Gelman & Rubin - 5000 itérations\n\nchaine1 &lt;- mh(nIter = 5000, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 5000, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 5000, thetaInit = 0.50, candSD = 0.015)$theta\n\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1),as.mcmc(chaine2),as.mcmc(chaine3))\n\n# 5000 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.18       1.51"
+    "text": "Diagnostic de Gelman & Rubin - 5000 itérations\n\nchaine1 &lt;- mh(nIter = 5000, thetaInit = 0.01, candSD = 0.015)$theta\nchaine2 &lt;- mh(nIter = 5000, thetaInit = 0.99, candSD = 0.015)$theta\nchaine3 &lt;- mh(nIter = 5000, thetaInit = 0.50, candSD = 0.015)$theta\n\n# Mise au format coda\nsimul &lt;- mcmc.list(as.mcmc(chaine1), as.mcmc(chaine2), as.mcmc(chaine3))\n\n# 5000 itérations\ngelman.diag(simul)\n\nPotential scale reduction factors:\n\n     Point est. Upper C.I.\n[1,]       1.05       1.15"
   },
   {
     "objectID": "Bayes.html#précision-autocorrélation",
@@ -242,14 +242,14 @@
     "href": "Bayes.html#autocorrélation",
     "title": "Statistique Bayésienne",
     "section": "Autocorrélation",
-    "text": "Autocorrélation\n\n\n\nautocorr.plot(as.mcmc(chaine3),lag.max=200,lwd=2)\n\n\n\n\n\n\n\n\n\n\nautocorr.diag(as.mcmc(chaine3))\n\n            [,1]\nLag 0  1.0000000\nLag 1  0.9895226\nLag 5  0.9473690\nLag 10 0.8911419\nLag 50 0.5387291"
+    "text": "Autocorrélation\n\n\n\nautocorr.plot(as.mcmc(chaine3), lag.max = 200, lwd = 2)\n\n\n\n\n\n\n\n\n\n\nautocorr.diag(as.mcmc(chaine3))\n\n            [,1]\nLag 0  1.0000000\nLag 1  0.9936767\nLag 5  0.9693948\nLag 10 0.9403325\nLag 50 0.7255014"
   },
   {
     "objectID": "Bayes.html#ess-raftery-lewis",
     "href": "Bayes.html#ess-raftery-lewis",
     "title": "Statistique Bayésienne",
     "section": "ESS, Raftery & Lewis",
-    "text": "ESS, Raftery & Lewis\n\n\nESS\n\neffectiveSize(as.mcmc(chaine3))\n\n    var1 \n26.32621 \n\n\nLes 5 000 itérations correspondent à 26 réalisations indépendantes de l’a posteriori.\n\n\nUn IC equal-tailed va demander une connaissance précise des queues de distribution.\nRaftery & Lewis estime le nombre d’itérations nécessaires pour l’estimation.\n\nraftery.diag(as.mcmc(chaine3))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                       \n Burn-in  Total Lower bound  Dependence\n (M)      (N)   (Nmin)       factor (I)\n 75       74586 3746         19.9      \n\n\nIl faut 3 746 réalisations indépendantes de l’a posteriori pour estimer un \\(IC_{95\\%}\\) avec une précision de \\(\\pm 0.005\\) sur les bornes, soit 74 586 itérations en tenant compte de l’autocorrélation."
+    "text": "ESS, Raftery & Lewis\n\n\nESS\n\neffectiveSize(as.mcmc(chaine3))\n\n    var1 \n15.85521 \n\n\nLes 5 000 itérations correspondent à 16 réalisations indépendantes de l’a posteriori.\n\n\nUn IC equal-tailed va demander une connaissance précise des queues de distribution.\nRaftery & Lewis estime le nombre d’itérations nécessaires pour l’estimation.\n\nraftery.diag(as.mcmc(chaine3))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                        \n Burn-in  Total  Lower bound  Dependence\n (M)      (N)    (Nmin)       factor (I)\n 98       105052 3746         28        \n\n\nIl faut 3 746 réalisations indépendantes de l’a posteriori pour estimer un \\(IC_{95\\%}\\) avec une précision de \\(\\pm 0.005\\) sur les bornes, soit 105 052 itérations en tenant compte de l’autocorrélation."
   },
   {
     "objectID": "Bayes.html#logiciels-dinférence-bayésienne-dans",
@@ -304,15 +304,15 @@
     "objectID": "Bayes.html#diagnostic-trace-plot",
     "href": "Bayes.html#diagnostic-trace-plot",
     "title": "Statistique Bayésienne",
-    "section": "Diagnostic : trace plot",
-    "text": "Diagnostic : trace plot\n\nJAGSStan\n\n\n\nlibrary(ggmcmc)\nSJ1 &lt;- ggs(modJ1_sim) \nggs_traceplot(SJ1, greek = TRUE) + theme_grey(base_size=25) \n\n\n\n\n\n\n\n\n\n\n\nlibrary(ggmcmc)\nSS &lt;- ggs(modS_sim) \nggs_traceplot(SS, greek = TRUE) + theme_grey(base_size=25)"
+    "section": "Diagnostic : trace plot",
+    "text": "Diagnostic : trace plot\n\nlibrary(ggmcmc)\nSJ1 &lt;- ggs(modJ1_sim) \nggs_traceplot(SJ1, greek = TRUE) + theme_grey(base_size=25)"
   },
   {
     "objectID": "Bayes.html#diagnostic-densité",
     "href": "Bayes.html#diagnostic-densité",
     "title": "Statistique Bayésienne",
-    "section": "Diagnostic : densité",
-    "text": "Diagnostic : densité\n\nJAGSStan\n\n\n\n\nggs_density(SJ1, \n            greek = TRUE) +\n  xlim(0,1) +\n  theme_grey(base_size=25) \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nggs_density(SS, \n            greek = TRUE) +\n  xlim(0,1) +\n  theme_grey(base_size=25)"
+    "section": "Diagnostic : densité",
+    "text": "Diagnostic : densité\n\n\nggs_density(SJ1, \n            greek = TRUE) +\n  xlim(0,1) +\n  theme_grey(base_size=25)"
   },
   {
     "objectID": "Bayes.html#diagnostic-convergence-hatr",
@@ -325,15 +325,15 @@
     "objectID": "Bayes.html#diagnostic-autocorrélation-et-ess",
     "href": "Bayes.html#diagnostic-autocorrélation-et-ess",
     "title": "Statistique Bayésienne",
-    "section": "Diagnostic : autocorrélation et ESS",
-    "text": "Diagnostic : autocorrélation et ESS\n\nJAGSStan\n\n\n\nggs_autocorrelation(SJ1, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) \n\n\n\n\n\n\n\nggs_diagnostics(SJ1, proportion=FALSE) %&gt;% filter(Diagnostic==\"Effective\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter  value\n  &lt;fct&gt;      &lt;dbl&gt;\n1 theta     10820.\n\n\n\n\n\nggs_autocorrelation(SS, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) \n\n\n\n\n\n\n\nggs_diagnostics(SS, proportion=FALSE) %&gt;% filter(Diagnostic==\"Effective\") %&gt;% select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter value\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta     4186."
+    "section": "Diagnostic : autocorrélation et ESS",
+    "text": "Diagnostic : autocorrélation et ESS\n\nggs_autocorrelation(SJ1, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) \n\n\n\n\n\n\n\nggs_diagnostics(SJ1, proportion = FALSE) |&gt; filter(Diagnostic == \"Effective\") |&gt; \n  select(Parameter, Diagnostic, value)\n\n# A tibble: 1 × 3\n  Parameter Diagnostic  value\n  &lt;fct&gt;     &lt;fct&gt;       &lt;dbl&gt;\n1 theta     Effective  12000."
   },
   {
     "objectID": "Bayes.html#diagnostic-précision-pour-lhdi",
     "href": "Bayes.html#diagnostic-précision-pour-lhdi",
     "title": "Statistique Bayésienne",
-    "section": "Diagnostic : précision pour l’HDI",
-    "text": "Diagnostic : précision pour l’HDI\n\nJAGSStan\n\n\nIl faut fusionner les réalisations des 3 chaînes pour ne pas obtenir un diagnostic par chaîne.\n\nraftery.diag(as.mcmc(do.call(rbind, modJ1_sim)))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                             \n       Burn-in  Total Lower bound  Dependence\n       (M)      (N)   (Nmin)       factor (I)\n theta 2        3826  3746         1.02      \n\n\n\n\nIl faut convertir au format coda (As.mcmc.list) puis fusionner les réalisations des 3 chaînes.\n\nraftery.diag(as.mcmc(do.call(rbind, As.mcmc.list(modS_sim))))\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                             \n       Burn-in  Total Lower bound  Dependence\n       (M)      (N)   (Nmin)       factor (I)\n theta 8        9560  3746         2.55      \n lp__  6        7127  3746         1.90"
+    "section": "Diagnostic : précision pour l’HDI",
+    "text": "Diagnostic : précision pour l’HDI\nIl faut fusionner les réalisations des 3 chaînes pour ne pas obtenir un diagnostic par chaîne.\n\ndo.call(rbind, modJ1_sim) |&gt; as.mcmc() |&gt; coda::raftery.diag()\n\n\nQuantile (q) = 0.025\nAccuracy (r) = +/- 0.005\nProbability (s) = 0.95 \n                                             \n       Burn-in  Total Lower bound  Dependence\n       (M)      (N)   (Nmin)       factor (I)\n theta 2        3787  3746         1.01"
   },
   {
     "objectID": "Bayes.html#probabilité-theta-de-guérison-estimations",
@@ -368,28 +368,28 @@
     "href": "Bayes.html#modèle-concept",
     "title": "Statistique Bayésienne",
     "section": "Modèle : concept",
-    "text": "Modèle : concept\n\n\n\n\n\n\n\ny\nt\n\n\n\n\n1\n1 (crème)\n\n\n0\n1 (crème)\n\n\n1\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n1\n1 (crème)\n\n\n…\n…\n\n\n\n\n\nModèle GLM basé sur le lien \\(\\textrm{logit}(P) = \\log\\left(\\frac{P}{1-P}\\right)\\)\n\\(\\color{#ED4F33}{P(y_{i|t}=1|\\beta_0, \\beta_1)} = \\frac{1}{1+\\exp(-\\mu_i)}\\)\n\\(\\mu_i = \\beta_0 + \\beta_1 t_i\\)\na prioris \\(\\color{#F5B12E}{P(\\beta_j)} \\sim \\textrm{norm}(\\mu,\\sigma)\\)\nJAGS paramétrise la loi normale à partir de la précision (inverse de la variance)\nJAGS : fonctions logit et ilogit (loi logistique)"
+    "text": "Modèle : concept\n\n\n\n\n\n\n\ny\nt\n\n\n\n\n1\n1 (crème)\n\n\n0\n1 (crème)\n\n\n1\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n0\n0 (placebo)\n\n\n1\n1 (crème)\n\n\n…\n…\n\n\n\n\n\nModèle GLM basé sur le lien \\(\\textrm{logit}(P) = \\log\\left(\\frac{P}{1-P}\\right)\\)\n\\(\\color{#ED4F33}{P(y_{i|t}=1|\\beta_0, \\beta_1)} = \\frac{1}{1+\\exp(-\\mu_i)}\\)\n\\(\\mu_i = \\beta_0 + \\beta_1 t_i\\)\na prioris \\(\\color{#F5B12E}{P(\\beta_j)} \\sim \\textrm{norm}(\\mu,\\sigma)\\)\nJAGS paramétrise la loi normale à partir de la précision (inverse de la variance), Stan à partir de l’écart-type (comme R)\nJAGS : fonctions logit et ilogit (loi logistique)"
   },
   {
     "objectID": "Bayes.html#modèle",
     "href": "Bayes.html#modèle",
     "title": "Statistique Bayésienne",
     "section": "Modèle",
-    "text": "Modèle\n\nJAGSStan\n\n\n\nmodeleJAGSL &lt;- \n \" \n  model {\n    for (i in 1:nbsuj) {\n      y[i] ~ dbern(mu[i]) \n      mu[i] = ilogit(beta0 + beta1*t[i])\n      # ou : logit(mu[i]) = beta0 + beta1*t[i]\n    }\n    \n    # A prioris\n      beta0 ~ dnorm(0, 1/100^2) \n      beta1 ~ dnorm(0, 1/100^2) \n  }\n\" \n\n\n\n\nmodeleStanL &lt;-\n\"\ndata {\n  int&lt;lower=0&gt; nbsuj;              // nombre de patients\n  int&lt;lower=0, upper=1&gt; y[nbsuj];  // résultats\n  vector[nbsuj] t;                 // traitement\n}\nparameters {\n  real beta0;                      // intercept\n  real beta1;                      // log-OR\n}\nmodel {\n  beta0 ~ normal(0, 100);                 // a priori\n  beta1 ~ normal(0, 100);                 // a priori\n  y ~ bernoulli_logit(beta0 + beta1 * t); // vraisemblance\n}\n\""
+    "text": "Modèle\n\nStanJAGS\n\n\n\nmodeleStanL &lt;-\n\"\ndata {\n  int&lt;lower=0&gt; nb_sujets;                   // nombre de patients\n  array[nb_sujets] int&lt;lower=0, upper=1&gt; y; // résultats\n  vector[nb_sujets] t;                      // traitement (codé 0/1)\n}\nparameters {\n  real beta0;                      // intercept\n  real beta1;                      // log-OR\n}\nmodel {\n  beta0 ~ normal(0, 2.5);                 // a priori\n  beta1 ~ normal(0, 2.5);                 // a priori\n  y ~ bernoulli_logit(beta0 + beta1 * t); // vraisemblance\n}\n\"\n\n\n\n\nmodeleJAGSL &lt;- \n \" \n  model {\n    for (i in 1:nb_sujets) {\n      y[i] ~ dbern(mu[i]) \n      mu[i] = ilogit(beta0 + beta1*t[i])\n      # ou : logit(mu[i]) = beta0 + beta1*t[i]\n    }\n    \n    # A prioris\n      beta0 ~ dnorm(0, 1/100^2) \n      beta1 ~ dnorm(0, 1/100^2) \n  }\n\""
   },
   {
     "objectID": "Bayes.html#résultats",
     "href": "Bayes.html#résultats",
     "title": "Statistique Bayésienne",
     "section": "Résultats",
-    "text": "Résultats\n\nJAGSStan\n\n\n\n\n\nIterations = 2501:12500\nThinning interval = 1 \nNumber of chains = 3 \nSample size per chain = 10000 \n\n1. Empirical mean and standard deviation for each variable,\n   plus standard error of the mean:\n\n         Mean     SD Naive SE Time-series SE\nbeta0 -0.7203 0.1794 0.001036       0.002251\nbeta1  0.4081 0.2536 0.001464       0.003242\n\n2. Quantiles for each variable:\n\n          2.5%     25%     50%     75%   97.5%\nbeta0 -1.07439 -0.8398 -0.7189 -0.5994 -0.3731\nbeta1 -0.09109  0.2384  0.4090  0.5791  0.9091\n\n\n\n\n\n\nInference for Stan model: modeleStanL.\n3 chains, each with iter=11500; warmup=1500; thin=1; \npost-warmup draws per chain=10000, total post-warmup draws=30000.\n\n         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff Rhat\nbeta0   -0.72    0.00 0.18   -1.07   -0.84   -0.72   -0.60   -0.38  9980    1\nbeta1    0.40    0.00 0.25   -0.09    0.23    0.41    0.58    0.90 10100    1\nlp__  -180.11    0.01 0.99 -182.76 -180.49 -179.80 -179.41 -179.14 11447    1\n\nSamples were drawn using NUTS(diag_e) at Tue Feb 27 00:42:06 2024.\nFor each parameter, n_eff is a crude measure of effective sample size,\nand Rhat is the potential scale reduction factor on split chains (at \nconvergence, Rhat=1)."
+    "text": "Résultats\n\nStanJAGS\n\n\n\nmodLS_sim\n\nInference for Stan model: modeleStanL.\n3 chains, each with iter=11500; warmup=1500; thin=1; \npost-warmup draws per chain=10000, total post-warmup draws=30000.\n\n         mean se_mean   sd    2.5%     25%     50%     75%   97.5% n_eff Rhat\nbeta0   -0.71    0.00 0.18   -1.07   -0.83   -0.71   -0.59   -0.37 10636    1\nbeta1    0.40    0.00 0.25   -0.09    0.23    0.40    0.56    0.89 10352    1\nlp__  -180.17    0.01 1.00 -182.87 -180.55 -179.86 -179.45 -179.20 10444    1\n\nSamples were drawn using NUTS(diag_e) at Thu Nov 26 04:11:47 2026.\nFor each parameter, n_eff is a crude measure of effective sample size,\nand Rhat is the potential scale reduction factor on split chains (at \nconvergence, Rhat=1).\n\n\n\n\n\nsummary(modLJ_sim)\n\n\nIterations = 2501:12500\nThinning interval = 1 \nNumber of chains = 3 \nSample size per chain = 10000 \n\n1. Empirical mean and standard deviation for each variable,\n   plus standard error of the mean:\n\n         Mean     SD Naive SE Time-series SE\nbeta0 -0.7225 0.1764 0.001019       0.002119\nbeta1  0.4099 0.2478 0.001430       0.003030\n\n2. Quantiles for each variable:\n\n          2.5%     25%     50%     75%   97.5%\nbeta0 -1.07645 -0.8391 -0.7211 -0.6038 -0.3814\nbeta1 -0.07683  0.2436  0.4098  0.5762  0.9007"
   },
   {
     "objectID": "Bayes.html#grandeurs-dérivées",
     "href": "Bayes.html#grandeurs-dérivées",
     "title": "Statistique Bayésienne",
     "section": "Grandeurs dérivées",
-    "text": "Grandeurs dérivées\nIl est possible d’estimer d’autres grandeurs à partir des simulations :\n\n# Mise en commun des simulations\nmodLJ_csim &lt;- as.mcmc(do.call(rbind, modLJ_sim))\n# probabilité de guérison, placebo\np0 &lt;- 1/(1+exp(-modLJ_csim[,\"beta0\"]))\n# probabilité de guérison, crème\np1 &lt;- 1/(1+exp(-(modLJ_csim[,\"beta0\"]+modLJ_csim[,\"beta1\"])))\n# Probabilité a posteriori que crème&gt;placebo\n(Psup &lt;- mean(p1&gt;p0)) # équivalent à mean(modLJ_csim[,\"beta1\"]&gt;0)\n\n[1] 0.9458\n\n# Absolute Risk Difference\nARD &lt;- p1-p0 ; mean(ARD)\n\n[1] 0.09464863\n\n# RR\nRR &lt;- p1/p0 ; mean(RR)\n\n[1] 1.307047\n\n# OR\nOR &lt;- mean(exp(modLJ_csim[,\"beta1\"])) # équivalent à mean((p1/(1-p1))/(p0/(1-p0)))"
+    "text": "Grandeurs dérivées\nIl est possible d’estimer d’autres grandeurs à partir des simulations :\n\n# Mise en commun des simulations\nmodLJ_csim &lt;- as.mcmc(do.call(rbind, modLJ_sim))\n# probabilité de guérison, placebo\np0 &lt;- 1/(1+exp(-modLJ_csim[,\"beta0\"]))\n# probabilité de guérison, crème\np1 &lt;- 1/(1+exp(-(modLJ_csim[,\"beta0\"]+modLJ_csim[,\"beta1\"])))\n# Probabilité a posteriori que crème&gt;placebo\n(Psup &lt;- mean(p1&gt;p0)) # équivalent à mean(modLJ_csim[,\"beta1\"]&gt;0)\n\n[1] 0.9494667\n\n# Absolute Risk Difference\nARD &lt;- p1-p0 ; mean(ARD)\n\n[1] 0.09504733\n\n# RR\nRR &lt;- p1/p0 ; mean(RR)\n\n[1] 1.307819\n\n# OR\nOR &lt;- mean(exp(modLJ_csim[,\"beta1\"])) # équivalent à mean((p1/(1-p1))/(p0/(1-p0)))"
   },
   {
     "objectID": "Bayes.html#distribution-a-posteriori-1",
@@ -403,14 +403,14 @@
     "href": "Bayes.html#données-1",
     "title": "Statistique Bayésienne",
     "section": "Données",
-    "text": "Données\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n1\nCrème\n11\n25\n\n\n1\nPlacebo\n10\n27\n\n\n2\nCrème\n16\n4\n\n\n2\nPlacebo\n22\n10\n\n\n3\nCrème\n14\n5\n\n\n3\nPlacebo\n7\n12\n\n\n4\nCrème\n2\n14\n\n\n4\nPlacebo\n1\n16\n\n\n\n\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n5\nCrème\n6\n11\n\n\n5\nPlacebo\n0\n12\n\n\n6\nCrème\n1\n10\n\n\n6\nPlacebo\n0\n10\n\n\n7\nCrème\n1\n4\n\n\n7\nPlacebo\n1\n8\n\n\n8\nCrème\n4\n2\n\n\n8\nPlacebo\n6\n1\n\n\n\n\n\n\n\n\n\nsource : Agresti 2002, Categorical Data Analysis"
+    "text": "Données\nElles sont reconstruites à partir de la table, nommée t :\n\nt\n\n  Traitement Succès Échecs Total\n1    Placebo     47     96   143\n2      Crème     55     75   130\n3      Total    102    171   273\n\ndataList &lt;- list(y = c(rep(1, t[1, \"Succès\"]), rep(0, t[1, \"Échecs\"]),  # 1 = Placebo\n                       rep(1, t[2, \"Succès\"]), rep(0, t[2, \"Échecs\"])), # 2 = Crème\n                 t = c(rep(0, t[1, \"Total\"]),  rep(1, t[2,\"Total\"])),\n                 nb_sujets = as.numeric(t[3, \"Total\"]))"
   },
   {
     "objectID": "Bayes.html#format-des-données-pour-lanalyse",
     "href": "Bayes.html#format-des-données-pour-lanalyse",
     "title": "Statistique Bayésienne",
     "section": "Format des données pour l’analyse",
-    "text": "Format des données pour l’analyse\n\n\n\n\n\n\n\nc\nt\ny\n\n\n\n\n1\n0\n0\n\n\n1\n1\n0\n\n\n8\n0\n1\n\n\n3\n0\n0\n\n\n7\n1\n0\n\n\n2\n0\n0\n\n\n2\n0\n0\n\n\n4\n1\n0\n\n\n\n\n\n\n\nc\n\nIdentifiant du centre (de 1 à 8)\n\nt\n\nIdentifiant du traitement (0 : placebo, 1 : crème)\n\ny\n\nidentifiant de la guérison (0 : non, 1 : oui)"
+    "text": "Format des données pour l’analyse\n\n\n\n\n\n\n\nc\nt\ny\n\n\n\n\n5\n0\n0\n\n\n1\n1\n0\n\n\n1\n1\n0\n\n\n4\n0\n0\n\n\n1\n1\n1\n\n\n1\n1\n0\n\n\n2\n0\n1\n\n\n8\n0\n1\n\n\n\n\n\n\n\nc\n\nIdentifiant du centre (de 1 à 8)\n\nt\n\nIdentifiant du traitement (0 : placebo, 1 : crème)\n\ny\n\nidentifiant de la guérison (0 : non, 1 : oui)"
   },
   {
     "objectID": "Bayes.html#stratégies-danalyse",
@@ -424,7 +424,7 @@
     "href": "Bayes.html#code",
     "title": "Statistique Bayésienne",
     "section": "Code",
-    "text": "Code\n\nJAGSStan\n\n\n\nmodeleHLJ &lt;- \" \n  model {\n    for (i in 1:nbsuj) {                                 # N patients\n      y[i] ~ dbern(theta[i])                             # Vraisemblance, selon un ...\n      theta[i] = ilogit(beta0[c[i]] + beta1[c[i]]*t[i])  # modèle logistique, coefficents aléatoires \n    }\n    for (j in 1:nbcentres) {        # N centres   \n      beta0[j] ~ dnorm(mu0,prec0)   # A prioris pour beta0 (autant qu'il y a de centres)\n      beta1[j] ~ dnorm(mu1,prec1)   # A prioris pour beta1 (autant qu'il y a de centres)\n    }\n    mu0 ~ dnorm(0, 1/100^2)      # a prioris pour les hyper-paramètres\n    mu1 ~ dnorm(0, 1/100^2)\n    prec0 ~ dgamma(0.001,0.001) \n    prec1 ~ dgamma(0.001,0.001) \n    sig0 = sqrt(1/prec0)         # calcul de l'écart-type à partir de la précision\n    sig1 = sqrt(1/prec1)\n  } \" \n\n\n\nStan adpaté aux modèles complexes, mais avec syntaxe peu intuitive. Manuel de Stan sur ce type de modèle : https://mc-stan.org/docs/stan-users-guide/hierarchical-logistic-regression.html\nPackages pour générer du code Stan avec une syntaxe similaire à R :\n\nrstanarm : modèles précompilés (gain de temps)\nbrms : pas de précompilation, ce qui permet plus de flexibilité"
+    "text": "Code\n\nStanJAGS\n\n\n\nmodeleHLS &lt;- \" \ndata {\n  int&lt;lower=1&gt; nb_sujets;                            // nombre de patients\n  int&lt;lower=1&gt; nb_centres;                           // nombre de centres\n  array[nb_sujets] int&lt;lower=0, upper=1&gt; y;          // résultat\n  vector[nb_sujets] t;                               // traitement codé 0/1\n  array[nb_sujets] int&lt;lower=1, upper=nb_centres&gt; c; // centre\n}\n\nparameters {\n  real mu0;                               // intercept moyen\n  real mu1;                               // pente moyenne\n  real&lt;lower=0&gt; sigma0;                   // écart-type entre centres, intercept\n  real&lt;lower=0&gt; sigma1;                   // écart-type entre centres, pente\n  vector[nb_centres] z0;\n  vector[nb_centres] z1;\n}\n\ntransformed parameters {\n  vector[nb_centres] beta0 = mu0 + sigma0 * z0;    // intercept propre à chaque centre\n  vector[nb_centres] beta1 = mu1 + sigma1 * z1;    // pente propre à chaque centre\n}\n\nmodel {\n  mu0 ~ normal(0, 2.5);\n  mu1 ~ normal(0, 2.5);\n  sigma0 ~ normal(0, 1);\n  sigma1 ~ normal(0, 1);\n  z0 ~ std_normal();\n  z1 ~ std_normal();\n  // Vraisemblance\n  for (i in 1:nb_sujets) {\n    y[i] ~ bernoulli_logit(beta0[c[i]] + beta1[c[i]] * t[i]);\n  }\n}\n\" \n\n\n\n\nmodeleHLJ &lt;- \" \n  model {\n    for (i in 1:nb_sujets) {                             # N patients\n      y[i] ~ dbern(theta[i])                             # Vraisemblance, selon un ...\n      theta[i] = ilogit(beta0[c[i]] + beta1[c[i]]*t[i])  # modèle logistique, coefficents aléatoires \n    }\n    for (j in 1:nb_centres) {       # N centres   \n      beta0[j] ~ dnorm(mu0,prec0)   # A prioris pour beta0 (autant qu'il y a de centres)\n      beta1[j] ~ dnorm(mu1,prec1)   # A prioris pour beta1 (autant qu'il y a de centres)\n    }\n    mu0 ~ dnorm(0, 1/100^2)      # a prioris pour les hyper-paramètres\n    mu1 ~ dnorm(0, 1/100^2)\n    prec0 ~ dgamma(0.001,0.001) \n    prec1 ~ dgamma(0.001,0.001) \n    sig0 = sqrt(1/prec0)         # calcul de l'écart-type à partir de la précision\n    sig1 = sqrt(1/prec1)\n  } \""
   },
   {
     "objectID": "Bayes.html#résultats-1",
@@ -459,7 +459,7 @@
     "href": "Bayes.html#comparaison-de-modèles-dic",
     "title": "Statistique Bayésienne",
     "section": "Comparaison de modèles : DIC",
-    "text": "Comparaison de modèles : DIC\n\n# Modèle sans effet centre\n(dic0 &lt;- dic.samples(modLJ,n.iter = 10000))\n\nMean deviance:  360.2 \npenalty 1.973 \nPenalized deviance: 362.2 \n\n# Modèle avec effet centre (hiérarchique)\n(dic1 &lt;- dic.samples(modLHF,n.iter = 10000))\n\nMean deviance:  285.1 \npenalty 9.628 \nPenalized deviance: 294.8 \n\n# Différences\ndiffdic(dic0, dic1)\n\nDifference: 67.43693\nSample standard error: 18.65602"
+    "text": "Comparaison de modèles : DIC\n\n# Modèle sans effet centre\n(dic0 &lt;- dic.samples(modLJ,n.iter = 10000))\n\nMean deviance: 360.3\npenalty: 2.001\nPenalized deviance: 362.3\n\n# Modèle avec effet centre (hiérarchique)\n(dic1 &lt;- dic.samples(modLHF,n.iter = 10000))\n\nMean deviance: 285.1\npenalty: 9.554\nPenalized deviance: 294.7\n\n# Différences\ndiffdic(dic0, dic1)\n\nDifference: 67.60209\nSample standard error: 18.60475"
   },
   {
     "objectID": "Bayes.html#approche-fréquentiste-p-value",
@@ -473,7 +473,7 @@
     "href": "Bayes.html#le-test-dhyptothèse-de-neyman-pearson",
     "title": "Statistique Bayésienne",
     "section": "Le test d’hyptothèse de Neyman-Pearson",
-    "text": "Le test d’hyptothèse de Neyman-Pearson\n\n\n\n\n\n\n\n\nRésultat de l’expérience\nLa vérité\n\n\n\\(H_0\\) est vraie\n\\(H_0\\) est fausse\n\n\n\n\nRejet de \\(H_0\\)\nErreur de type I (\\(\\alpha\\))\nPuissance (\\(1-\\beta\\))\n\n\nConservation de \\(H_0\\)\n\nErreur de type II (\\(\\beta\\))\n\n\n\n\nApproche décisionnelle, avec \\(\\alpha\\) et \\(\\beta\\) fixés à l’avance\nConçu pour la standardisation industrielle et le contrôle qualité"
+    "text": "Le test d’hyptothèse de Neyman-Pearson\n\n\n\n\n\n\n\n\n\nRésultat de l’expérience\nLa vérité\n\n\n\n\nRejet de \\(H_0\\)\nErreur de type I (\\(\\alpha\\))\nPuissance (\\(1-\\beta\\))\n\n\nConservation de \\(H_0\\)\n\nErreur de type II (\\(\\beta\\))\n\n\n\n\nApproche décisionnelle, avec \\(\\alpha\\) et \\(\\beta\\) fixés à l’avance\nConçu pour la standardisation industrielle et le contrôle qualité"
   },
   {
     "objectID": "Bayes.html#probabilité-de-préférer-le-traitement-a",
@@ -550,7 +550,7 @@
     "href": "Bayes.html#le-test-dhypothèse-comme-rituel",
     "title": "Statistique Bayésienne",
     "section": "Le test d’hypothèse comme rituel",
-    "text": "Le test d’hypothèse comme rituel\n“Null ritual” : mélange des idées de Fisher et Neyman-Pearson :\n\nDéfinir une \\(H_0\\) d’absence de différence, sans préciser les prédictions de l’hypothèse de recherche ou une hypothèse alternative substantive\nUtiliser 5 % comme seuil de rejet de \\(H_0\\).\nToujours utiliser cette procédure.\n\n\n\nElements of social rituals include (a) the repetition of the same action, (b) a focus on special numbers or colors, (c) fears about serious sanctions for rule violations, and (d) wishful thinking and delusions that virtually eliminate critical thinking (Gigerenzer et al. 2004)"
+    "text": "Le test d’hypothèse comme rituel\n“Null ritual” : mélange des idées de Fisher et Neyman-Pearson :\n\nDéfinir une \\(H_0\\) d’absence de différence, sans préciser les prédictions de l’hypothèse de recherche ou une hypothèse alternative substantive\nUtiliser 5 % comme seuil de rejet de \\(H_0\\).\nToujours utiliser cette procédure.\n\n\n\nElements of social rituals include (a) therepetition of the same action, (b) a focus on special numbers or colors, (c) fears about serious sanctions for rule violations, and (d) wishful thinking and delusions that virtually eliminate critical thinking (Gigerenzer et al. 2004)"
   },
   {
     "objectID": "Bayes.html#les-problèmes-avec-la-p-value",
@@ -577,8 +577,8 @@
     "objectID": "Bayes.html#pourquoi-la-statistique-bayésienne",
     "href": "Bayes.html#pourquoi-la-statistique-bayésienne",
     "title": "Statistique Bayésienne",
-    "section": "Pourquoi la statistique Bayésienne ?",
-    "text": "Pourquoi la statistique Bayésienne ?\n\n\n\nIntuitif\nFlexible\nRépond aux bonnes questions (e.g. \\(P(H_0)\\))\n\\(\\theta\\) complexe\n\\(n\\) petit\nsparse data bias\nEfficient (et donc éthique) si information a priori existante\n\n\n\nContrôle des faux positifs\nModélisation et intégration des biais\nGestion d’outliers par modèles robustes\nGestion de la multiplicité ou de l’arrêt optionnel\nGestion des prédicteurs multiples\nApproche intégrée"
+    "section": "Pourquoi la statistique Bayésienne ?",
+    "text": "Pourquoi la statistique Bayésienne ?\n\n\n\nIntuitif\nFlexible\nRépond aux bonnes questions (e.g. \\(P(H_0)\\))\n\\(\\theta\\) complexe\n\\(n\\) petit\nsparse data bias\nEfficient (et donc éthique) si information a priori existante\n\n\n\nContrôle des faux positifs\nModélisation et intégration des biais\nGestion d’outliers par modèles robustes\nGestion de la multiplicité ou de l’arrêt optionnel\nGestion des prédicteurs multiples\nApproche intégrée"
   },
   {
     "objectID": "Bayes.html#une-popularité-croissante",
@@ -599,6 +599,349 @@
     "href": "Bayes.html#section",
     "title": "Statistique Bayésienne",
     "section": "",
-    "text": "Bayesian statistics is difficult in the sense\n\n\nthat thinking is difficult.\n\n\n\n\n\n\n\n\n\nDonald A. Berry\n‘Teaching Elementary Bayesian Statistics with Real Applications in Science’"
+    "text": "Bayesian statistics is difficult in the sense\n\n\nthat thinking is difficult.\n\n\n\n\n\nDonald A. Berry\n‘Teaching Elementary Bayesian Statistics with Real Applications in Science’"
+  },
+  {
+    "objectID": "Bayes.html#approximation-par-grille-dans-r",
+    "href": "Bayes.html#approximation-par-grille-dans-r",
+    "title": "Statistique Bayésienne",
+    "section": "Approximation par grille dans R",
+    "text": "Approximation par grille dans R\n\ngrille &lt;- data.frame(theta=seq(0, 1, by = 0.1))\ngrille$P_theta &lt;- 1/nrow(grille)\ngrille$P_D_sachant_theta &lt;- dbinom(x = 7, size = 10, prob = grille$theta)\ngrille$C_foisB &lt;- with(grille, P_D_sachant_theta*P_theta)\nP_D &lt;- sum(grille$C_foisB)\ngrille$P_theta_sachant_D &lt;- with(grille, P_D_sachant_theta*P_theta/P_D)\nE_P_theta_sachant_D &lt;- sum(with(grille, theta*P_theta_sachant_D))\ngrille\n\n   theta    P_theta P_D_sachant_theta      C_foisB P_theta_sachant_D\n1    0.0 0.09090909       0.000000000 0.000000e+00      0.000000e+00\n2    0.1 0.09090909       0.000008748 7.952727e-07      9.613264e-06\n3    0.2 0.09090909       0.000786432 7.149382e-05      8.642179e-04\n4    0.3 0.09090909       0.009001692 8.183356e-04      9.892049e-03\n5    0.4 0.09090909       0.042467328 3.860666e-03      4.666777e-02\n6    0.5 0.09090909       0.117187500 1.065341e-02      1.287785e-01\n7    0.6 0.09090909       0.214990848 1.954462e-02      2.362556e-01\n8    0.7 0.09090909       0.266827932 2.425708e-02      2.932199e-01\n9    0.8 0.09090909       0.201326592 1.830242e-02      2.212398e-01\n10   0.9 0.09090909       0.057395628 5.217784e-03      6.307262e-02\n11   1.0 0.09090909       0.000000000 0.000000e+00      0.000000e+00\n\nP_D\n\n[1] 0.08272661\n\nE_P_theta_sachant_D\n\n[1] 0.6669622"
+  },
+  {
+    "objectID": "Bayes.html#programation-dans-r-1",
+    "href": "Bayes.html#programation-dans-r-1",
+    "title": "Statistique Bayésienne",
+    "section": "Programation dans R (1)",
+    "text": "Programation dans R (1)\n\n# Programmation de g\ng &lt;- function(theta) {\n      theta^7*(1-theta)^3*(theta &gt;= 0 & theta &lt;= 1)\n}"
+  },
+  {
+    "objectID": "Bayes.html#programation-dans-r-2",
+    "href": "Bayes.html#programation-dans-r-2",
+    "title": "Statistique Bayésienne",
+    "section": "Programation dans R (2)",
+    "text": "Programation dans R (2)\n\n# Algorithme de Metropolis-Hastings\nmh &lt;- function(nIter, thetaInit, candSD) {\n  # Initialisation\n  thetaOut &lt;- numeric(nIter) ; accept &lt;- 0 \n  thetaActuel &lt;- thetaInit ; gActuel &lt;- g(thetaActuel)\n  # Itérations\n  for (i in 1:nIter) {\n    thetaCand &lt;- rnorm(n = 1, mean = thetaActuel, sd = candSD) # Tirer 1 candidat\n    gCand &lt;- g(theta = thetaCand) # Evaluer g avec le candidat\n    ratio &lt;- gCand/gActuel # Ratio\n    u &lt;- runif(n = 1) # u sera inf à ratio avec probabilité = ratio\n    if (u &lt; ratio){ # alors candidat accepté\n      thetaActuel &lt;- thetaCand ; gActuel &lt;- gCand\n      accept &lt;- accept + 1 # compte le nombre de candidats acceptés\n      }\n    # Collecter les résultats\n    thetaOut[i] &lt;- thetaActuel\n    }\n  list(theta = thetaOut, accept = accept/nIter)\n}"
+  },
+  {
+    "objectID": "Bayes.html#logiciels-dinférence-bayésienne-dans-r",
+    "href": "Bayes.html#logiciels-dinférence-bayésienne-dans-r",
+    "title": "Statistique Bayésienne",
+    "section": "Logiciels d’inférence Bayésienne dans R",
+    "text": "Logiciels d’inférence Bayésienne dans R\n\nBUGS : Bayesian inference Using Gibbs Sampling\n\nWinBUGS (R2WinBUGS), OpenBUGS (BRugs, R2OpenBUGS), MultiBUGS (R2MultiBUGS en cours de développement)\n\nExtensions de BUGS :\n\nJAGS : Just Another Gibbs Sampler (rjags / R2jags, runjags)\nNIMBLE : intégré à R, plusieurs algorithmes d’estimation possibles\n\nStan (nommé en référence à Stanislaw Ulam) (rstan, cmdstanr rstanarm, brms), basé essentiellement sur du Hamiltonian Monte Carlo (HMC)\nINLA : Integrated Nested Laplace Approximation, alternative plus rapide au MCMC pour une large famille de modèles"
+  },
+  {
+    "objectID": "Bayes.html#estimation-fréquentiste",
+    "href": "Bayes.html#estimation-fréquentiste",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation fréquentiste",
+    "text": "Estimation fréquentiste\nOn peut estimer à partir des données \\(y\\) la proportion de succès et son intervalle de confiance à 95 % :\n\ny &lt;- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès\nnb_succes &lt;- sum(y)\nnb_sujets &lt;- length(y)\n\nDescTools::BinomCI(x = nb_succes, n = nb_sujets, method = \"wilson\")\n\n     est    lwr.ci    upr.ci\n[1,] 0.7 0.3967781 0.8922087\n\n\n\n\nOn a estimé ici l’IC par la méthode de Wilson, qui a une meilleure couverture que d’autres."
+  },
+  {
+    "objectID": "Bayes.html#rappel",
+    "href": "Bayes.html#rappel",
+    "title": "Statistique Bayésienne",
+    "section": "Rappel",
+    "text": "Rappel\nComme en statistique fréquentiste, nous voulons apprendre sur \\(\\theta\\) à partir des données observées \\(y\\).\nMais nous allons employer le théorème de Bayes :\n\\[\n\\begin{aligned}\n{\\color{#2E2963}{\\underbrace{P(\\theta \\mid y)}_{\\textrm{a posteriori}}}}\n&=\n\\frac{\n{\\color{#ED4F33}{\\underbrace{P(y \\mid \\theta)}_{\\textrm{vraisemblance}}}}\n\\,\n{\\color{#F5B12E}{\\underbrace{P(\\theta)}_{\\textrm{a priori}}}}\n}{\n{\\color{#ADD2D8}{\\underbrace{P(y)}_{\\textrm{données}}}}\n}\n\\end{aligned}\n\\] Ce qui implique de définir des distributions a priori pour \\(\\theta\\)."
+  },
+  {
+    "objectID": "Bayes.html#estimation-conjuguée-de-θ",
+    "href": "Bayes.html#estimation-conjuguée-de-θ",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation conjuguée de θ",
+    "text": "Estimation conjuguée de θ\n\n\n\n\n\n\\(n=10\\) patients, \\(k=7\\) guéris\nPour chaque patient \\(i\\), la guérison suit une loi de Bernoulli : \\(\\color{#ED4F33}{P(y_i=1|\\theta)} = \\theta^{y_i} (1-\\theta)^{1-y_i}\\)\nA priori \\(\\color{#F5B12E}{P(\\theta)} \\sim \\textrm{beta}(a,b)\\)"
+  },
+  {
+    "objectID": "Bayes.html#les-données",
+    "href": "Bayes.html#les-données",
+    "title": "Statistique Bayésienne",
+    "section": "Les données",
+    "text": "Les données\nLes données sont fournies à JAGS sous forme de liste.\n\ny &lt;- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès\nn &lt;- length(y)\n\ndonnees &lt;- list(y = y,\n                nb_sujets = n)"
+  },
+  {
+    "objectID": "Bayes.html#le-modèle",
+    "href": "Bayes.html#le-modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Le modèle",
+    "text": "Le modèle\ndata {\n  int&lt;lower=0&gt; nb_sujets;                   // nombre de patients\n  array[nb_sujets] int&lt;lower=0, upper=1&gt; y; // résultats\n}\n\nparameters {\n  real&lt;lower=0, upper=1&gt; theta;   // chances de guérison\n}\n\nmodel {\n  theta ~ beta(1, 1);             // a priori\n  y ~ bernoulli(theta);           // vraisemblance\n}\n\nAjouter une ligne vide en fin de ficher permet d’éviter des messages tels que “incomplete final line found”.\nLes modèles ont l’extension *.stan. Comme pour JAGS, ils peuvent aussi être créés directement dans R sous forme de chaîne de caractères."
+  },
+  {
+    "objectID": "Bayes.html#le-modèle-bernoulli",
+    "href": "Bayes.html#le-modèle-bernoulli",
+    "title": "Statistique Bayésienne",
+    "section": "Le modèle (Bernoulli)",
+    "text": "Le modèle (Bernoulli)\nLa syntaxe est proche de celle de R, mais pas identique :\nmodel {\n  for (i in 1:nb_sujets) {\n    y[i] ~ dbern(theta) # vraisemblance (Bernoulli)\n  }\n  theta ~ dbeta(1, 1)   # a priori (uniforme)\n}\n\nLes modèles peuvent être conservés dans des fichiers à part (pas d’extension particulière recommandée) ou créés directement dans R sous forme de chaîne de caractères :\n\nmodeleJAGS1 &lt;- \n\"                           \n model {\n  for (i in 1:nb_sujets) {      \n   y[i] ~ dbern(theta)      \n  }                         \n  theta ~ dbeta(1, 1)       \n }\n\""
+  },
+  {
+    "objectID": "Bayes.html#le-modèle-binomial",
+    "href": "Bayes.html#le-modèle-binomial",
+    "title": "Statistique Bayésienne",
+    "section": "Le modèle (Binomial)",
+    "text": "Le modèle (Binomial)\nUne formulation équivalente du modèle :\n\nmodeleJAGS2 &lt;- \n\"             \n data {\n  nbgueri &lt;- sum(y)                  # Nombre de guérisons\n }\n \n model {\n  nbgueri ~ dbinom(theta, nb_sujets) # Vraisemblance (binomiale)\n  theta ~ dbeta(1, 1)                # a priori\n } \n\""
+  },
+  {
+    "objectID": "Bayes.html#valeurs-initiales",
+    "href": "Bayes.html#valeurs-initiales",
+    "title": "Statistique Bayésienne",
+    "section": "Valeurs initiales",
+    "text": "Valeurs initiales\nRecommandé avec JAGS pour :\n\nvérifier la convergence en partant de valeurs différentes de \\(\\theta_0\\) ou\nles modèles complexes (meilleures performances en partant d’une valeur à haute probabilité a posteriori)\n\n\nLes valeurs initiales sont fournies sous forme de liste :\n\ninits &lt;- function() {\n  resampleY &lt;- sample(y , replace=TRUE)      # Rééchantillonage des y\n  theta0 &lt;- sum(resampleY)/length(resampleY) # EMV\n  theta0 &lt;- 0.001 + 0.998*theta0             # Eviter des valeurs de 0 ou 1\n  return(list(theta=theta0))\n}\nunlist(replicate(5, inits()))                # Exemple : 5 tirages de inits()\n\n theta  theta  theta  theta  theta \n0.8992 0.5000 0.7994 0.3004 0.5000"
+  },
+  {
+    "objectID": "Bayes.html#initialisation-du-modèle",
+    "href": "Bayes.html#initialisation-du-modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Initialisation du modèle",
+    "text": "Initialisation du modèle\n\n## Initialisation du modèle\nmodJ1 &lt;- jags.model(file = \"models/modele_JAGS_Bernoulli.jags\", # Modèle\n                    data = donnees,                   # Données\n                    inits = inits,                    # valeurs initiales (optionnel)\n                    n.chains = 3)                     # Nombre de chaînes\n\nCompiling model graph\n   Resolving undeclared variables\n   Allocating nodes\nGraph information:\n   Fully observed stochastic nodes: 10\n   Unobserved stochastic nodes: 1\n   Total graph size: 13\n\nInitializing model\n\n\nÀ partir de l’objet R :\nmodJ1 &lt;- jags.model(file = textConnection(modeleJAGS1), # Modèle\n                    data = donnees,                     # Données\n                    inits = inits,                      # valeurs initiales (optionnel)\n                    n.chains = 3)                       # Nombre de chaînes"
+  },
+  {
+    "objectID": "Bayes.html#choix-de-linterface",
+    "href": "Bayes.html#choix-de-linterface",
+    "title": "Statistique Bayésienne",
+    "section": "Choix de l’interface",
+    "text": "Choix de l’interface\nIl faut avoir installé JAGS au préalable.\nOn va employer rjags comme interface entre JAGS et R :\n\nlibrary(\"rjags\") \n\nLinked to JAGS 5.0.2\n\n\nLoaded modules: basemod,bugs,diag\n\n\n\nAttachement du package : 'rjags'\n\n\nL'objet suivant est masqué depuis 'package:dplyr':\n\n    collapse"
+  },
+  {
+    "objectID": "Bayes.html#burn-in",
+    "href": "Bayes.html#burn-in",
+    "title": "Statistique Bayésienne",
+    "section": "Burn-in",
+    "text": "Burn-in\nDans l’estimation MCMC, les premiers échantillons (“warmup” / “burn-in”) sont tirés avant convergence vers la distribution a posteriori.\n\n## Burn-in\nupdate(modJ1, n.iter = 500) # 500 itérations de burn-in"
+  },
+  {
+    "objectID": "Bayes.html#simulations-de-la-posteriori",
+    "href": "Bayes.html#simulations-de-la-posteriori",
+    "title": "Statistique Bayésienne",
+    "section": "Simulations de l’a posteriori",
+    "text": "Simulations de l’a posteriori\nUne fois le burn-in effectué, on échantillonne l’a posteriori à partir de la fonction coda.samples(), ou jags.samples().\n\nmodJ1_sim &lt;- coda.samples(model = modJ1,               # modèle compilé\n                          variable.names = c(\"theta\"), # variables à conserver, sous forme de vecteur\n                          n.iter = 4000)               # nombre d'itérations par chaîne\n\n\n\ncoda.samples() renvoie les simulations dans le format employé par le package coda."
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-convergence",
+    "href": "Bayes.html#diagnostic-convergence",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : convergence",
+    "text": "Diagnostic : convergence\nOn s’intéresse à \\(\\hat{R}\\) :\n\nggs_diagnostics(SJ1, version_rhat = \"BG98\") |&gt; # Version de Brooks & Gelman utilisée dans coda\n  dplyr::filter(Diagnostic == \"Rhat\") |&gt; dplyr::select(Parameter, value)\n\n# A tibble: 1 × 2\n  Parameter value\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta     1.000\n\ncoda::gelman.diag(modJ1_sim)\n\nPotential scale reduction factors:\n\n      Point est. Upper C.I.\ntheta          1          1"
+  },
+  {
+    "objectID": "Bayes.html#extraction-des-résultats-avec-tidybayes",
+    "href": "Bayes.html#extraction-des-résultats-avec-tidybayes",
+    "title": "Statistique Bayésienne",
+    "section": "Extraction des résultats avec tidybayes",
+    "text": "Extraction des résultats avec tidybayes\nLe package tidybayes facilite la manipulation des résultats :\n\ntidybayes::tidy_draws(modJ1_sim)\n\n# A tibble: 12,000 × 4\n   .chain .iteration .draw theta\n    &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;dbl&gt;\n 1      1          1     1 0.524\n 2      1          2     2 0.694\n 3      1          3     3 0.661\n 4      1          4     4 0.585\n 5      1          5     5 0.787\n 6      1          6     6 0.677\n 7      1          7     7 0.819\n 8      1          8     8 0.608\n 9      1          9     9 0.498\n10      1         10    10 0.845\n# ℹ 11,990 more rows\n\ntidybayes::tidy_draws(modJ1_sim) |&gt; dplyr::pull(theta) |&gt; mean()\n\n[1] 0.668389"
+  },
+  {
+    "objectID": "Bayes.html#estimation-de-θ",
+    "href": "Bayes.html#estimation-de-θ",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation de θ",
+    "text": "Estimation de θ\n\nsummary(modJ1_sim)\n\n\nIterations = 501:4500\nThinning interval = 1 \nNumber of chains = 3 \nSample size per chain = 4000 \n\n1. Empirical mean and standard deviation for each variable,\n   plus standard error of the mean:\n\n          Mean             SD       Naive SE Time-series SE \n      0.668389       0.129858       0.001185       0.001175 \n\n2. Quantiles for each variable:\n\n  2.5%    25%    50%    75%  97.5% \n0.3966 0.5807 0.6769 0.7656 0.8893"
+  },
+  {
+    "objectID": "Bayes.html#hdi-de-θ",
+    "href": "Bayes.html#hdi-de-θ",
+    "title": "Statistique Bayésienne",
+    "section": "HDI de θ",
+    "text": "HDI de θ\n\ndo.call(rbind, modJ1_sim) |&gt; coda::as.mcmc() |&gt; coda::HPDinterval()\n\n          lower     upper\ntheta 0.4164113 0.9027968\nattr(,\"Probability\")\n[1] 0.95"
+  },
+  {
+    "objectID": "Bayes.html#avec-tidybayes",
+    "href": "Bayes.html#avec-tidybayes",
+    "title": "Statistique Bayésienne",
+    "section": "Avec tidybayes",
+    "text": "Avec tidybayes\n\ntidybayes::tidy_draws(modJ1_sim) |&gt; tidybayes::mean_qi(theta)  # ETI\n\n# A tibble: 1 × 6\n  theta .lower .upper .width .point .interval\n  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    \n1 0.668  0.397  0.889   0.95 mean   qi       \n\ntidybayes::tidy_draws(modJ1_sim) |&gt; tidybayes::mean_hdi(theta) # HDI\n\n# A tibble: 1 × 6\n  theta .lower .upper .width .point .interval\n  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    \n1 0.668  0.416  0.903   0.95 mean   hdi"
+  },
+  {
+    "objectID": "Bayes.html#visualisation-ggplot2",
+    "href": "Bayes.html#visualisation-ggplot2",
+    "title": "Statistique Bayésienne",
+    "section": "Visualisation (ggplot2)",
+    "text": "Visualisation (ggplot2)\nElle est possible avec les outils ggplot2 :\n\ntidybayes::tidy_draws(modJ1_sim) |&gt; ggplot() +\n  geom_histogram(aes(x = theta, y = after_stat(density)),\n                 fill = \"steelblue\", col = \"white\", bins = 40)"
+  },
+  {
+    "objectID": "Bayes.html#visualisation-tidybayes",
+    "href": "Bayes.html#visualisation-tidybayes",
+    "title": "Statistique Bayésienne",
+    "section": "Visualisation (tidybayes)",
+    "text": "Visualisation (tidybayes)\ntidybayes importe le package ggdist spécialisé dans les distributions :\n\ntidybayes::tidy_draws(modJ1_sim) |&gt; ggplot() + aes(x = theta) +\n  tidybayes::stat_histinterval(point_interval = tidybayes::mean_hdi,\n                               .width = 0.95, \n                               fill = \"steelblue\",\n                               slab_color = \"white\",\n                               breaks = 40, \n                               outline_bars = TRUE,\n                               slab_size = 0.25)"
+  },
+  {
+    "objectID": "Bayes.html#visualisation-tidybayes-output",
+    "href": "Bayes.html#visualisation-tidybayes-output",
+    "title": "Statistique Bayésienne",
+    "section": "Visualisation (tidybayes)",
+    "text": "Visualisation (tidybayes)"
+  },
+  {
+    "objectID": "Bayes.html#comparaison-à-la-distribution-théorique",
+    "href": "Bayes.html#comparaison-à-la-distribution-théorique",
+    "title": "Statistique Bayésienne",
+    "section": "Comparaison à la distribution théorique",
+    "text": "Comparaison à la distribution théorique"
+  },
+  {
+    "objectID": "Bayes.html#modèles-stan",
+    "href": "Bayes.html#modèles-stan",
+    "title": "Statistique Bayésienne",
+    "section": "Modèles Stan",
+    "text": "Modèles Stan\nStan, comme JAGS, emploie des blocs de code:\n\n(optionnel) functions : fonctions définies par l’utilisateur·rice\ndata : les données, pré-spécifiées et fixes\n(optionnel) transformed data : permet de transformer les variables issues des données\nparameters : les paramètres inconnus que Stan va devoir échantillonner ; demandent des a prioris explicites\n(optionnel) transformed parameters : valeurs dépendant des paramètres requises pour les calculs de vraisemblance\nmodel : Le modèle, sous form d’a priori et de vraisemblance\n(optionnel) generated quantities : permet de calculer des quantités qu’on voudrait voir apparaître dans les résultats"
+  },
+  {
+    "objectID": "Bayes.html#choix-de-linterface-1",
+    "href": "Bayes.html#choix-de-linterface-1",
+    "title": "Statistique Bayésienne",
+    "section": "Choix de l’interface",
+    "text": "Choix de l’interface\nPour utiliser Stan dans R, il existe plusieurs packages :\n\nFaisant appel à Stan directement :\n\nrstan peut être installé depuis le CRAN, la version de Stan résultante sera moins à jour\ncmdstanr est une interface légère à Stan, mais non disponible sur le CRAN\n\nServant d’interface à Stan (permet de définir les modèles en langage R) : rstanarm, brms, …"
+  },
+  {
+    "objectID": "Bayes.html#charger-stan",
+    "href": "Bayes.html#charger-stan",
+    "title": "Statistique Bayésienne",
+    "section": "Charger Stan",
+    "text": "Charger Stan\nLes modèles Stan sont compilés en C++, ce qui peut prendre du temps.\nLa commande rstan_options(auto_write = TRUE) sauvegarde les modèles compilés sur le disque dur, permettant le plus souvent d’éviter une recompilation à chaque nouvel usage du modèle (possiblement avec d’autres données).\nLa commande options(mc.cores = parallel::detectCores()) permet d’employer plusieurs noyaux du processeur pour faire tourner en parallèle plusieurs chaines MCMC.\n\nlibrary(rstan)\n\nrstan_options(auto_write = TRUE)\noptions(mc.cores = parallel::detectCores())\n# Pour plus de contrôle :\n# options(mc.cores = min(4, parallel::detectCores()))"
+  },
+  {
+    "objectID": "Bayes.html#compiler-le-modèle",
+    "href": "Bayes.html#compiler-le-modèle",
+    "title": "Statistique Bayésienne",
+    "section": "Compiler le modèle",
+    "text": "Compiler le modèle\nstan_model() traduit le modèle Stan en C++ puis compile le code C++ et le charge.\n\n## Compile le modèle en C++ puis crée un dynamic shared object (DSO)\nmodS &lt;- stan_model(file = \"models/modele_Stan.stan\", model_name = \"probabilité binomiale\")\n# Si le modèle était un objet R de type chaîne de caractères :\n# modS &lt;- stan_model(model_code = modeleStan, model_name = \"probabilité binomiale\")\n\nAvec Stan, il est possible de définir le burn-in (nommé warmup) directement à l’étape suivante."
+  },
+  {
+    "objectID": "Bayes.html#les-données-1",
+    "href": "Bayes.html#les-données-1",
+    "title": "Statistique Bayésienne",
+    "section": "Les données",
+    "text": "Les données\nLes données sont fournies à Stan sous forme de liste.\n\ny &lt;- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès\nn &lt;- length(y)\n\ndonnees &lt;- list(y = y,\n                nb_sujets = n)"
+  },
+  {
+    "objectID": "Bayes.html#simulations-de-la-posteriori-1",
+    "href": "Bayes.html#simulations-de-la-posteriori-1",
+    "title": "Statistique Bayésienne",
+    "section": "Simulations de l’a posteriori",
+    "text": "Simulations de l’a posteriori\nOn échantillonne l’a posteriori à partir de la fonction sampling, en définissant le burn-in.\n\nmodS_sim &lt;- sampling(object = modS,  # DSO compilé\n                     data = donnees, # données\n                     chains = 3,     # nombre de chaînes (4 par défaut)\n                     iter = 4500,    # nombre total de réalisations (inclant le burn-in)\n                     warmup = 500)   # nombre d'itérations pour le burn-in (iter/2 par défaut)"
+  },
+  {
+    "objectID": "Bayes.html#inférence",
+    "href": "Bayes.html#inférence",
+    "title": "Statistique Bayésienne",
+    "section": "Inférence",
+    "text": "Inférence\nL’objet obtenu fournit assez de statistiques pour dériver des dérivations ponctuelles (mean) et des intervalles de crédibilité à 95 % equal-tailed (2.5% et 97.5%), ainsi que quelques diagnostics de convergence (Rhat) et précision (n.eff).\n\nmodS_sim\n\nInference for Stan model: probabilité binomiale.\n3 chains, each with iter=4500; warmup=500; thin=1; \npost-warmup draws per chain=4000, total post-warmup draws=12000.\n\n       mean se_mean   sd   2.5%   25%   50%   75% 97.5% n_eff Rhat\ntheta  0.67    0.00 0.13   0.39  0.58  0.67  0.76  0.89  4653    1\nlp__  -8.15    0.01 0.71 -10.16 -8.32 -7.87 -7.69 -7.64  4935    1\n\nSamples were drawn using NUTS(diag_e) at Thu Nov 26 00:55:18 2026.\nFor each parameter, n_eff is a crude measure of effective sample size,\nand Rhat is the potential scale reduction factor on split chains (at \nconvergence, Rhat=1)."
+  },
+  {
+    "objectID": "Bayes.html#traitements-postérieurs",
+    "href": "Bayes.html#traitements-postérieurs",
+    "title": "Statistique Bayésienne",
+    "section": "Traitements postérieurs",
+    "text": "Traitements postérieurs\nLes échantillons peuvent être récupérés sous forme de jeu de données pour un traitement facilité par d’autres packages :\n\nmes_tirages &lt;- tidybayes::tidy_draws(modS_sim)\nmes_tirages\n\n# A tibble: 12,000 × 11\n   .chain .iteration .draw theta   lp__ accept_stat__ stepsize__ treedepth__\n    &lt;int&gt;      &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n 1      1          1     1 0.600  -7.75         0.933       1.03           1\n 2      1          2     2 0.207 -13.5          0.420       1.03           2\n 3      1          3     3 0.960 -13.2          1           1.03           3\n 4      1          4     4 0.938 -11.6          1           1.03           1\n 5      1          5     5 0.912 -10.4          1           1.03           2\n 6      1          6     6 0.886  -9.66         1           1.03           1\n 7      1          7     7 0.896  -9.92         0.980       1.03           1\n 8      1          8     8 0.719  -7.72         1           1.03           2\n 9      1          9     9 0.431  -8.98         0.747       1.03           1\n10      1         10    10 0.429  -9.01         0.995       1.03           1\n# ℹ 11,990 more rows\n# ℹ 3 more variables: n_leapfrog__ &lt;dbl&gt;, divergent__ &lt;dbl&gt;, energy__ &lt;dbl&gt;"
+  },
+  {
+    "objectID": "Bayes.html#sans-tidybayes",
+    "href": "Bayes.html#sans-tidybayes",
+    "title": "Statistique Bayésienne",
+    "section": "Sans tidybayes",
+    "text": "Sans tidybayes\nLe package rstan dispose de ses outils propres, comme extract() pour obtenir une liste des tirages des paramètres du modèle ou as.data.frame() pour obtenir les tirages sous ce format :\n\nextract(modS_sim) |&gt; str()\n\nList of 2\n $ theta: num [1:12000(1d)] 0.677 0.646 0.871 0.695 0.741 ...\n  ..- attr(*, \"dimnames\")=List of 1\n  .. ..$ iterations: NULL\n $ lp__ : num [1:12000(1d)] -7.64 -7.65 -9.3 -7.66 -7.8 ...\n  ..- attr(*, \"dimnames\")=List of 1\n  .. ..$ iterations: NULL\n\nas.data.frame(modS_sim) |&gt; str()\n\n'data.frame':   12000 obs. of  2 variables:\n $ theta: num  0.6 0.207 0.96 0.938 0.912 ...\n $ lp__ : num  -7.75 -13.51 -13.2 -11.64 -10.45 ..."
+  },
+  {
+    "objectID": "Bayes.html#estimations-ponctuelles-et-ic",
+    "href": "Bayes.html#estimations-ponctuelles-et-ic",
+    "title": "Statistique Bayésienne",
+    "section": "Estimations ponctuelles et IC",
+    "text": "Estimations ponctuelles et IC\n\n\n\n# Moyenne et ETI \nmes_tirages |&gt; tidybayes::mean_qi(theta) \n\n# A tibble: 1 × 6\n  theta .lower .upper .width .point .interval\n  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    \n1 0.665  0.391  0.886   0.95 mean   qi       \n\nmean(mes_tirages$theta)\n\n[1] 0.6650895\n\nquantile(mes_tirages$theta, c(0.025, 0.975))\n\n     2.5%     97.5% \n0.3910876 0.8861780 \n\n\n\n\n# Médiane et HDI\nmes_tirages |&gt; tidybayes::median_hdi(theta) \n\n# A tibble: 1 × 6\n  theta .lower .upper .width .point .interval\n  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    \n1 0.674  0.416  0.904   0.95 median hdi      \n\nmedian(mes_tirages$theta)\n\n[1] 0.6739638\n\ncoda::HPDinterval(coda::as.mcmc(mes_tirages$theta))\n\n         lower     upper\nvar1 0.4231489 0.9093168\nattr(,\"Probability\")\n[1] 0.95\n\n\n\n\n\nLes fonctions median_hdi() et HPDinterval() n’emploient pas la même procédure pour estimer l’HDI (distribution estimée vs distribution empirique). Les différences seront surtout visibles sur des distributions multimodales."
+  },
+  {
+    "objectID": "Bayes.html#visualisation",
+    "href": "Bayes.html#visualisation",
+    "title": "Statistique Bayésienne",
+    "section": "Visualisation",
+    "text": "Visualisation"
+  },
+  {
+    "objectID": "Bayes.html#diagnostics",
+    "href": "Bayes.html#diagnostics",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostics",
+    "text": "Diagnostics\nAvant d’exploiter les résultats, la convergence vers l’a posteriori et tout problème dans les calculs doivent être évalués. Certains outils ont déjà été vus avec JAGS, d’autres sont propres au mode d’échantillonnage (HMC) employé avec Stan :\n\nInspections visuellles (mélange des chaînes et problèmes évidents)\n\\(\\hat{R}\\) (convergence / accord entre les chaînes)\nEffective sample size (autocorrélation & précision)\nDivergent transitions (convergence)\nBFMI (Bayesian Fraction of Missing Information : déplacements dans l’a posteriori problématiques)\nMaximum tree depth (efficience)"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-trace-plot-1",
+    "href": "Bayes.html#diagnostic-trace-plot-1",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : trace plot",
+    "text": "Diagnostic : trace plot\n\nrstan::traceplot(modS_sim, pars = \"theta\", inc_warmup = TRUE)\n\n\n\n\n\n\n\n\nDes packages comme bayesplot donnent accès à des visualisations plus avancées."
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-convergence-1",
+    "href": "Bayes.html#diagnostic-convergence-1",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : convergence",
+    "text": "Diagnostic : convergence\nOn s’intéresse à \\(\\hat{R}\\) :\n\nmes_tirages$theta |&gt; rstan::Rhat()\n\n[1] 0.9999627\n\nmodS_sim |&gt; ggmcmc::ggs() |&gt; ggmcmc::ggs_Rhat(version_rhat = \"BG98\", plot = FALSE)\n\n# A tibble: 1 × 2\n  Parameter  Rhat\n  &lt;fct&gt;     &lt;dbl&gt;\n1 theta      1.00"
+  },
+  {
+    "objectID": "Bayes.html#diagnostic-ess",
+    "href": "Bayes.html#diagnostic-ess",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostic : ESS",
+    "text": "Diagnostic : ESS\nLes développeur·ses Stan recommandent \\(\\textrm{n_eff} \\geq 100\\), y compris pour les queues de distribution, comme seuil pour considérer les estimations comme fiables :\n\n# Les calculs demandent de préserver la structure par chaîne\ntheta_draws_array &lt;- as.array(modS_sim, pars = \"theta\")[, , \"theta\"]\ntheta_draws_array[1:2,]\n\n          chains\niterations   chain:1   chain:2   chain:3\n      [1,] 0.6001537 0.8335320 0.7339410\n      [2,] 0.2074185 0.8815601 0.8475328\n\ntheta_draws_array |&gt; ess_bulk() # moyennes/médianes\n\n[1] 4587.292\n\ntheta_draws_array |&gt; ess_tail() # quantiles (ETI)\n\n[1] 5389.344\n\ntheta_draws_array |&gt; monitor(warmup = 0)\n\nInference for the input samples (3 chains: each with iter = 4000; warmup = 0):\n\n    Q5 Q50 Q95 Mean  SD  Rhat Bulk_ESS Tail_ESS\nV1 0.4 0.7 0.9  0.7 0.1     1     4587     5389\n\nFor each parameter, Bulk_ESS and Tail_ESS are crude measures of \neffective sample size for bulk and tail quantities respectively (an ESS &gt; 100 \nper chain is considered good), and Rhat is the potential scale reduction \nfactor on rank normalized split chains (at convergence, Rhat &lt;= 1.05)."
+  },
+  {
+    "objectID": "Bayes.html#diagnostics-spécifiques",
+    "href": "Bayes.html#diagnostics-spécifiques",
+    "title": "Statistique Bayésienne",
+    "section": "Diagnostics spécifiques",
+    "text": "Diagnostics spécifiques\nStan emploie par défaut du Hamiltonian Monte Carlo / NUTS (no U-turn sampling) pour lequel des diagnostics spécifiques sont disponibles :\n\nrstan::check_hmc_diagnostics(modS_sim)\n\n\nDivergences:\n\n\n0 of 12000 iterations ended with a divergence.\n\n\n\nTree depth:\n\n\n0 of 12000 iterations saturated the maximum tree depth of 10.\n\n\n\nEnergy:\n\n\nE-BFMI indicated no pathological behavior.\n\n\nIl arrive que Stan renvoie des warnings en estimant un modèle."
+  },
+  {
+    "objectID": "Bayes.html#divergent-transitions",
+    "href": "Bayes.html#divergent-transitions",
+    "title": "Statistique Bayésienne",
+    "section": "Divergent transitions",
+    "text": "Divergent transitions\nExemple : “There were 15 divergent transitions after warmup”.\nÀ prendre au sérieux : elles suggèrent que l’algorithme pourrait ne pas explorer certaines parties de l’a posteriori. On les rencontre souvent dans le cas de géométries de l’a posteriori problématiques : distributions multimodales, identification faible, corrélations élevées, formes en entonnoir (fréquentes dans les modèles multiniveaux), non-linéarité, a prioris trop vagues, peu de données, mauvaise spécification du modèle.\nUne “divergence” a lieu lorsque la simulation des dynamiques Hamiltoniennes devient peu fiable, typiquement parce que l’a posteriori a des régions à forte courbure ou une forme changeant rapidement.\nVoir ici pour une discussion non technique ou ici pour en savoir plus."
+  },
+  {
+    "objectID": "Bayes.html#comment-réagir",
+    "href": "Bayes.html#comment-réagir",
+    "title": "Statistique Bayésienne",
+    "section": "Comment réagir",
+    "text": "Comment réagir\nLa solution la plus rapide est d’augmenter le paramètre adapt_delta (e.g. sampling(..., control = list(adapt_delta = 0.99))), la meilleure reste souvent de modifier le modèle, ses a prioris, ou l’échelle de mesure des variables.\nadapt_delta joue sur la probabilité cible d’accepter la cible : des valeurs plus fortes induisent des mouvements plus faibles. Cela augmentera le temps de calcul.\nLa valeur par défaut est de 0.80, il n’est pas attendu de bénéfice au-delà de 0.99.\nUne façon de vérifier si le problème vient des données est d’estimer le modèle à partir de données simulées par le mécanisme générateur de données supposé par le modèle.\nCertaines anciennes écoles d’estimation Bayésienne défendaient l’usage d’a prioris non informatifs / vagues (pour que les a posterioris soient dominés par les données). Des a prioris faiblement informatifs (weakly informative) peuvent améliorer la convergence."
+  },
+  {
+    "objectID": "Bayes.html#faible-bfmi",
+    "href": "Bayes.html#faible-bfmi",
+    "title": "Statistique Bayésienne",
+    "section": "Faible BFMI",
+    "text": "Faible BFMI\nExemple : “The E-BFMI 0.2786 is below the nominal threshold of 0.3 which suggests that HMC may have trouble exploring the target distribution”.\nUn BFMI faible peut indiquer un problème d’adaptation de l’algorithme, ou des queues épaisses de l’a posteriori qui n’ont pas été correctement explorées. Il peut aussi être dû à une mauvaise échelle des variables, des problèmes d’identification, ou des géométries de l’a posteriori problématiques.\nAugmenter le warmup ou les itérations peut parfois aider. Si le problème persiste, il faudra évaluer les a prioris, la complexité du modèle, et sa paramétrisation."
+  },
+  {
+    "objectID": "Bayes.html#maximum-treedepth",
+    "href": "Bayes.html#maximum-treedepth",
+    "title": "Statistique Bayésienne",
+    "section": "Maximum treedepth",
+    "text": "Maximum treedepth\nExemple : “There were 8 transitions after warmup that exceeded the maximum treedepth.”.\nCes warnings indiquent généralement un échantillonnage inefficient, demandant des trajectoires plus longues que permis. C’est moins problématique qu’un warning sur la divergence, mais peut quand même indiquer une géométrie posterieure problématique ou une mauvaise paramétrisation du modèle.\nOn peut augmenter la treedepth maximale : control = list(max_treedepth = 12) ; cela augmentera le temps de calcul et n’est pas recommandé par les développeur·ses Stan. Il est rarement utile de dépasser 12."
+  },
+  {
+    "objectID": "Bayes.html#estimation",
+    "href": "Bayes.html#estimation",
+    "title": "Statistique Bayésienne",
+    "section": "Estimation",
+    "text": "Estimation\n\nStanJAGS\n\n\n\nmodLS &lt;- stan_model(model_code = modeleStanL, model_name = \"modeleStanL\")\nmodLS_sim &lt;- sampling(object=modLS, # DSO compilé\n                     data=dataList, # données\n                     chains=3,      # nombre de chaînes (4 par défaut)\n                     iter=11500,    # nombre total de réalisations (inclant le burn-in)\n                     warmup=1500)   # nombre d'itérations pour le burn-in (iter/2 par défaut)\n\n\n\n\ninits &lt;- function() {\n      inits &lt;- list(\"beta0\"=rnorm(n=1, mean=0, sd=10),\n                    \"beta1\"=rnorm(n=1, mean=0, sd=10))\n}\nmodLJ &lt;- jags.model(textConnection(modeleJAGSL), data=dataList, inits=inits, n.chains=3)\nupdate(modLJ, n.iter=1500)\nparams &lt;- c(\"beta0\",\"beta1\")\nmodLJ_sim &lt;- coda.samples(model=modLJ, variable.names=params, n.iter=10000)"
+  },
+  {
+    "objectID": "Bayes.html#données-2",
+    "href": "Bayes.html#données-2",
+    "title": "Statistique Bayésienne",
+    "section": "Données",
+    "text": "Données\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n1\nCrème\n11\n25\n\n\n1\nPlacebo\n10\n27\n\n\n2\nCrème\n16\n4\n\n\n2\nPlacebo\n22\n10\n\n\n3\nCrème\n14\n5\n\n\n3\nPlacebo\n7\n12\n\n\n4\nCrème\n2\n14\n\n\n4\nPlacebo\n1\n16\n\n\n\n\n\n\n\n\n\n\n\nCentre\nTraitement\nSuccès\nÉchecs\n\n\n\n\n5\nCrème\n6\n11\n\n\n5\nPlacebo\n0\n12\n\n\n6\nCrème\n1\n10\n\n\n6\nPlacebo\n0\n10\n\n\n7\nCrème\n1\n4\n\n\n7\nPlacebo\n1\n8\n\n\n8\nCrème\n4\n2\n\n\n8\nPlacebo\n6\n1\n\n\n\n\n\n\n\n\nsource : Agresti 2002, Categorical Data Analysis"
+  },
+  {
+    "objectID": "Bayes.html#résultats-jags",
+    "href": "Bayes.html#résultats-jags",
+    "title": "Statistique Bayésienne",
+    "section": "Résultats (JAGS)",
+    "text": "Résultats (JAGS)\n\n\n\n\n\n\n\n\n\n\n\n\nCoefficient\nTaille Centre\nlog-OR brut\nlog-OR estimé\n95 % HDI\n\n\n\n\n\\(\\beta_1(c_1)\\)\n73\n0.1723\n0.6197\n(-0.2037 , 1.3921)\n\n\n\\(\\beta_1(c_2)\\)\n52\n0.5978\n0.7748\n(-0.0463 , 1.5728)\n\n\n\\(\\beta_1(c_3)\\)\n38\n1.5686\n0.9631\n( 0.1082 , 1.8970)\n\n\n\\(\\beta_1(c_4)\\)\n33\n0.8267\n0.7374\n(-0.2978 , 1.6851)\n\n\n\\(\\beta_1(c_5)\\)\n29\n2.6483\n0.9904\n(-0.0318 , 2.1868)\n\n\n\\(\\beta_1(c_6)\\)\n21\n1.0986\n0.7493\n(-0.2791 , 1.8637)\n\n\n\\(\\beta_1(c_7)\\)\n14\n0.6931\n0.7486\n(-0.3384 , 1.8067)\n\n\n\\(\\beta_1(c_8)\\)\n13\n-1.0986\n0.6771\n(-0.4811 , 1.6664)"
+  },
+  {
+    "objectID": "Bayes.html#fda-et-ema",
+    "href": "Bayes.html#fda-et-ema",
+    "title": "Statistique Bayésienne",
+    "section": "FDA et EMA",
+    "text": "FDA et EMA\nLa FDA a partagé en Janvier 2026 une draft guidance : Use of Bayesian Methodology in Clinical Trials of Drug and Biological Products (lien).\nCe n’est pas la première guidance FDA s’intéressant à ces méthodes : elles sont au moins abordées au sujet des essais adaptatifs (2019), des contrôles externes (2023) et des master protocols (2023).\nL’EMA n’en est pour l’instant qu’au stade du concept paper."
   }
 ]

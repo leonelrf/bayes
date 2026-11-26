@@ -1,0 +1,440 @@
+
+## Théorème de Bayes appliqué à des paramètres
+
+$$
+\begin{align}
+\color{#2E2963}{\underbrace{P(\theta | D)}}   \ \ \ & = & \color{#ED4F33}{\underbrace{P(D | \theta)}}  \ \ \ \ \  & &  \color{#F5B12E}{\underbrace{P(\theta)}}  \ \ \  & / & \color{#ADD2D8}{\underbrace{P(D)}}  \ \  \\
+\color{#2E2963}{\textrm{a posteriori}}      & = & \color{#ED4F33}{\textrm{vraisemblance}} & & \color{#F5B12E}{\textrm{a priori}} \ \  & / & \color{#ADD2D8}{\textrm{données}}
+\end{align}
+$$
+
+. . .
+
+:::::: columns
+::: {.column width="50%"}
+$\theta$ discret
+
+$\color{#ADD2D8}{P(D)} = \displaystyle\sum_{\theta} \color{#ED4F33}{P(D|\theta)} \color{#F5B12E}{P(\theta)}$
+:::
+
+:::: {.column width="50%"}
+::: fragment
+$\theta$ continu
+
+$\color{#ADD2D8}{P(D)} = \int \color{#ED4F33}{P(D|\theta)} \color{#F5B12E}{P(\theta)} \textrm{d}\theta$
+:::
+::::
+::::::
+
+## Approximation par grille
+
+
+1.  Lister un nombre fini de valeurs du/des paramètre(s) $\theta$ à estimer
+
+::: incremental
+2.  Leur donner une probabilité a priori $\color{#F5B12E}{P(\theta)}$
+
+3.  Calculer la vraisemblance $\color{#ED4F33}{P(D|\theta)}$ des données observées pour chacune des valeurs possibles de $\theta$
+
+4.  Faire le produit de la vraisemblance et de l'a priori $\color{#ED4F33}{P(D|\theta)}*\color{#F5B12E}{P(\theta)}$ pour chaque valeur de $\theta$
+
+5.  La somme de ces produits $\sum_\theta \color{#ED4F33}{P(D|\theta)}*\color{#F5B12E}{P(\theta)}$ donne la constante de normalisation $\color{#ADD2D8}{P(D)}$
+
+6.  En déduire l'a posteriori $\color{#2E2963}{P(\theta | D)} = \frac{\color{#ED4F33}{P(D|\theta)}*\color{#F5B12E}{P(\theta)}}{\color{#ADD2D8}{P(D)}}$ pour les valeurs choisies
+:::
+
+## Approximation par grille {.smaller}
+
+$n=10$ patients traités, $k=7$ guéris
+
+$\color{#ED4F33}{P(D|\theta)} = P(D=7/10|\theta) = {10\choose 7} \theta^7 (1-\theta)^{3}$
+
+| $\theta$ | $\color{#F5B12E}{P(\theta)}$ | $\color{#ED4F33}{P(D|\theta)}$ | $\color{#ED4F33}{P(D|\theta)}*\color{#F5B12E}{P(\theta)}$ | $\color{#2E2963}{P(\theta|D)} = \color{#ED4F33}{P(D|\theta)}*\color{#F5B12E}{P(\theta)} / \color{#ADD2D8}{P(D)}$ |
+|--------------:|--------------:|--------------:|--------------:|--------------:|
+| 0 % | 1/11=9,1 % | 0,000 % | 0,000000 | 0,000 % |
+| ... | ... | ... | ... | ... |
+| 70 % | 9,1 % | 26,683 %[^1] | 0,024257 | 29,322 % |
+| ... | ... | ... | ... | ... |
+| 100 % | 9,1 % | 0,000 % | 0,000000 | 0,000 % |
+| Somme | 100 % |  | $\color{#ADD2D8}{P(D)}$ = 0,0827 | 100 % |
+
+: {.striped tbl-colwidths="[10,20,20,25,25]"}
+
+[^1]: Dans R : `dbinom(x=7, size=10, prob=0.7)`
+
+\
+Estimateur bayésien de $\theta$ (probabilité de guérison) : $E\left[\color{#2E2963}{P(\theta|D)} \right] = \sum_\theta \theta \color{#2E2963}{P(\theta|D)}$ = 67%
+
+## Approximation par grille dans R {.smaller}
+
+```{r}
+#| label: grille
+#| echo: true
+
+grille <- data.frame(theta=seq(0, 1, by = 0.1))
+grille$P_theta <- 1/nrow(grille)
+grille$P_D_sachant_theta <- dbinom(x = 7, size = 10, prob = grille$theta)
+grille$C_foisB <- with(grille, P_D_sachant_theta*P_theta)
+P_D <- sum(grille$C_foisB)
+grille$P_theta_sachant_D <- with(grille, P_D_sachant_theta*P_theta/P_D)
+E_P_theta_sachant_D <- sum(with(grille, theta*P_theta_sachant_D))
+grille
+P_D
+E_P_theta_sachant_D
+```
+
+## Estimation par lois conjuguées : loi de probabilité bêta
+
+::::: columns
+::: {.column width="50%"}
+$\theta \sim$ beta(a, b), a\>0, b\>0
+
+![](../Bayes_files/img/Rlogo.svg){.no-lightbox width="5%"} `dbeta(x,shape1=a,shape2=b)`
+
+$P(\theta | a, b) = \\ \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)} \theta^{a-1} (1-\theta)^{b-1} I_{\left\{ 0\leq \theta \leq 1 \right\}}(\theta)$
+
+$E(\theta) = \frac{a}{a+b}$
+
+Effective sample size = a+b
+
+Si a\>1, b\>1, mode : $\frac{a-1}{a+b-2}$
+:::
+
+::: {.column width="50%"}
+```{r}
+#| label: ExBeta
+#| fig-height: 10
+#| fig-width: 10
+#| fig-align: center
+#| out-width: "80%"
+x <- data.frame(a=c(0.01,0.5,2,0.5,  1,5,1,2,5),
+                b=c(0.01,  1,5,0.5,0.5,2,1,2,5))
+taille <- c(20,6)
+
+plotlist <- vector("list", 9)
+
+for (i in 1:9) {
+  plotlist[[i]] <- ggplot() + stat_function(color = OrSq, linewidth=2,
+                                 fun = dbeta, args = list(shape1=x[i,"a"], shape2=x[i,"b"])) +
+     labs(y=expression(paste("P(",theta,"|a,b)")),
+          x=expression(theta)) + ylim(0,3) +
+     scale_x_continuous(limits = c(0,1), breaks = seq(0,1,by=0.2)) +
+  annotate("text", x = 0, y = 2.75, color=BlFoSq, size=taille[2], 
+           label = paste0("a=", x[i,"a"], ", b=", x[i,"b"]), hjust="left") +
+     theme_grey(base_size=taille[1])
+}
+
+for (i in c(1,4)) {
+  plotlist[[i]] <- plotlist[[i]] + theme(legend.position = "none", 
+                                         axis.ticks.x=element_blank(),
+                                         axis.text.x=element_blank(),
+                                         axis.title.x=element_blank())
+}
+
+for (i in c(2,3,5,6)) {
+  plotlist[[i]] <- plotlist[[i]] + theme(legend.position = "none", 
+                                         axis.ticks.x=element_blank(),
+                                         axis.text.x=element_blank(),
+                                         axis.title.x=element_blank(),
+                                         axis.ticks.y=element_blank(),
+                                         axis.text.y=element_blank(),
+                                         axis.title.y=element_blank())
+}
+
+plotlist[[7]] <- plotlist[[7]] + theme(legend.position = "none")
+
+for (i in c(8,9)) {
+  plotlist[[i]] <- plotlist[[i]] + theme(legend.position = "none", 
+                                          axis.ticks.y=element_blank(),
+                                          axis.text.y=element_blank(),
+                                          axis.title.y=element_blank())
+}
+
+ggarrange(plotlist = plotlist, ncol = 3, nrow = 3)
+rm(taille, plotlist, x)
+```
+:::
+:::::
+
+## Estimation bayésienne d'une proportion : distribution conjuguée
+
+La loi bêta est *conjuguée* avec une vraisemblance binomiale :
+
+-   $\color{#F5B12E}{P(\theta) \sim \textrm{beta}(a,b)}$
+
+-   $\color{#ED4F33}{P(D|\theta) \sim \textrm{binom}(n,\theta)}$ avec $k$ succès
+
+-   $\color{#2E2963}{P(\theta|D) \sim \textrm{beta}(} \color{#ED4F33}{k}+\color{#F5B12E}{a},\color{#ED4F33}{(n-k)}+\color{#F5B12E}{b}\color{#2E2963}{)}$
+
+. . .
+
+[a posteriori]{#2E2963} : compromis entre [a priori]{style="color:#F5B12E"} et [vraisemblance]{style="color:#ED4F33"}
+
+## Estimation bayésienne d'une proportion : distribution conjuguée
+
+:::::::: columns
+::: {.column width="33%"}
+```{r}
+#| label: ConjugHaldane
+#| fig-height: 8
+#| fig-width: 6
+#| fig-align: center
+#| out-width: "90%"
+
+taille <- c(20, 6, 1.5)
+apriori <- ggplot() + 
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 5)) +
+  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0),linewidth = taille[3], color = OrSq) +
+  geom_segment(aes(x = c(0, 1), y = c(0, 0), xend = c(0, 1), yend = c(5, 5)),
+               lineend = "round", linejoin = "mitre",
+               linewidth = taille[3], color = OrSq, arrow = arrow(length = unit(0.1, "inches"))) +
+  labs(x = expression(theta), y = expression(paste("P(",theta,")"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = OrSq, size = taille[2],
+           label = "Haldane : beta(0, 0)", hjust = "left") + 
+  theme_grey(base_size=taille[1]) 
+
+vraisemblance <- ggplot() + 
+  stat_function(color = RoSq, linewidth=taille[3],
+                fun = function(x) choose(10,7)*x^7*(1-x)^3, 
+                xlim = c(0,1)) +
+  coord_cartesian(ylim = c(0, 0.4)) +
+  labs(x = expression(theta), y = expression(paste("P(D|",theta,")"))) +
+  scale_x_continuous(breaks = seq(0,1,by=0.2)) +
+  annotate("text", x = 0.1, y = 0.35, color = RoSq, size = taille[2],
+           label="binom(k = 7, n = 10)", hjust="left") + 
+  theme_grey(base_size = taille[1]) 
+
+aposteriori <- ggplot() + 
+  stat_function(color = BlFoSq, linewidth = taille[3],
+                fun = dbeta, args = list(shape1 = 7+0, shape2 = 3+0),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(x = expression(theta), y = expression(paste("P(",theta,"|D)"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = BlFoSq, size = taille[2],
+           label="beta(7+0, 3+0)", hjust = "left") + 
+  annotate("text", x = 0.6, y = 0.25, color = BlFoSq, size = taille[2],
+           label = "hat(theta)==0.70", hjust = "left", parse = TRUE) + 
+  theme_grey(base_size = taille[1]) 
+
+ggarrange(plotlist = list(apriori, vraisemblance, aposteriori), ncol = 1, nrow = 3)
+```
+:::
+
+:::: {.column width="33%"}
+::: fragment
+```{r}
+#| label: ConjugUnif
+#| fig-height: 8
+#| fig-width: 6
+#| fig-align: center
+#| out-width: "90%"
+
+apriori <- ggplot() + 
+  stat_function(color = OrSq, linewidth=taille[3],
+                fun = dbeta, args = list(shape1=1, shape2=1), 
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(x = expression(theta), y = expression(paste("P(", theta, ")"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = OrSq, size = taille[2],
+           label="Uniforme : beta(1, 1)", hjust = "left") + 
+  theme_grey(base_size = taille[1]) 
+
+vraisemblance <- ggplot() +
+  stat_function(color = RoSq, linewidth=taille[3],
+                fun = function(x) choose(10,7)*x^7*(1-x)^3,
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 0.4)) +
+  labs(x = expression(theta), y = expression(paste("P(D|", theta, ")"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 0.35, color = RoSq, size = taille[2],
+           label = "binom(k = 7, n = 10)", hjust = "left") + 
+  theme_grey(base_size = taille[1]) 
+
+aposteriori <- ggplot() +
+  stat_function(color = BlFoSq, linewidth=taille[3],
+                fun = dbeta, args = list(shape1 = 7+1, shape2 = 3+1),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(x = expression(theta), y = expression(paste("P(",theta,"|D)"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = BlFoSq, size = taille[2],
+           label = "beta(7+1, 3+1)", hjust = "left") + 
+  annotate("text", x = 0.6, y = 0.25, color = BlFoSq, size = taille[2],
+           label = "hat(theta)==0.67", hjust = "left", parse = TRUE) + 
+  theme_grey(base_size = taille[1]) 
+
+ggarrange(plotlist = list(apriori, vraisemblance, aposteriori), ncol = 1, nrow = 3)
+```
+:::
+::::
+
+:::: {.column width="33%"}
+::: fragment
+```{r}
+#| label: ConjugInfo
+#| fig-height: 8
+#| fig-width: 6
+#| fig-align: center
+#| out-width: "90%"
+
+apriori <- ggplot() + 
+  stat_function(color = OrSq, linewidth = taille[3],
+                fun = dbeta, args = list(shape1 = 10, shape2 = 10),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(x = expression(theta), y = expression(paste("P(",theta,")"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = OrSq, size = taille[2],
+           label="Informative : beta(10, 10)", hjust = "left") + 
+  theme_grey(base_size = taille[1]) 
+
+vraisemblance <- ggplot() +
+  stat_function(color = RoSq, linewidth=taille[3],
+                fun = function(x) choose(10,7)*x^7*(1-x)^3,
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 0.4)) +
+  labs(x = expression(theta), y = expression(paste("P(D|",theta,")"))) +
+  scale_x_continuous(limits = c(0, 1), breaks = seq(0, 1,by = 0.2)) +
+  annotate("text", x = 0.1, y = 0.35, color = RoSq, size = taille[2],
+           label = "binom(k=7, n=10)", hjust = "left") + 
+  theme_grey(base_size = taille[1]) 
+
+aposteriori <- ggplot() +
+  stat_function(color = BlFoSq, linewidth=taille[3],
+                fun = dbeta, args = list(shape1=7+10, shape2=3+10),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 5)) +
+  labs(x = expression(theta), y = expression(paste("P(",theta,"|D)"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  annotate("text", x = 0.1, y = 4.5, color = BlFoSq, size = taille[2],
+           label = "beta(7+10, 3+10)", hjust = "left") + 
+  annotate("text", x = 0.6, y = 0.25, color = BlFoSq, size = taille[2],
+           label = "hat(theta)==0.57", hjust = "left", parse = TRUE) + 
+  theme_grey(base_size = taille[1]) 
+
+ggarrange(plotlist = list(apriori, vraisemblance, aposteriori), ncol = 1, nrow = 3)
+```
+:::
+::::
+::::::::
+
+## Intervalles de crédibilité {.smaller}
+
+$(i,s)$ tel que $\theta$ a $(1-\alpha)$ % de chances d'être compris dans l'intervalle
+
+:::::: columns
+::: {.column width="50%"}
+```{r}
+#| label: HDI
+#| fig-height: 6
+#| fig-width: 10
+#| fig-align: center
+#| out-width: "90%"
+
+taille <- c(25, 8, 1.5)
+
+HDIofICDF = function(ICDFname , credMass = 0.95 , tol = 1e-8 , ... ) {
+  # Arguments:
+  #   ICDFname is R's name for the inverse cumulative density function
+  #     of the distribution.
+  #   credMass is the desired mass of the HDI region.
+  #   tol is passed to R's optimize function.
+  # Return value:
+  #   Highest density iterval (HDI) limits in a vector.
+  # Example of use: For determining HDI of a beta(30,12) distribution, type
+  #   HDIofICDF( qbeta , shape1 = 30 , shape2 = 12 )
+  #   Notice that the parameters of the ICDFname must be explicitly named;
+  #   e.g., HDIofICDF( qbeta , 30 , 12 ) does not work.
+  # Adapted and corrected from Greg Snow's TeachingDemos package.
+  incredMass =  1.0 - credMass
+  intervalWidth = function( lowTailPr , ICDFname , credMass , ... ) {
+    ICDFname( credMass + lowTailPr , ... ) - ICDFname( lowTailPr , ... )
+  }
+  optInfo = optimize( intervalWidth , c( 0 , incredMass ) , ICDFname=ICDFname ,
+                      credMass=credMass , tol=tol , ... )
+  HDIlowTailPr = optInfo$minimum
+  return( c( ICDFname( HDIlowTailPr , ... ) ,
+             ICDFname( credMass + HDIlowTailPr , ... ) ) )
+}
+hdi <- HDIofICDF(qbeta , shape1 = 7+1 , shape2 = 3+1)
+
+beta_shade <- function(a, b, x){
+  y <- dbeta(x, shape1 = a, shape2 = b)
+  y[x < hdi[1] | x > hdi[2]] <- NA
+  return(y)
+}
+
+aposteriori <- ggplot() +
+  stat_function(color = NA, linewidth=taille[3],
+                fun = beta_shade, args = list(a = 7+1, b = 3+1),
+                geom = 'area', fill = BlClSq, n = 1001) +
+  stat_function(color = BlFoSq, linewidth=taille[3],
+                fun = dbeta, args = list(shape1 = 7+1, shape2 = 3+1),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 3)) +
+  geom_segment(aes(x = hdi[1], y = dbeta(hdi[1], 7+1, 3+1) - .1, 
+                   xend = hdi[2], yend = dbeta(hdi[1], 7+1, 3+1) - .1),
+               lineend = "round", linejoin = "mitre",
+               linewidth = taille[3], color = OrSq, 
+               arrow = arrow(length = unit(0.1, "inches"), ends = "both")) +
+  annotate("text", x = mean(hdi), y = dbeta(hdi[1], 7+1, 3+1), color = BlFoSq, size = taille[2],
+           label=paste0("95 % HDI = (", format(hdi[1], nsmall = 2, digits = 2),
+                        " ; ", format(hdi[2], nsmall = 2, digits = 2), ")"),
+           hjust = "center", vjust = "bottom") + 
+  labs(x = expression(theta), y = expression(paste("P(",theta,"|D)"))) +
+  scale_x_continuous(breaks = seq(0, 1, by = 0.2)) +
+  theme_grey(base_size=taille[1])
+aposteriori
+```
+
+**Highest Density Interval** (HDI/HPD) : Largeur minimale
+:::
+
+:::: {.column width="50%"}
+::: fragment
+```{r}
+#| label: ETI
+#| fig-height: 6
+#| fig-width: 10
+#| fig-align: center
+#| out-width: "90%"
+
+ciq <- qbeta(c(0.025, 0.975), 7+1, 3+1)
+
+beta_shade <- function(a, b, x){
+  y <- dbeta(x, shape1=a, shape2 = b)
+  y[x > ciq[1] & x < ciq[2]] <- NA
+  return(y)
+}
+
+aposteriori <- ggplot() +
+  stat_function(color = NA, linewidth = taille[3],
+                fun = beta_shade, args = list(a = 7+1, b = 3+1),
+                geom = 'area', fill = BlClSq, n = 1001,
+                xlim = c(0, 1)) +
+  stat_function(color = BlFoSq, linewidth = taille[3],
+                fun = dbeta, args = list(shape1 = 7+1, shape2 = 3+1),
+                xlim = c(0, 1)) +
+  coord_cartesian(ylim = c(0, 3)) +
+  geom_segment(aes(x =    ciq[1], y =    dbeta(ciq[1], 7+1, 3+1) - .1, 
+                   xend = ciq[2], yend = dbeta(ciq[1], 7+1, 3+1) - .1),
+               lineend = "round", linejoin = "mitre",
+               linewidth = taille[3], color = OrSq, 
+               arrow = arrow(length = unit(0.1, "inches"),ends="both")) +
+  annotate("text", x = mean(ciq), y = dbeta(ciq[1], 7+1, 3+1), color = BlFoSq, size = taille[2],
+           label=paste0("95 % CI = (", format(ciq[1], nsmall=2, digits=2),
+                        " ; ", format(ciq[2], nsmall = 2, digits = 2), ")"),
+           hjust = "center", vjust = "bottom") + 
+  labs(x = expression(theta), y = expression(paste("P(", theta, "|D)"))) +
+  scale_x_continuous(breaks = seq(0, 1 , by = 0.2)) +
+  theme_grey(base_size = taille[1])
+aposteriori
+```
+
+**Equal-tailed Interval** : défini par les quantiles (e.g. 2.5 % et 97.5 %) de la distribution
+:::
+::::
+::::::

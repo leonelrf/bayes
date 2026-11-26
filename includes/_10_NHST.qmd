@@ -1,0 +1,270 @@
+## Approche fréquentiste : p-value
+
+Probabilité d’obtenir un effet ≥ à celui observé si l’hypothèse testée est vraie et si [les conditions de validité utilisées pour son calcul sont respectées]{style="color:#ED4F33"}[^2]
+
+[^2]: par exemple, échantillonnage aléatoire parfait (pas de biais de sélection), modèle sous-jacent correctement spécifié (linéarité, additivité, distribution des erreurs, absence de facteur de confusion non ajusté, absence d’intermédiaires entre l’exposition et la réponse ...), pas de violation de protocole, erreurs de mesure et sélection du modèle parfaitement pris en compte...
+
+-   Introduite par Karl Pearson en 1900
+-   Popularisée par Ronald Fisher en 1925
+
+------------------------------------------------------------------------
+
+Pour Ronald Fisher, $p$ est un [index informel]{style="color:#F5B12E"} pour mesurer l’écart entre les données et l’hypothèse testée.
+
+\
+[*If P is*]{style="color:#8B8682"} [*between .1 and .9 there is certainly no reason to suspect the hypothesis tested*]{style="color:#F5B12E"}[*. If it is below .02 it is strongly indicated that the hypothesis fails to account for the whole of the facts.*]{style="color:#F5B12E"} [1925]
+
+[*The value for which*]{style="color:#8B8682"} [*P=0.05*]{style="color:#F5B12E"}[*, or 1 in 20, is 1.96 or nearly 2; it is*]{style="color:#8B8682"} [*convenient*]{style="color:#F5B12E"} [*to take this point as a limit in judging whether a deviation ought to be considered significant or not.*]{style="color:#8B8682"} [1925]
+
+[*no scientific worker has a fixed level of significance*]{style="color:#F5B12E"} [*at which from year to year, and in all circumstances, he rejects hypotheses; he rather gives his mind to each particular case in the light of his evidence and his ideas*]{style="color:#8B8682"} [1956]
+
+## Le test d'hyptothèse de Neyman-Pearson
+
+|   | Résultat de l'expérience | La vérité |
+|--------------------------|--------------------:|:-----------------------:|
+| Rejet de $H_0$ | Erreur de type I ($\alpha$) | Puissance ($1-\beta$) |
+| Conservation de $H_0$ |  | Erreur de type II ($\beta$) |
+
+-   Approche décisionnelle, avec $\alpha$ et $\beta$ fixés à l'avance
+
+-   Conçu pour la standardisation industrielle et le contrôle qualité
+
+------------------------------------------------------------------------
+
+Pour Neyman et Pearson, $p$ ne permet pas de juger de la force de preuve mais fournit une [règle de décision objective]{style="color:#F5B12E"}.
+
+\
+[*We are inclined to think that*]{style="color:#8B8682"} [*as far as a particular hypothesis is concerned*]{style="color:#F5B12E"}[*, no test*]{style="color:#F5B12E"} [*based upon a theory of probability*]{style="color:#8B8682"} [*can by itself provide any valuable evidence*]{style="color:#F5B12E"} [*of the truth or falsehood of a hypothesis. But we may look at the purpose of tests from another viewpoint. Without hoping to know whether each separate hypothesis is true or false, we may search for*]{style="color:#8B8682"} [*rules to govern our behaviour*]{style="color:#F5B12E"} [*with regard to them, in following which we insure that,*]{style="color:#8B8682"} [*in the long run*]{style="color:#F5B12E"} [*of experience,*]{style="color:#8B8682"} [*we shall not often be wrong.*]{style="color:#F5B12E"} [1933]
+
+## Probabilité de préférer le traitement A
+
+-   2 traitements A et B testés tous 2 sur 6 patients
+
+-   1 patient préfère B, 5 patients préfèrent A
+
+. . .
+
+Peut-on en conclure que P(A préféré) \> P(B préféré) ?
+
+::: aside
+Tiré de Goodman 1999, Toward Evidence-Based Medical Statistics, Ann Intern Med
+:::
+
+## Approche fréquentiste
+
+-   Revient à tester $H_0$ : P(A préféré) = $\theta$ = 0.5
+
+-   Probabilité d'observer une difference $\geq$ que celle observée, si $H_0$ vraie
+
+-   La p-value dépend des [intentions]{style="color:#ED4F33"} $I$ de l'expérimentateur
+
+-   p-value = $P(D_{\theta, I} \geq D_{observé} | \theta, I)$
+
+## Intention de fixer N à 6
+
+Résultats plus extrêmes que 5/6 préférant A possibles :
+
+-   A préféré 6 fois, AAAAAA, avec probabilité $P(6A) = \left(\frac{1}{2}\right)^6$ sous $H_0$
+
+-   A préféré 0 fois : probabilité égale à P(6A)
+
+-   préféré 5 fois, AAAAAB ou AAAABA ou ..., $P(5A) = 6 \left(\frac{1}{2}\right)^1 \left(\frac{1}{2}\right)^5$
+
+-   A préféré 1 fois : probabilité égale à P(5A)
+
+p-value = ${\small P(6A|\theta=0.5)+P(5A|\theta=0.5)+P(1A|\theta=0.5)+P(0A|\theta=0.5)}$ = $\left(\frac{1}{2}\right)^6 + 6 \left(\frac{1}{2}\right)^5 \left(\frac{1}{2}\right)^1 + 6 \left(\frac{1}{2}\right)^1 \left(\frac{1}{2}\right)^5 + \left(\frac{1}{2}\right)^6$ = `r 14*0.5^6`
+
+## Intention de s'arrêter au 1^er^ patient préférant B ou à N=6
+
+-   $P(6A) = \left(\frac{1}{2}\right)^6$
+
+-   A préféré 5 fois implique obligatoirement AAAAAB, $P(5A)=P(6A)$
+
+-   A préféré \< 5 fois impossible
+
+p-value = $\left(\frac{1}{2}\right)^6 + \left(\frac{1}{2}\right)^5 \left(\frac{1}{2}\right)^1$ = `r 2*0.5^6`
+
+Impact de l'intention : principe de vraisemblance[^3] violé.
+
+[^3]: Les vraisemblances de D sous les hypothèses contiennent toute l'information qui peut être extraite des données
+
+## Le facteur de Bayes {.smaller}
+
+::::: columns
+::: {.column width="45%"}
+Sous le principe de vraisemblance, le facteur de Bayes permet de choisir entre deux modèles.
+
+Pour $H_1$ vs $H_0$ :
+
+$$BF_{10} = \frac{P\left(D|H_1\right)}{P\left(D|H_0\right)}$$
+:::
+
+::: {.column width="55%"}
+Selon Jeffreys :
+
+| $BF_{10}$ | Force de la preuve contre $H_0$     |
+|:---------:|:------------------------------------|
+|  \> 100   | Décisive                            |
+| 32 - 100  | Très forte                          |
+|  10 - 32  | Forte                               |
+| 3,2 - 10  | Substantielle                       |
+|  1 - 3,2  | Ne méritant pas plus que sa mention |
+
+BF peut être approché par le BIC.
+:::
+:::::
+
+## Retour à l'exemple
+
+$H_0$ : P(A préféré)=1/2, $H_1$ : P(A préféré)=5/6.
+
+$$BF_{exp_1} = \frac{6 \left(\frac{1}{6}\right)^1 \left(\frac{5}{6}\right)^5}{6 \left(\frac{1}{2}\right)^1 \left(\frac{1}{2}\right)^5} = 4,29$$ $$BF_{exp_2} = BF_{exp_1} = \frac{\left(\frac{1}{6}\right)^1 \left(\frac{5}{6}\right)^5}{\left(\frac{1}{2}\right)^1 \left(\frac{1}{2}\right)^5} = 4,29$$ Petit niveau de preuve en faveur de $H_1$ (et respect du principe de vraisemblance).
+
+## Plus formellement : approche conjuguée
+
+Sous $H_0$, $\color{#ED4F33}{P(D|\theta_{H_0})} = \theta_{H_0}^{k} (1-\theta_{H_0})^{n-k} = \left(\frac{1}{2}\right)^5 \left(\frac{1}{2}\right)^1$
+
+\
+Sous $H_1$, $\theta_{H_1}$ peut prendre n'importe quelle valeur.
+
+Avec $\color{#F5B12E}{P(\theta)}=\textrm{beta}(a,b)$,
+
+$$BF = \frac{\textrm{B}(k+a,n-k+b)/\textrm{B}(a,b)}{\theta_{H_0}^{k} (1-\theta_{H_0})^{n-k}}$$
+
+::: aside
+$\textrm{B(a,b)} = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$
+:::
+
+## Application
+
+```{r BFappl}
+#| echo: true
+
+BFprop <- function(k,n,ph0,a,b) {
+      vh0 <- ph0^k*(1-ph0)^(n-k)
+      vh1 <- exp( lbeta(k+a,n-k+b) - lbeta(a,b) )
+      return(vh1/vh0)
+}
+
+BFprop(k=5, n=6, ph0=1/2, a=1, b=1) # a priori uniforme
+BFprop(k=5, n=6, ph0=1/2, a=0.5, b=0.5) # a priori de Jeffreys
+BFprop(k=5, n=6, ph0=1/2, a=0.1, b=0.1) # a priori type Haldane
+BFprop(k=5, n=6, ph0=1/2, a=0.01, b=0.01) # encore plus extrême
+```
+
+## Importance du choix de l'a priori {.smaller}
+
+-   Sauf cas extrêmes, $\color{#2E2963}{P(\theta|D)}$ peu influencé par le choix de $\color{#F5B12E}{P(\theta)}$
+
+-   Mais le BF l'est :
+
+    -   A priori trop vague : $P(D|H_1) \approx 0$ $\forall \theta$ $\Rightarrow$ $H_0$ favorisé
+
+    -   Valeur observée proche de $H_0$ : $H_0$ favorisé même si estimation imprécise[^4]
+
+-   Certains bayésiens recommandent plutôt des approches de type région d'équivalence
+
+    -   Accepter $H_0$ si l'HDI de $\theta$ est inclus dans la région
+
+    -   Rejetter $H_0$ si en dehors
+
+    -   Non concluant si l'HDI recoupe la région
+
+[^4]: 3/6 patients préfèrent A $\Rightarrow$ BF=`r formatC(1/BFprop(k=3,n=6,ph0 =0.5, a=1, b=1),digits=1, format="f")` en faveur de $H_0$ avec a priori uniforme
+
+## Le "paradoxe" de Lindley {.smaller}
+
+Tests d'hypothèses fréquentiste bayésien peuvent diverger.
+
+Exemple : valeurs du $BF_{10}$[^5] pour un test $t$ donnant $p=0.05$ en fréquentiste, selon la taille d'échantillon
+
+[^5]: En employant la fonction `ttest.tstat` du package `BayesFactor` avec son a priori par défaut
+
+```{r LindleyParadox}
+#| fig-height: 5
+#| fig-width: 25
+#| out-width: "95%"
+#| cache: true
+
+bf <- data.frame(n.par.groupe = 2:2500) # Nombre de patients par groupe
+# Seuil critique correspondant du test t
+bf$t <- qt(p = 0.025, df = 2*bf$n.par.groupe-2, lower.tail = FALSE)
+# Facteur de Bayes (H1 vs H0) correspondant à ce seuil
+returnbf <- function(n) {
+  t <- qt(p = 0.025, df = 2*n-2, lower.tail = FALSE)
+  return(ttest.tstat(t = t, n1 = n, n2 = n, simple = TRUE))
+}
+bf$bf10 <- sapply(bf$n.par.groupe, returnbf) 
+
+taille <- c(25,1.5, 8)
+ggplot(bf, aes(x=n.par.groupe, y=bf10)) + 
+  geom_line(color = ifelse(bf$bf10<1/3.2,RoSq,BlClSq), linewidth=taille[2]) +
+  xlim(2,2500) + scale_y_log10(limits = c(0.1,10)) +
+  geom_hline(yintercept=c(3.2,1/3.2), linetype=2, linewidth=taille[2], color=c(BlFoSq, RoSq)) +
+  annotate("text", x=20, y=3.2+1, vjust="bottom", hjust="left", color=BlFoSq,
+           size=taille[3], label='paste(H[1], " confirmée")', parse=TRUE) +
+  annotate("text", x=20, y=1/(3.2+1), vjust="top", hjust="left", color=RoSq,
+           size=taille[3], label='paste(H[0], " confirmée")', parse=TRUE) +
+  annotate("text", x=1200, y=1, hjust="center", color=BlClSq,
+           size=taille[3], label='Données non concluantes') +
+    labs(x="Nombre de patients par groupe", y=expression(BF[10])) +
+  theme_grey(base_size=taille[1])
+```
+
+Malgré la significativité statistique,
+
+-   pour auncune taille d'échantillon $BF_{10} > 3.2$ ($H_1$ jamais confirmée)
+
+-   [à partir de $n \approx 1180$ patients par groupe, $BF_{10} > \frac{1}{3.2}$ ($H_0$ confirmée)]{style="color:#ED4F33"}.
+
+## Le test d'hypothèse comme rituel
+
+"Null ritual" : mélange des idées de Fisher et Neyman-Pearson :
+
+1.  Définir une $H_0$ d’absence de différence, sans préciser les prédictions de l’hypothèse de recherche ou une hypothèse alternative substantive
+
+2.  Utiliser 5 % comme seuil de rejet de $H_0$.
+
+3.  Toujours utiliser cette procédure.
+
+::: aside
+[*Elements of social rituals include (a) the*]{style="color:#8B8682"}[*repetition of the same action*]{style="color:#ED4F33"}*, (b) a [focus on special numbers]{style="color:#ED4F33"} or colors, (c) fears about serious [sanctions for rule violations]{style="color:#ED4F33"}, and (d) wishful thinking and delusions that virtually [eliminate critical thinking]{style="color:#ED4F33"}* (Gigerenzer et al. 2004)
+:::
+
+## Les problèmes avec la p-value {.smaller}
+
+-   Ne permet pas de quantifier les preuves en faveur de $H_0$, mais...
+
+-   Mal interprétée. Les résultats statistiquement non significatifs sont notamment interprétés comme preuve d'équivalence (i.e. confirmation de $H_0$)
+
+    -   Déjà problématique pour l'efficacité[^6]
+
+    -   Mais plus encore pour les risques[^7]
+
+-   Ne distingue pas taille d'effet et précision (telle qu'employée classiquement)
+
+-   Peut surestimer le degré de preuve
+
+-   Ne respecte pas le principe de vraisemblance (dépend de données imaginaires, car quantifie la probabilité de l'observé *ou plus extrême* - cela la rend particulièrement vulnérable à des manipulations, tels que changements de protocole ou de plan d'analyse post-hoc)
+
+[^6]: e.g. [communication FDA](https://www.fda.gov/news-events/press-announcements/fda-approves-new-treatment-pompe-disease) sur un médicament avec une taille d'effet cliniquement pertinente mais $p=0.06$ : [*Treatment (...) similar to the improvement seen with the other therapy*]{style="color:#8B8682"}
+
+[^7]: e.g. article concluant que [*exposure compared with no exposure was not associated with autism spectrum disorder*]{style="color:#8B8682"} sur la base d'un HR de 1.61 [95% CI, 0.997-2.59] ([10.1001/jama.2017.3415](https://doi.org/10.1001/jama.2017.3415))
+
+## ASA statement on p-values {.smaller}
+
+1.  [*P-values can indicate how incompatible the data are with a specified statistical model.*]{style="color:#8B8682"}
+
+2.  [*P-values do not measure the probability that the studied hypothesis is true, or the probability that the data were produced by random chance alone.*]{style="color:#8B8682"}
+
+3.  [*Scientific conclusions and business or policy decisions should not be based only on whether a p-value passes a specific threshold.*]{style="color:#8B8682"}
+
+4.  [*Proper inference requires full reporting and transparency.*]{style="color:#8B8682"}
+
+5.  [*A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.*]{style="color:#8B8682"}
+
+6.  [*By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.*]{style="color:#8B8682"}
+
+::: aside
+<https://www.amstat.org/asa/files/pdfs/P-ValueStatement.pdf> (2016-03-07)
+:::

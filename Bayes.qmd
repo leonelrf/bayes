@@ -1,0 +1,107 @@
+---
+title: "Statistique Bayésienne"
+subtitle: "Une Introduction"
+lang: fr-FR
+date: "2026-11-26"
+date-format: long
+author: "Lionel RIOU FRANÇA"
+institute: "Aixial Group"
+format: 
+  revealjs:
+    slide-number: true
+    width: 1400
+    margin: 0.1
+    slide_level: 2
+    code-block-height: 550px
+    transition: slide
+    transition-speed: fast
+    theme: default
+    chalkboard: true
+    # the option below is to avoid issues for equations displayed sequentially
+    include-in-header:
+      text: |
+        <script>
+          window.MathJax = {
+            options: {
+              enableAssistiveMml: false
+            }
+          };
+        </script>
+lightbox: true
+highlight-style: dracula
+code-annotations: below
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+
+library(ggplot2)
+library(ggpubr) # for ggarrange
+library(coda)
+library(BayesFactor) # For ttest.tstat
+# library(rjags) # will be loaded in the include to show output
+library(ggmcmc) # for ggs_traceplot, ggs_density, ggs_diagnostics 
+
+BlFoSq <- "#2E2963" # A posteriori
+BlClSq <- "#ADD2D8" # Données
+OrSq <-   "#F5B12E" # A priori
+RoSq <-   "#ED4F33" # Vraisemblance
+```
+
+## Liens d'intérêt
+
+\
+\
+Depuis Mars 2023, Lionel Riou França est employé par Aixial Group.
+
+\
+Les opinions exprimées dans cette présentation n'engagent que l'orateur. Elles ne correspondent pas nécessairement à celles d'Aixial Group.
+
+# Probabilité
+
+{{< include /includes/_01_probabilite.qmd >}}
+
+# Estimation : approche fréquentiste
+
+{{< include /includes/_02_est_freq.qmd >}}
+
+# Estimation : approche Bayésienne
+
+{{< include /includes/_03_est_Bayes.qmd >}}
+
+# Estimation Bayésienne par Markov Chain Monte Carlo (MCMC)
+
+{{< include /includes/_04_est_MCMC.qmd >}}
+
+# Diagnostics MCMC
+
+{{< include /includes/_05_diag_MCMC.qmd >}}
+
+# JAGS : probabilité θ de guérison
+
+{{< include /includes/_06_JAGS_simple_example.qmd >}}
+
+# Stan : probabilité θ de guérison
+
+{{< include /includes/_07_Stan_simple_example.qmd >}}
+
+# Comparaison de 2 traitements : régression logistique
+
+{{< include /includes/_08_regression_logistique.qmd >}}
+
+# Comparaison de 2 traitements : modèles hiérarchiques
+
+{{< include /includes/_09_modele_hierarchique.qmd >}}
+
+# Test d'hypothèses
+
+{{< include /includes/_10_NHST.qmd >}}
+
+# Bilan
+
+{{< include /includes/_11_Bilan.qmd >}}

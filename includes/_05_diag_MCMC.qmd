@@ -1,0 +1,182 @@
+## Vérification de la convergence
+
+MCMC : convergence avec $n=\infty$ itérations.
+
+::::::: columns
+:::: {.column width="50%"}
+::: {.callout-note icon="false"}
+## Diagnostic de **convergence**
+
+-   Graphiquement : trace plots, chaînes multiples
+
+-   Indicateurs numériques : Gelman & Rubin
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.callout-note icon="false"}
+## Diagnostic de **précision/stabilité**
+
+-   Graphiquement : trace plots, chaînes multiples
+
+-   Indicateurs numériques : autocorrélation, *effective sample size*, Raftery & Lewis
+:::
+::::
+:::::::
+
+## Trace plots & distribution non stationnaire
+
+```{r}
+#| label: TraceplotsConvergence
+#| echo: true
+#| fig-height: 11
+#| fig-width: 25
+#| fig-align: center
+#| out-width: "95%"
+#| output-location: slide
+
+# itérations avec écart-type trop faible
+chaine1 <- mh(nIter = 500, thetaInit = 0.01, candSD = 0.015)$theta
+chaine2 <- mh(nIter = 500, thetaInit = 0.99, candSD = 0.015)$theta
+chaine3 <- mh(nIter = 500, thetaInit = 0.50, candSD = 0.015)$theta
+
+library(ggplot2)
+data.frame(iteration = rep(1:length(chaine1), times = 3),
+           theta = c(chaine1, chaine2, chaine3), 
+           chaine = factor(rep(1:3, each = length(chaine1)))) |> ggplot() +
+  aes(x = iteration, y = theta, colour = chaine, group = chaine) +
+  geom_line(linewidth = 1) +
+  coord_cartesian(ylim = c(0,1)) +
+  labs(x = "Itération", y = expression(theta)) +
+  theme_grey(base_size = 25) + 
+  guides(color = "none")
+```
+
+## Diagnostic de Gelman & Rubin
+
+::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/diagnosis.svg){.no-lightbox width="85%"}
+:::
+
+::: {.column width="80%"}
+-   Compare la variance [inter]{style="color:#ED4F33"}-chaînes [$B$]{style="color:#ED4F33"} à la variance [intra]{style="color:#ED4F33"}-chaînes ([$W$]{style="color:#ED4F33"})
+
+-   Si distribution stationnaire, la différence moyenne entre les chaînes devrait correspondre à la différence moyenne intra-chaîne
+
+-   *Potential Scale Reduction Factor* (PSRF) / *Shrink Factor* : implique le ratio entre la variance poolée et la variance intra-chaînes
+
+-   $\textrm{PSRF} > 1.2$ ou $1.1$ est signe de [non-convergence]{style="color:#ED4F33"}
+  - Les développeurs de Stan recommandent même 1.05 voire 1.01
+  
+:::
+:::::
+
+## Diagnostic de Gelman & Rubin - 500 itérations
+
+```{r}
+#| label: GelmanRubin500
+#| echo: true
+
+library(coda)
+# Mise au format coda
+simul <- mcmc.list(as.mcmc(chaine1), as.mcmc(chaine2), as.mcmc(chaine3))
+
+# 500 itérations
+gelman.diag(simul)
+```
+
+Convergence non atteinte.
+
+## Diagnostic de Gelman & Rubin - 5000 itérations
+
+```{r}
+#| label: GelmanRubin5000
+#| echo: true
+
+chaine1 <- mh(nIter = 5000, thetaInit = 0.01, candSD = 0.015)$theta
+chaine2 <- mh(nIter = 5000, thetaInit = 0.99, candSD = 0.015)$theta
+chaine3 <- mh(nIter = 5000, thetaInit = 0.50, candSD = 0.015)$theta
+
+# Mise au format coda
+simul <- mcmc.list(as.mcmc(chaine1), as.mcmc(chaine2), as.mcmc(chaine3))
+
+# 5000 itérations
+gelman.diag(simul)
+```
+
+## Précision : Autocorrélation
+
+::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/twins.svg){.no-lightbox width="85%"}
+:::
+
+::: {.column width="80%"}
+-   Mesure le degré de dépendance entre $\theta_t$ et les valeurs passées (*lags*) $\theta_{k}$
+
+-   Mesure de la quantité d'information disponible dans la chaîne
+
+-   [*Effective Sample Size*]{style="color:#ED4F33"} : nombre de réalisations indépendantes de l'a posteriori nécessaires pour avoir une information équivalente à celle de la chaîne
+:::
+:::::
+
+## Autocorrélation
+
+::::: columns
+::: {.column width="60%"}
+```{r}
+#| label: AutocorrPlot
+#| fig-height: 15
+#| fig-width: 25
+#| fig-align: center
+#| out-width: "95%"
+#| echo: true
+
+autocorr.plot(as.mcmc(chaine3), lag.max = 200, lwd = 2)
+```
+:::
+
+::: {.column width="40%"}
+```{r}
+#| label: AutocorrDiag
+#| echo: true
+
+autocorr.diag(as.mcmc(chaine3))
+```
+:::
+:::::
+
+## ESS, Raftery & Lewis {.smaller}
+
+:::::: columns
+::: {.column width="40%"}
+**ESS**
+
+```{r}
+#| label: ESS
+#| echo: true
+
+effectiveSize(as.mcmc(chaine3))
+```
+
+Les `r formatC(length(chaine3),big.mark = " ")` itérations correspondent à `r round(effectiveSize(as.mcmc(chaine3)))` réalisations indépendantes de l'a posteriori.
+:::
+
+:::: {.column width="60%"}
+::: fragment
+Un IC *equal-tailed* va demander une connaissance précise des queues de distribution.
+
+Raftery & Lewis estime le nombre d'itérations nécessaires pour l'estimation.
+
+```{r}
+#| label: Raftery
+#| echo: true
+
+raftery.diag(as.mcmc(chaine3))
+```
+
+Il faut `r formatC(raftery.diag(as.mcmc(chaine3))$resmatrix[1,"Nmin"],big.mark = " ")` réalisations indépendantes de l'a posteriori pour estimer un $IC_{95\%}$ avec une précision de $\pm 0.005$ sur les bornes, soit `r formatC(raftery.diag(as.mcmc(chaine3))$resmatrix[1,"N"],big.mark = " ", format="f", digits = 0)` itérations en tenant compte de l'autocorrélation.
+:::
+::::
+::::::

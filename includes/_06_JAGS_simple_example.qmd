@@ -1,0 +1,420 @@
+## Estimation fréquentiste
+
+On peut estimer à partir des données $y$ la proportion de succès et son intervalle de confiance à 95 % :
+
+```{r}
+#| label: Prob_Gue_freq
+#| echo: true
+
+y <- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès
+nb_succes <- sum(y)
+nb_sujets <- length(y)
+
+DescTools::BinomCI(x = nb_succes, n = nb_sujets, method = "wilson")
+```
+
+::: aside
+On a estimé ici l'IC par la méthode de Wilson, qui a une meilleure couverture que d'autres.
+::: 
+
+## Rappel
+
+Comme en statistique fréquentiste, nous voulons apprendre sur $\theta$ à partir des données observées $y$.
+
+Mais nous allons employer le théorème de Bayes :
+
+$$
+\begin{aligned}
+{\color{#2E2963}{\underbrace{P(\theta \mid y)}_{\textrm{a posteriori}}}}
+&=
+\frac{
+{\color{#ED4F33}{\underbrace{P(y \mid \theta)}_{\textrm{vraisemblance}}}}
+\,
+{\color{#F5B12E}{\underbrace{P(\theta)}_{\textrm{a priori}}}}
+}{
+{\color{#ADD2D8}{\underbrace{P(y)}_{\textrm{données}}}}
+}
+\end{aligned}
+$$
+Ce qui implique de définir des [distributions a priori]{style="color:#F5B12E"} pour $\theta$.
+
+## Estimation conjuguée de θ
+
+::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/Diagram8_2.svg){width="80%"}
+:::
+
+::: {.column width="80%"}
+-   $n=10$ patients, $k=7$ guéris
+
+-   Pour chaque patient $i$, la guérison suit une loi de Bernoulli : $\color{#ED4F33}{P(y_i=1|\theta)} = \theta^{y_i} (1-\theta)^{1-y_i}$
+
+-   A priori $\color{#F5B12E}{P(\theta)} \sim \textrm{beta}(a,b)$
+:::
+:::::
+
+## Les données
+
+Les données sont fournies à JAGS sous forme de liste.
+
+```{r}
+#| label: Prob_Gue_Data
+#| echo: true
+
+y <- c(1, 0, 1, 1, 1, 1, 1, 0, 0, 1) # 1=Succès
+n <- length(y)
+
+donnees <- list(y = y,
+                nb_sujets = n)
+```
+
+## Le modèle (Bernoulli) {.smaller}
+
+La syntaxe est proche de celle de `R`, mais pas identique :
+
+```{.jags}
+{{< include /models/modele_JAGS_Bernoulli.jags >}}
+```
+
+Les modèles peuvent être conservés dans des fichiers à part (pas d'extension particulière recommandée) ou créés directement dans `R` sous forme de chaîne de caractères :
+
+```{r }
+#| label: Prob_Gue_Mod_J1
+#| echo: true
+
+modeleJAGS1 <- 
+"                           
+ model {
+  for (i in 1:nb_sujets) {      
+   y[i] ~ dbern(theta)      
+  }                         
+  theta ~ dbeta(1, 1)       
+ }
+"                           
+```
+
+## Le modèle (Binomial)
+
+Une formulation équivalente du modèle :
+
+```{r}
+#| label: Prob_Gue_Mod_J2
+#| echo: true
+#| code-line-numbers: "3-5|8|9"
+
+modeleJAGS2 <- 
+"             
+ data {
+  nbgueri <- sum(y)                  # Nombre de guérisons
+ }
+ 
+ model {
+  nbgueri ~ dbinom(theta, nb_sujets) # Vraisemblance (binomiale)
+  theta ~ dbeta(1, 1)                # a priori
+ } 
+"
+```
+
+## Valeurs initiales
+
+Recommandé avec JAGS pour :
+
+-   vérifier la convergence en partant de valeurs différentes de $\theta_0$ ou
+
+-   les modèles complexes (meilleures performances en partant d'une valeur à haute probabilité a posteriori)
+
+. . .
+
+Les valeurs initiales sont fournies sous forme de liste :
+
+```{r}
+#| label: Prob_Gue_Inits
+#| echo: true
+
+inits <- function() {
+  resampleY <- sample(y , replace=TRUE)      # Rééchantillonage des y
+  theta0 <- sum(resampleY)/length(resampleY) # EMV
+  theta0 <- 0.001 + 0.998*theta0             # Eviter des valeurs de 0 ou 1
+  return(list(theta=theta0))
+}
+unlist(replicate(5, inits()))                # Exemple : 5 tirages de inits()
+```
+
+## Choix de l'interface
+
+Il faut avoir installé [JAGS](https://sourceforge.net/projects/mcmc-jags/) au préalable.
+
+On va employer `rjags` comme interface entre JAGS et `R` :
+
+```{r}
+#| label: Prob_Gue_Com_J1_library
+#| echo: true
+#| message: true
+#| warning: true
+
+library("rjags") 
+```
+
+## Initialisation du modèle
+
+```{r}
+#| label: Prob_Gue_Com_J1_jags.model
+#| echo: true
+#| message: false
+#| warning: false
+#| cache: false
+#| dependson: c("ProbGueData","ProbGueModJ1","ProbGueInits")
+
+## Initialisation du modèle
+modJ1 <- jags.model(file = "models/modele_JAGS_Bernoulli.jags", # Modèle
+                    data = donnees,                   # Données
+                    inits = inits,                    # valeurs initiales (optionnel)
+                    n.chains = 3)                     # Nombre de chaînes
+```
+
+À partir de l'objet `R` :
+
+```r
+modJ1 <- jags.model(file = textConnection(modeleJAGS1), # Modèle
+                    data = donnees,                     # Données
+                    inits = inits,                      # valeurs initiales (optionnel)
+                    n.chains = 3)                       # Nombre de chaînes
+```
+
+## Burn-in
+
+Dans l'estimation MCMC, les premiers échantillons ("warmup" / "burn-in") sont tirés avant convergence vers la distribution a posteriori.
+
+```{r}
+#| label: Prob_Gue_Com_J1_update
+#| echo: true
+
+## Burn-in
+update(modJ1, n.iter = 500) # 500 itérations de burn-in
+```
+
+
+## Simulations de l'a posteriori
+
+Une fois le *burn-in* effectué, on échantillonne l'a posteriori à partir de la fonction `coda.samples()`, ou `jags.samples()`.
+
+```{r}
+#| label: Prob_Gue_Sim_J1
+#| echo: true
+#| message: false
+#| warning: false
+#| cache: true
+
+modJ1_sim <- coda.samples(model = modJ1,               # modèle compilé
+                          variable.names = c("theta"), # variables à conserver, sous forme de vecteur
+                          n.iter = 4000)               # nombre d'itérations par chaîne
+```
+
+:::aside 
+`coda.samples()` renvoie les simulations dans le format employé par le *package* `coda`.
+:::
+
+## Diagnostic : trace plot
+
+```{r}
+#| label: Prob_Gue_TracePlot_J1
+#| fig-height: 7
+#| fig-width: 25
+#| out-width: "95%"
+#| echo: true
+#| message: false
+#| warning: false
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+library(ggmcmc)
+SJ1 <- ggs(modJ1_sim) 
+ggs_traceplot(SJ1, greek = TRUE) + theme_grey(base_size=25) 
+```
+
+## Diagnostic : densité
+
+```{r}
+#| label: Prob_Gue_Density_J1
+#| fig-height: 10
+#| fig-width: 15
+#| out-width: "95%"
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_TracePlot_J1"
+#| output-location: column
+
+ggs_density(SJ1, 
+            greek = TRUE) +
+  xlim(0,1) +
+  theme_grey(base_size=25) 
+```
+
+## Diagnostic : convergence
+
+On s'intéresse à $\hat{R}$ :
+
+```{r}
+#| label: Prob_Gue_Rhat_J1
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_TracePlot_J1"
+#| output-location: default
+
+ggs_diagnostics(SJ1, version_rhat = "BG98") |> # Version de Brooks & Gelman utilisée dans coda
+  dplyr::filter(Diagnostic == "Rhat") |> dplyr::select(Parameter, value)
+
+coda::gelman.diag(modJ1_sim)
+```
+
+## Diagnostic : autocorrélation et ESS
+
+```{r}
+#| label: Prob_Gue_Autocorr_J1
+#| fig-height: 5
+#| fig-width: 25
+#| out-width: "95%"
+#| echo: true
+#| warning: false
+#| cache: true
+#| dependson: "Prob_Gue_TracePlot_J1"
+#| output-location: default
+
+ggs_autocorrelation(SJ1, greek = TRUE) + ylim(-.2,1) + theme_grey(base_size=25) 
+ggs_diagnostics(SJ1, proportion = FALSE) |> filter(Diagnostic == "Effective") |> 
+  select(Parameter, Diagnostic, value)
+```
+
+## Diagnostic : précision pour l'HDI
+
+Il faut fusionner les réalisations des 3 chaînes pour ne pas obtenir un diagnostic par chaîne.
+
+```{r}
+#| label: Prob_Gue_Raftery_J1 
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+do.call(rbind, modJ1_sim) |> as.mcmc() |> coda::raftery.diag()
+```
+
+## Extraction des résultats avec tidybayes
+
+Le *package* `tidybayes` facilite la manipulation des résultats :
+
+```{r}
+#| label: Prob_Gue_tidybayes_J1 
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+tidybayes::tidy_draws(modJ1_sim)
+tidybayes::tidy_draws(modJ1_sim) |> dplyr::pull(theta) |> mean()
+```
+
+## Estimation de θ
+
+```{r}
+#| label: Prob_Gue_Estimations_J1
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+summary(modJ1_sim)
+```
+
+## HDI de θ
+
+```{r}
+#| label: Prob_Gue_HDI_J1
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+do.call(rbind, modJ1_sim) |> coda::as.mcmc() |> coda::HPDinterval()
+```
+
+## Avec tidybayes
+
+```{r}
+#| label: Prob_Gue_HDI_tidybayes_J1
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+tidybayes::tidy_draws(modJ1_sim) |> tidybayes::mean_qi(theta)  # ETI
+tidybayes::tidy_draws(modJ1_sim) |> tidybayes::mean_hdi(theta) # HDI
+```
+
+
+## Visualisation (ggplot2)
+
+Elle est possible avec les outils `ggplot2` :
+
+```{r}
+#| label: Prob_Gue_Hist_ggplot_J1
+#| fig-height: 7
+#| fig-width: 20
+#| fig-align: center
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: default
+
+tidybayes::tidy_draws(modJ1_sim) |> ggplot() +
+  geom_histogram(aes(x = theta, y = after_stat(density)),
+                 fill = "steelblue", col = "white", bins = 40)
+```
+
+## Visualisation (tidybayes)
+
+`tidybayes` importe le *package* `ggdist` spécialisé dans les distributions :
+
+```{r}
+#| label: Prob_Gue_Hist_tidybayes_J1
+#| fig-height: 7
+#| fig-width: 20
+#| fig-align: center
+#| echo: true
+#| cache: true
+#| dependson: "Prob_Gue_Sim_J1"
+#| output-location: slide
+
+tidybayes::tidy_draws(modJ1_sim) |> ggplot() + aes(x = theta) +
+  tidybayes::stat_histinterval(point_interval = tidybayes::mean_hdi,
+                               .width = 0.95, 
+                               fill = "steelblue",
+                               slab_color = "white",
+                               breaks = 40, 
+                               outline_bars = TRUE,
+                               slab_size = 0.25)
+```
+
+## Comparaison à la distribution théorique
+
+```{r}
+#| label: Prob_Gue_Hist_J1
+#| fig-height: 7
+#| fig-width: 20
+#| out-width: "95%"
+#| cache: true
+#| dependson: "Prob_Gue_TracePlot_J1"
+
+taille <- c(25, 1.5, 8)
+ggplot() + geom_histogram(aes(x = do.call(rbind, modJ1_sim), y=after_stat(density)), 
+                          bins = 50, fill = BlClSq, color = "black") +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, 3.5)) +
+  labs(x=expression(theta), y=expression(paste("P(", theta, "|D)"))) +
+  stat_function(linewidth=taille[2], color = BlFoSq,
+                                 fun = dbeta, args = list(shape1=8, shape2=4)) +
+  annotate("text", x = 0.75, y = 3, color = BlFoSq, size = taille[3], 
+           hjust = "left", label = "Beta(8,4)") +
+  theme_grey(base_size=taille[1]) 
+```

@@ -1,0 +1,220 @@
+## MCMC : Markov Chain Monte Carlo
+
+Monte Carlo
+
+:   car estimation d'une grandeur complexe (intégrale) par [simulation]{style="color:#ED4F33"}.
+
+Markov Chain
+
+:   car l'état du système au temps $t$ ne dépend que de $t-1$.
+
+L'algorithme de Metropolis-Hastings ou l'échantillonage de Gibbs garantissent la [convergence]{style="color:#ED4F33"} vers la distribution cible après un temps de chauffe ("[burn-in]{style="color:#F5B12E"}")
+
+## Algorithme de Metropolis-Hastings (version simple)
+
+:::::: columns
+:::: {.column width="40%"}
+::: {.callout-note icon="false"}
+## Inférence Bayésienne
+
+$$\color{#2E2963}{P(\theta|D)} = \frac{\color{#ED4F33}{P(D|\theta)} \color{#F5B12E}{P(\theta)}}{\color{#ADD2D8}{\int P(D|\theta) P(\theta) \textrm{d}\theta}}$$
+:::
+
+Comment estimer des intégrales complexes?
+::::
+
+::: {.column width="60%"}
+But : estimer $f(\theta)$, à partir d'une forme + simple $g(\theta) \propto f(\theta)$.
+
+-   Départ de $\theta_0$
+
+-   Tirer $\theta^* \sim \textrm{N}\left(\theta_{\textrm{actuel}},\sigma^2\right)$
+
+-   Adopter $\theta^*$ avec probabilité $\min \left(1, \frac{g(\theta^*)}{g(\theta_{\textrm{actuel}})}\right)$
+
+Cette chaîne de Markov convergera vers la distribution cible $f(\theta)$.
+:::
+::::::
+
+## Application : probabilité de guérison
+
+$$
+\begin{align}
+ f(\theta) = \color{#2E2963}{P(\theta | D)} 
+ &\propto \color{#ED4F33}{P(D | \theta)} \color{#F5B12E}{P(\theta)} \\
+ &\propto \color{#ED4F33}{\theta^k(1-\theta)^{n-k}} \color{#F5B12E}{\theta^{a-1}(1-\theta)^{b-1}} \\
+ &\propto \theta^{k+a-1}(1-\theta)^{n-k+b-1}
+ \end{align}
+$$ Données : n=10 patients, k=7 guérisons.
+
+A priori uniforme beta(1,1).
+
+$$g(\theta) = \theta^7 (1-\theta)^3 \textrm{I}_{0 \leq \theta \leq 1}(\theta)$$
+
+## Programation dans `R` (1)
+
+```{r}
+#| label: MetropolisProgr_01
+#| echo: true
+
+# Programmation de g
+g <- function(theta) {
+      theta^7*(1-theta)^3*(theta >= 0 & theta <= 1)
+}
+```
+
+## Programation dans  `R` (2)
+
+```{r}
+#| label: MetropolisProgr_02
+#| echo: true
+
+# Algorithme de Metropolis-Hastings
+mh <- function(nIter, thetaInit, candSD) {
+  # Initialisation
+  thetaOut <- numeric(nIter) ; accept <- 0 
+  thetaActuel <- thetaInit ; gActuel <- g(thetaActuel)
+  # Itérations
+  for (i in 1:nIter) {
+    thetaCand <- rnorm(n = 1, mean = thetaActuel, sd = candSD) # Tirer 1 candidat
+    gCand <- g(theta = thetaCand) # Evaluer g avec le candidat
+    ratio <- gCand/gActuel # Ratio
+    u <- runif(n = 1) # u sera inf à ratio avec probabilité = ratio
+    if (u < ratio){ # alors candidat accepté
+      thetaActuel <- thetaCand ; gActuel <- gCand
+      accept <- accept + 1 # compte le nombre de candidats acceptés
+      }
+    # Collecter les résultats
+    thetaOut[i] <- thetaActuel
+    }
+  list(theta = thetaOut, accept = accept/nIter)
+}
+```
+
+## Application : Écart-type inapproprié
+
+**Trop faible**
+
+```{r}
+#| label: MetropolisProgrSDsmall
+#| echo: TRUE
+
+simul1 <- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.02)
+simul1$accept # La plupart des propositions sont acceptées
+summary(simul1$theta)
+```
+
+. . .
+
+**Trop élevé**
+
+```{r}
+#| label: MetropolisProgrSDbig
+#| echo: TRUE
+
+simul2 <- mh(nIter = 10000, thetaInit = 0.01, candSD = 2.00)
+simul2$accept # La plupart des propositions sont rejetées
+summary(simul2$theta)
+```
+
+## Trace plots
+
+```{r}
+#| label: TraceplotsSmallBig
+#| fig-height: 10
+#| fig-width: 25
+#| fig-align: center
+#| out-width: "95%"
+
+taille <- c(25, 1.0)
+tp1 <- ggplot() + geom_line(aes(x = 1:length(simul1$theta), y = simul1$theta), 
+                            color = BlFoSq, linewidth = taille[2]) + 
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Itération", y = expression(theta), title = expression(paste(sigma, " = 0.02"))) +
+  theme_grey(base_size = taille[1]) 
+tp2 <- ggplot() + geom_line(aes(x=1:length(simul2$theta),y=simul2$theta), 
+                            color=BlFoSq, linewidth=taille[2]) + 
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Itération", y = expression(theta), title = expression(paste(sigma, " = 2.00"))) +
+  theme_grey(base_size = taille[1]) 
+
+ggarrange(plotlist = list(tp1, tp2), ncol = 1, nrow = 2)
+```
+
+## Écart-type approprié
+
+```{r}
+#| label: MetropolisProgrSDgood
+#| echo: TRUE
+
+simul3 <- mh(nIter = 10000, thetaInit = 0.01, candSD = 0.30)
+simul3$accept # Environ 50 % des propositions sont acceptées
+summary(simul3$theta)
+```
+
+```{r}
+#| label: TraceplotsGood 
+#| fig-height: 5
+#| fig-width: 25
+#| fig-align: center
+#| out-width: "95%"
+
+ggplot() + geom_line(aes(x = 1:length(simul3$theta), y = simul3$theta), 
+                     color = BlFoSq, linewidth = taille[2]) +
+  coord_cartesian(ylim = c(0, 1)) +
+  labs(x = "Itération", y = expression(theta), title = expression(paste(sigma, " = 0.30"))) +
+  theme_grey(base_size = taille[1]) 
+```
+
+## Distribution a posteriori
+
+```{r}
+#| label: MetroHastHist
+#| fig-height: 9
+#| fig-width: 20
+#| fig-align: center
+#| out-width: "95%"
+
+taille <- c(25, 1.5, 8)
+
+ggplot() + geom_histogram(aes(x = simul3$theta, y = after_stat(density)), 
+                          bins = 50, fill = BlClSq, color = "black") +
+  coord_cartesian(xlim = c(0, 1)) +
+  labs(x = expression(theta), y = expression(paste("P(", theta, "|D)")),
+       title = expression(paste("Metropolis-Hastings, ", sigma, " = 0.30"))) +
+  stat_function(linewidth = taille[2], color = BlFoSq,
+                fun = dbeta, args = list(shape1 = 8, shape2 = 4),
+                xlim = c(0, 1)) +
+  annotate("text", x = 0.75, y = 3, color=BlFoSq, size=taille[3], hjust="left", label = "Beta(8, 4)") +
+  theme_grey(base_size = taille[1]) 
+```
+
+## Échantillonage de Gibbs
+
+Plusieurs paramètres $\theta_i$ à estimer: Metropolis-Hastings inefficient (ou difficultés à connaître la distribution complète)
+
+Alternative : Gibbs
+
+-   Échantillonnage alterné des $\theta_i$ à partir de $P\left( \theta_i | \theta_{j \neq i, D} \right)$
+
+-   Exemple : paramètres $\mu$ et $\sigma$ d'une loi normale
+
+    -   au temps $t$, tirer $\mu^t$ à partir de $P\left( \mu | \sigma^{\color{#ED4F33}{t-1}}, D \right)$
+
+    -   puis tirer $\sigma^t$ à partir de $P\left( \sigma | \mu^{\color{#ED4F33}{t}}, D \right)$
+
+## Logiciels d'inférence Bayésienne dans `R`
+
+-   BUGS : **B**ayesian inference **U**sing **G**ibbs **S**ampling
+
+    -   WinBUGS (`R2WinBUGS`), OpenBUGS (`BRugs`, `R2OpenBUGS`), MultiBUGS (`R2MultiBUGS` en cours de développement)
+
+-   Extensions de BUGS :
+
+    -   [JAGS]{.fragment .highlight-blue} : **J**ust **A**nother **G**ibbs **S**ampler (`rjags` / `R2jags`, `runjags`)
+
+    -   NIMBLE : intégré à R, plusieurs algorithmes d'estimation possibles
+
+-   [Stan]{.fragment .highlight-blue} (nommé en référence à Stanislaw Ulam) (`rstan`, `cmdstanr` `rstanarm`, `brms`), basé essentiellement sur du Hamiltonian Monte Carlo (HMC)
+
+-   INLA : **I**ntegrated **N**ested **L**aplace **A**pproximation, alternative plus rapide au MCMC pour une large famille de modèles

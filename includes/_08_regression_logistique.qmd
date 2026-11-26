@@ -1,0 +1,230 @@
+## Données
+
+```{r TableAgrAgr}
+# Données
+Succès <- c(11,10,16,22,14, 7, 2, 1, 6, 0, 1, 0,1,1,4,6)
+Echecs <- c(25,27, 4,10, 5,12,14,16,11,12,10,10,4,8,2,1)
+Multi <- data.frame(Centre=factor(sort(rep(1:8,2))),
+                    Traitement=factor(rep(1:0,8),
+                                      labels=c("Placebo","Crème")),
+                    Succès=Succès,Échecs=Echecs)
+rm(Succès,Echecs)
+
+# Table aggrégée
+t <- data.frame(Traitement=factor(c("Placebo","Crème"),levels = c("Placebo","Crème","Total")),
+                rbind(colSums(Multi[Multi$Traitement=="Placebo",3:4]),
+                      colSums(Multi[Multi$Traitement=="Crème",3:4])))
+t <- cbind(t,rowSums(t[,2:3]))
+t <- rbind(t,c("Total",colSums(t[,2:4])))
+colnames(t)[4] <- "Total"
+
+knitr::kable(t, align="lrrr")
+```
+
+::: aside
+source: Agresti 2002, Categorical Data Analysis
+:::
+
+## Modèle : concept
+
+:::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/Diagram21_2.svg){width="95%"}
+:::
+
+::: {.column width="25%"}
+| y   | t           |
+|:----|:------------|
+| 1   | 1 (crème)   |
+| 0   | 1 (crème)   |
+| 1   | 0 (placebo) |
+| 0   | 0 (placebo) |
+| 0   | 0 (placebo) |
+| 1   | 1 (crème)   |
+| ... | ...         |
+:::
+
+::: {.column width="55%"}
+-   Modèle GLM basé sur le lien $\textrm{logit}(P) = \log\left(\frac{P}{1-P}\right)$
+
+-   $\color{#ED4F33}{P(y_{i|t}=1|\beta_0, \beta_1)} = \frac{1}{1+\exp(-\mu_i)}$
+
+-   $\mu_i = \beta_0 + \beta_1 t_i$
+
+-   a prioris $\color{#F5B12E}{P(\beta_j)} \sim \textrm{norm}(\mu,\sigma)$
+
+-   JAGS paramétrise la loi normale à partir de la **précision** (inverse de la variance), Stan à partir de l'écart-type (comme `R`)
+
+-   JAGS : fonctions `logit` et `ilogit` (loi logistique)
+:::
+::::::
+
+## Modèle
+
+::: panel-tabset
+## Stan
+
+```{r AgrAgrLogitModS}
+#| echo: true
+modeleStanL <-
+"
+data {
+  int<lower=0> nb_sujets;                   // nombre de patients
+  array[nb_sujets] int<lower=0, upper=1> y; // résultats
+  vector[nb_sujets] t;                      // traitement (codé 0/1)
+}
+parameters {
+  real beta0;                      // intercept
+  real beta1;                      // log-OR
+}
+model {
+  beta0 ~ normal(0, 2.5);                 // a priori
+  beta1 ~ normal(0, 2.5);                 // a priori
+  y ~ bernoulli_logit(beta0 + beta1 * t); // vraisemblance
+}
+"
+```
+
+## JAGS
+
+```{r AgrAgrLogitModJ}
+#| echo: true
+modeleJAGSL <- 
+ " 
+  model {
+    for (i in 1:nb_sujets) {
+      y[i] ~ dbern(mu[i]) 
+      mu[i] = ilogit(beta0 + beta1*t[i])
+      # ou : logit(mu[i]) = beta0 + beta1*t[i]
+    }
+    
+    # A prioris
+      beta0 ~ dnorm(0, 1/100^2) 
+      beta1 ~ dnorm(0, 1/100^2) 
+  }
+" 
+```
+:::
+
+## Données
+
+Elles sont reconstruites à partir de la table, nommée `t` :
+
+```{r}
+#| label: reglog_data
+#| echo: true
+
+t
+dataList <- list(y = c(rep(1, t[1, "Succès"]), rep(0, t[1, "Échecs"]),  # 1 = Placebo
+                       rep(1, t[2, "Succès"]), rep(0, t[2, "Échecs"])), # 2 = Crème
+                 t = c(rep(0, t[1, "Total"]),  rep(1, t[2,"Total"])),
+                 nb_sujets = as.numeric(t[3, "Total"]))
+```
+
+## Estimation
+
+::: panel-tabset
+## Stan
+
+```{r AgrAgrLogitMCMCS1}
+#| cache: true
+#| echo: true
+#| output: false
+modLS <- stan_model(model_code = modeleStanL, model_name = "modeleStanL")
+modLS_sim <- sampling(object=modLS, # DSO compilé
+                     data=dataList, # données
+                     chains=3,      # nombre de chaînes (4 par défaut)
+                     iter=11500,    # nombre total de réalisations (inclant le burn-in)
+                     warmup=1500)   # nombre d'itérations pour le burn-in (iter/2 par défaut)
+```
+
+## JAGS
+
+```{r AgrAgrLogitMCMCJ1}
+#| cache: true
+#| echo: true
+#| output: false
+
+inits <- function() {
+      inits <- list("beta0"=rnorm(n=1, mean=0, sd=10),
+                    "beta1"=rnorm(n=1, mean=0, sd=10))
+}
+modLJ <- jags.model(textConnection(modeleJAGSL), data=dataList, inits=inits, n.chains=3)
+update(modLJ, n.iter=1500)
+params <- c("beta0","beta1")
+modLJ_sim <- coda.samples(model=modLJ, variable.names=params, n.iter=10000)
+```
+:::
+
+
+## Résultats
+
+::: panel-tabset
+## Stan
+
+```{r AgrAgrLogitMCMCS2}
+#| cache: true
+#| echo: true
+#| dependson: "AgrAgrLogitMCMCS1"
+modLS_sim
+```
+
+## JAGS
+
+```{r AgrAgrLogitMCMCJ2}
+#| cache: true
+#| echo: true
+#| dependson: "AgrAgrLogitMCMCJ1"
+summary(modLJ_sim)
+```
+:::
+
+## Grandeurs dérivées
+
+Il est possible d'estimer d'autres grandeurs à partir des simulations :
+
+```{r AgrAgrLogitMCMCJDerivees}
+#| cache: true
+#| echo: true
+#| dependson: "AgrAgrLogitMCMCJ1"
+# Mise en commun des simulations
+modLJ_csim <- as.mcmc(do.call(rbind, modLJ_sim))
+# probabilité de guérison, placebo
+p0 <- 1/(1+exp(-modLJ_csim[,"beta0"]))
+# probabilité de guérison, crème
+p1 <- 1/(1+exp(-(modLJ_csim[,"beta0"]+modLJ_csim[,"beta1"])))
+# Probabilité a posteriori que crème>placebo
+(Psup <- mean(p1>p0)) # équivalent à mean(modLJ_csim[,"beta1"]>0)
+# Absolute Risk Difference
+ARD <- p1-p0 ; mean(ARD)
+# RR
+RR <- p1/p0 ; mean(RR)
+# OR
+OR <- mean(exp(modLJ_csim[,"beta1"])) # équivalent à mean((p1/(1-p1))/(p0/(1-p0)))
+```
+
+## Distribution a posteriori
+
+```{r AgrAgrLogitMCMCJFig}
+#| fig-height: 9
+#| fig-width: 20
+#| out-width: "95%"
+#| cache: true
+#| dependson: "AgrAgrLogitMCMCJDerivees"
+
+taille <- c(25, 1.5, 8)
+x <- HPDinterval(ARD)
+
+ggplot() + geom_histogram(aes(x = as.vector(ARD), y=after_stat(density)), 
+                          bins = 50, fill = BlFoSq, color = "black") +
+  labs(x=expression(theta[1]-theta[0]), y=expression(paste("P(", theta[1]-theta[0], "|D)"))) +
+  geom_segment(aes(x=x[1,"lower"], y=0.1, xend=x[1,"upper"], yend=0.1),
+               linewidth=2, color="white") +
+  geom_point(aes(x=mean(ARD), y=1), size=taille[3], color="white") + 
+  geom_vline(xintercept = 0, linewidth=taille[2], color="black") +
+  annotate("text", x=mean(ARD), y=1.2, color="white", size=taille[3], vjust="bottom",
+           label=paste0("E[ARD]=",formatC(100*mean(ARD), digits=2, format="f")," %")) +
+  annotate("text", x=0.15, y=6, color=BlFoSq, size=taille[3], hjust="left",
+           label=paste0("P(ARD>0)=",formatC(100*Psup, digits=2, format="f")," %")) +
+  theme_grey(base_size=taille[1]) 
+```

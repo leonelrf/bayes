@@ -1,0 +1,296 @@
+
+## Données {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+```{r FullAgrData1}
+knitr::kable(Multi[1:8,], align="llrr")
+```
+:::
+
+::: {.column width="50%"}
+```{r FullAgrData2}
+knitr::kable(Multi[9:16,], align="llrr", row.names=FALSE)
+```
+:::
+:::::
+
+::: aside
+source : Agresti 2002, Categorical Data Analysis
+:::
+
+## Format des données pour l'analyse
+
+::::: columns
+::: {.column width="30%"}
+```{r HieraLogitDat}
+Multi2 <- rbind(Multi,Multi)
+Multi2$Y <- rep(0:1,each=16)
+Multi2$Freq <- ifelse(Multi2$Y==0,Multi2$Échecs,Multi2$Succès)
+Multi2 <- Multi2[c("Centre","Traitement","Y","Freq")]
+index <- rep(seq_len(nrow(Multi2)), times=Multi2$Freq)
+Data = Multi2[index,]
+Data$Freq <- NULL
+rm(Multi2,index)
+
+dataHList <- list(y = Data$Y, 
+                  t = as.numeric(Data$Traitement == "Crème"),
+                  c = as.integer(Data$Centre),
+                  nb_sujets = nrow(Data),
+                  nb_centres = length(unique(Data$Centre)))
+
+t <- data.frame(c = dataHList$c, t = dataHList$t, y = dataHList$y)
+
+knitr::kable(t[sample(x = 1:nrow(t), size = 8),], row.names = FALSE, align = "ccc")
+```
+:::
+
+::: {.column width="70%"}
+
+c
+
+:   Identifiant du centre (de 1 à 8)
+
+t
+
+:   Identifiant du traitement (0 : placebo, 1 : crème)
+
+y
+
+:   identifiant de la guérison (0 : non, 1 : oui)
+:::
+:::::
+
+## Stratégies d'analyse
+
+-   Ignorer le centre : précision ↑, mais risque de biais
+
+-   Estimer un effet par centre : sans biais mais précision ↓
+
+-   Modèle hiérarchique
+
+    -   Les effets centre ont 1 distribution commune (dépendance d'1 paramètre sur les autres)
+
+    -   L'effet de chaque centre bénéficie de l'information des autres centres via les hyper-paramètres
+
+    -   $\textrm{logit}(P)= \beta_{0c} + \beta_{1c} t$ avec $\beta_{jc} \sim \textrm{norm}(\mu_j,\sigma)$
+
+## Code
+
+::: panel-tabset
+## Stan
+
+```{r HieraLogitModS}
+#| echo: true
+
+modeleHLS <- " 
+data {
+  int<lower=1> nb_sujets;                            // nombre de patients
+  int<lower=1> nb_centres;                           // nombre de centres
+  array[nb_sujets] int<lower=0, upper=1> y;          // résultat
+  vector[nb_sujets] t;                               // traitement codé 0/1
+  array[nb_sujets] int<lower=1, upper=nb_centres> c; // centre
+}
+
+parameters {
+  real mu0;                               // intercept moyen
+  real mu1;                               // pente moyenne
+  real<lower=0> sigma0;                   // écart-type entre centres, intercept
+  real<lower=0> sigma1;                   // écart-type entre centres, pente
+  vector[nb_centres] z0;
+  vector[nb_centres] z1;
+}
+
+transformed parameters {
+  vector[nb_centres] beta0 = mu0 + sigma0 * z0;    // intercept propre à chaque centre
+  vector[nb_centres] beta1 = mu1 + sigma1 * z1;    // pente propre à chaque centre
+}
+
+model {
+  mu0 ~ normal(0, 2.5);
+  mu1 ~ normal(0, 2.5);
+  sigma0 ~ normal(0, 1);
+  sigma1 ~ normal(0, 1);
+  z0 ~ std_normal();
+  z1 ~ std_normal();
+  // Vraisemblance
+  for (i in 1:nb_sujets) {
+    y[i] ~ bernoulli_logit(beta0[c[i]] + beta1[c[i]] * t[i]);
+  }
+}
+" 
+```
+
+## JAGS
+
+```{r HieraLogitModJ}
+#| echo: true
+#| code-line-numbers: "3-6|7-10|11-14|15-16"
+
+modeleHLJ <- " 
+  model {
+    for (i in 1:nb_sujets) {                             # N patients
+      y[i] ~ dbern(theta[i])                             # Vraisemblance, selon un ...
+      theta[i] = ilogit(beta0[c[i]] + beta1[c[i]]*t[i])  # modèle logistique, coefficents aléatoires 
+    }
+    for (j in 1:nb_centres) {       # N centres   
+      beta0[j] ~ dnorm(mu0,prec0)   # A prioris pour beta0 (autant qu'il y a de centres)
+      beta1[j] ~ dnorm(mu1,prec1)   # A prioris pour beta1 (autant qu'il y a de centres)
+    }
+    mu0 ~ dnorm(0, 1/100^2)      # a prioris pour les hyper-paramètres
+    mu1 ~ dnorm(0, 1/100^2)
+    prec0 ~ dgamma(0.001,0.001) 
+    prec1 ~ dgamma(0.001,0.001) 
+    sig0 = sqrt(1/prec0)         # calcul de l'écart-type à partir de la précision
+    sig1 = sqrt(1/prec1)
+  } " 
+```
+:::
+
+## Résultats (JAGS) {.smaller}
+
+```{r HieraLogitSim}
+#| cache: true
+#| output: false
+#| dependson: c("HieraLogitDat","HieraLogitModJ")
+
+## Estimation
+# On va laisser JAGS gérer les valeurs initiales
+# Modèle
+modLHF <- jags.model(textConnection(modeleHLJ), data=dataHList, n.chains=3)
+# Burn in
+update(modLHF, n.iter=1500)
+# Paramètres
+params <- c("beta0","mu0","sig0","beta1","mu1","sig1")
+# Simulation
+modLHF_sim <- coda.samples(model=modLHF, variable.names=params, n.iter=10000)
+
+## Mise en forme
+modLHF_csim <- as.mcmc(do.call(rbind, modLHF_sim))
+pmcoef <- colMeans(modLHF_csim)
+HDI <- HPDinterval(modLHF_csim)
+## OR réels
+lor <- function(centre) {
+       t <- with(Data[Data$Centre==centre,],table(Traitement,Y))
+       if (sum(t==0)>0) {
+             t <- t+0.5 # Correction d'Haldane
+       }
+       log(t[1,1]*t[2,2]/(t[1,2]*t[2,1]))
+}
+lORbrut <- NULL
+for (i in 1:8) {lORbrut <- c(lORbrut,lor(centre = i))}
+```
+
+```{r HieraLogitTable}
+x <- cbind(pmcoef[9:16],lORbrut,table(Data$Centre))
+t <- cbind(c(paste0("$\\beta_1(c_",1:8,")$")), x[,3], 
+           format(x[,2:1],digits=1,nsmall = 4),
+           paste0("(",format(HDI[9:16,1],digits=1,nsmall=4), " , ",
+                      format(HDI[9:16,2],digits=1,nsmall=4), ")"))
+colnames(t) <- c("Coefficient", "Taille Centre", "log-OR brut", "log-OR estimé", "95 \\% HDI")
+
+knitr::kable(t, row.names = FALSE, align = "lrrrc")
+```
+
+## Shrinkage (retrécissement)
+
+```{r HieraLogitFig}
+#| fig-height: 9
+#| fig-width: 20
+#| out-width: "95%"
+#| cache: true
+#| warning: false
+#| dependson: "HieraLogitSim"
+
+taille <- c(25, 1.5, 8)
+t <- data.frame(mu1=as.vector(modLHF_csim[,"mu1"]))
+
+ggplot(t, aes(x = mu1)) + xlim(-1.5,3) + ylim(0, 1.3) + 
+  labs(x = "log-OR", y="Densité a posteriori") +
+  geom_density(color = BlFoSq,linewidth=taille[2]) + 
+  geom_vline(xintercept = 0, linewidth=taille[2], color="black") +
+  geom_vline(xintercept = pmcoef["mu1"], linewidth=taille[2], linetype=2, color="gray") +
+  annotate("point", x=x[,"lORbrut"], y=0.15, size=0.50*sqrt(x[,3]), color=RoSq) +
+  annotate("text", x=x[,"lORbrut"], y=0.15-.025, size=taille[3]*.75, 
+           vjust="top", color=RoSq, label=1:8) +
+  annotate("point", x=x[,1], y=0.45, size=2, color=BlFoSq) +
+  annotate("segment", x=x[,"lORbrut"], y=0.15, xend=x[,1], yend=0.45, lineend = "round",
+           linejoin="mitre", linewidth=taille[2]*.5, color=BlClSq, 
+           arrow = arrow(length = unit(0.1, "inches"))) +
+  annotate("segment", x=HDI["mu1","lower"], y=0.05, xend=HDI["mu1","upper"], yend=0.05,
+           linewidth=2, color=BlClSq) +
+  annotate("text", x=1, y=1, color=BlFoSq, size=taille[3], hjust="left",
+           label=paste0("P(log-OR>0)=",formatC(100*mean(t$mu1>0), digits=2, format="f")," %")) +
+  annotate("text", x=1.5, y=0.8, color=BlFoSq, size=taille[3], hjust="left",
+           label=paste0("E[log-OR]=",formatC(pmcoef["mu1"], digits=2, format="f"))) +
+  annotate("text", x=-1.5,y=0.15, label="Brut", color=RoSq, hjust="left", size=taille[3]*.80) +
+  annotate("text", x=-1.5,y=0.45, label="Hiérachique", color=BlFoSq, hjust="left",
+           size=taille[3]*.80) +
+  theme_grey(base_size=taille[1]) 
+```
+
+## Shrinkage (retrécissement)
+
+::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/pressure.svg){.no-lightbox width="85%"}
+:::
+
+::: {.column width="80%"}
+-   Modèle hiérarchique (e.g. multiniveaux, à effets aléatoires)
+
+-   Estimations de bas niveau se rapprochent du(des) mode(s) du groupe (e.g. log-ORs des centres)
+
+    -   ↓ d'estimations extrêmes (*outliers*)
+
+    -   Réduit le risque de [faux positifs]{style="color:#ED4F33"}
+
+    -   Estimations plus précises pour les petits groupes (*borrowing strength*)
+:::
+:::::
+
+## Deviance Information Criterion
+
+::::: columns
+::: {.column width="20%"}
+![](../Bayes_files/img/balance.svg){.no-lightbox width="85%"}
+:::
+
+::: {.column width="80%"}
+-   Mesure de l'ajustement des données implémentée depuis BUGS
+
+-   DIC = Déviance D = $-2 \log\left(\color{#ED4F33}{P(D|\theta)}\right)$ pénalisée de la complexité
+
+-   Le modèle avec le DIC le plus faible est favorisé
+
+-   D'autres approches plus récentes (wAIC, LOO) adoptées pour Stan mais non implémentées en routine pour JAGS
+:::
+:::::
+
+## Comparaison de modèles : DIC
+
+```{r DICprep}
+#| cache: false
+#| output: false
+#| dependson: c("AgrAgrLogitModJ","AgrAgrLogitMCMCJ1","HieraLogitDat","HieraLogitSim")
+
+modLJ <- jags.model(textConnection(modeleJAGSL), data=dataList, inits=inits, n.chains=3)
+update(modLJ, n.iter=1500)
+modLHF <- jags.model(textConnection(modeleHLJ), data=dataHList, n.chains=3)
+update(modLHF, n.iter=1500)
+```
+
+```{r DIC}
+#| echo: true
+#| cache: true
+#| dependson: c("AgrAgrLogitModJ","AgrAgrLogitMCMCJ1","HieraLogitDat","HieraLogitSim")
+
+# Modèle sans effet centre
+(dic0 <- dic.samples(modLJ,n.iter = 10000))
+
+# Modèle avec effet centre (hiérarchique)
+(dic1 <- dic.samples(modLHF,n.iter = 10000))
+
+# Différences
+diffdic(dic0, dic1)
+```

@@ -1,0 +1,144 @@
+## La Probabilité : Définition fréquentiste
+
+:::::: columns
+:::: {.column width="50%"}
+::: {.callout-note icon="false"}
+## $P(X=s)$
+
+Proportion de patients guéris sur une infinité de patients traités.
+
+$$P(X=s)=\frac{\textrm{Nombre guéris}}{\textrm{Nombre traités}}$$
+:::
+::::
+
+::: {.column width="50%"}
+```{r}
+#| label: ProbFreq
+#| fig-width: 6
+#| fig-height: 6
+#| fig-align: center
+
+x <- data.frame(Trial=1:1000, 
+                Result=rbinom(1000,1,0.5))
+x$Prob <- cumsum(x$Result)/x$Trial
+
+x |> ggplot() + aes(x = Trial, y = Prob) + 
+  geom_point(size=2, colour = RoSq) + 
+  geom_line(linewidth = 1, colour = RoSq) + 
+  scale_x_log10() +
+  coord_cartesian(ylim =  c(0, 1)) +
+  labs(x="Nombre de patients traités",
+       y="Proportion de succès") +
+  annotate("text", x = x$Trial[1:10], y = x$Prob[1:10], 
+           label=c("E","S")[x$Result[1:10]+1],
+           vjust="bottom", color = BlFoSq, size = 5) +
+  annotate("text", x = nrow(x), y = 0.9, color = BlFoSq, size = 5, hjust = "right",
+           label=paste("Fréquence Finale : ",format(x$Prob[nrow(x)], nsmall = 4))) +
+  theme_grey(base_size=25)
+```
+:::
+::::::
+
+## La Probabilité : Approche bayésienne
+
+::::: columns
+::: {.column width="50%"}
+![](../Bayes_files/img/idea.svg){.no-lightbox width="85%"}
+:::
+
+::: {.column width="50%"}
+-   Probabilité objective d'un événement n'existe pas
+-   Probabilité = Croyance subjective
+-   Mesure d'incertitude
+-   Obéit aux axiomes du calcul des probabilités
+:::
+:::::
+
+## Probabilités conditionnelles : test de dépistage
+
+-   Mammographie et cancer du sein
+    -   Sensibilité = 75 % = $P\left(T^+ | M^+ \right)$
+    -   Spécificité = 99 % = $P\left(T^- | M^- \right)$
+-   Prévalence du cancer dans la population dépistée : 3 ‰
+
+. . .
+
+Lors d'un dépistage, le test est positif.
+
+Probabilité d'avoir un cancer ([Valeur Prédictive Positive]{.fragment .highlight-blue}) ?
+
+## Probabilités conditionnelles : test de dépistage {transition="none"}
+
+Supposons une population de [4 000]{style="color:#ED4F33"} personnes
+
+|                   | M+ (Malade) | M- (Sain) |                          Total |
+|-------------------|------------:|----------:|-------------------------------:|
+| T+ (Test positif) |             |           |                                |
+| T- (Test négatif) |             |           |                                |
+| Total             |             |           | [4 000]{style="color:#ED4F33"} |
+
+: {tbl-colwidths="[31,25,23,21]"}
+
+## Probabilités conditionnelles : test de dépistage {transition="none"}
+
+Prévalence : [3 ‰]{style="color:#ED4F33"}
+
+|   | M+ (Malade) | M- (Sain) | Total |
+|-------------------|-----------------:|-----------------:|-----------------:|
+| T+ (Test positif) |  |  |  |
+| T- (Test négatif) |  |  |  |
+| Total | [12]{style="color:#ED4F33"} | [3988]{.fragment} | [4 000]{style="color:#F5B12E"} |
+
+: {tbl-colwidths="[31,25,23,21]"}
+
+::: aside
+$n_{M^+} = 4000*3/1000 = 12$
+:::
+
+## Probabilités conditionnelles : test de dépistage {transition="none"}
+
+Sensibilité $P\left(T^+ | M^+ \right)$ : [75%]{style="color:#ED4F33"}
+
+|                   |                 M+ (Malade) | M- (Sain) | Total |
+|-------------------|----------------------------:|----------:|------:|
+| T+ (Test positif) |  [9]{style="color:#ED4F33"} |           |       |
+| T- (Test négatif) |              [3]{.fragment} |           |       |
+| Total             | [12]{style="color:#F5B12E"} |      3988 | 4 000 |
+
+: {tbl-colwidths="[31,25,23,21]"}
+
+::: aside
+$n_{M^+, T^+} = 12*75/100 = 9$
+:::
+
+## Probabilités conditionnelles : test de dépistage {transition="none"}
+
+Spécificité $P\left(T^- | M^- \right)$ : [99%]{style="color:#ED4F33"}
+
+|   | M+ (Malade) | M- (Sain) | Total |
+|------------------|-----------------:|------------------:|-----------------:|
+| T+ (Test positif) | 9 | [40]{.fragment} | [49]{.fragment} |
+| T- (Test négatif) | 3 | [3 948]{style="color:#ED4F33"} | [3 951]{.fragment} |
+| Total | 12 | [3 988]{style="color:#F5B12E"} | 4 000 |
+
+: {tbl-colwidths="[31,25,23,21]"}
+
+::: aside
+$n_{M^-, T^-} = (4000-12)*99/100 = 3988*0,99 = 3948$
+:::
+
+## Théorème de Bayes
+
+|                   | M+ (Malade) | M- (Sain) | Total |
+|-------------------|------------:|----------:|------:|
+| T+ (Test positif) |           9 |        40 |    49 |
+| T- (Test négatif) |           3 |     3 948 | 3 951 |
+| Total             |          12 |     3 988 | 4 000 |
+
+$$
+\begin{align}
+P(M^+|T^+) 
+ &= \frac{\color{#ED4F33}{P(T^+ | M^+)} \color{#F5B12E}{P(M^+)}}{\color{#ADD2D8}{P(T^+)}} \\
+ &\class{fragment}{= \frac{{\color{#ED4F33}{9/12}} * \color{#F5B12E}{12/4000}}{\color{#ADD2D8}{49/4000}}} \class{fragment}{= \frac{9}{49} = 18~\%}
+ \end{align}
+$$

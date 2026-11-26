@@ -1,0 +1,100 @@
+## Pratiques {.smaller}
+
+-   [Inférence]{style="color:#F5B12E"} Bayésienne et Fréquentiste donnent des résultats [similaires]{style="color:#F5B12E"} (généralement)
+
+-   [Test d'hypothèse]{style="color:#F5B12E"} Bayésien et Fréquentiste peuvent [différer]{style="color:#ED4F33"}
+
+-   Si possible, privilégier l'estimation des paramètres et de l'incertitude aux tests
+
+-   Choix de l'approche
+
+    -   $n$ petit, modèles complexes : Bayésien parfois la seule option
+
+    -   *Innovative trial designs* (*master protocols, external controls, adaptative trials*) : place plus importante du Bayésien
+
+-   Le choix de l'a priori n'est pas nécessairement non informatif
+
+-   Tendance émergente à considérer *weakly informative* > *uninformative*
+
+-   L'élicitation et intégration des a prioris (e.g. Si des données historiques existent, avis d'experts, ...) reste un champ de recherche actif
+
+-   Ne pas négliger les analyses de sensibilité
+
+## Pourquoi la statistique Bayésienne ?
+
+::::: columns
+::: {.column width="50%"}
+-   Intuitif
+
+-   Flexible
+
+-   Répond aux bonnes questions (e.g. $P(H_0)$)
+
+-   $\theta$ complexe
+
+-   $n$ petit
+
+-   *sparse data bias*
+
+-   Efficient (et donc éthique) si information a priori existante
+:::
+
+::: {.column width="50%"}
+-   Contrôle des faux positifs
+
+-   Modélisation et intégration des biais
+
+-   Gestion d'*outliers* par modèles robustes
+
+-   Gestion de la multiplicité ou de l'arrêt optionnel
+
+-   Gestion des prédicteurs multiples
+
+-   Approche intégrée
+:::
+:::::
+
+## FDA et EMA
+
+La FDA a partagé en Janvier 2026 une *draft guidance* : *Use of Bayesian Methodology in Clinical Trials of Drug and Biological Products* ([lien](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/use-bayesian-methodology-clinical-trials-drug-and-biological-products)).
+
+Ce n'est pas la première *guidance* FDA s'intéressant à ces méthodes : elles sont au moins abordées au sujet des essais adaptatifs [(2019](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry)), des contrôles externes ([2023](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/considerations-design-and-conduct-externally-controlled-trials-drug-and-biological-products)) et des *master protocols* ([2023](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/master-protocols-drug-and-biological-product-development)).
+
+L'EMA n'en est pour l'instant qu'au stade du [*concept paper*](https://www.ema.europa.eu/en/scientific-guidelines/use-bayesian-methods-clinical-development).
+
+## Pour aller plus loin {.smaller}
+
+-   Livres
+
+    -   Spiegelhalter et al. 2004. Bayesian Approaches to Clinical Trials and Health-Care Evaluation. Wiley
+
+    -   Kruschke 2015. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan, 2^nd^ Edition. Elsevier
+
+    -   McElreath 2020. Statistical Rethinking: A Bayesian Course with Examples in R and STAN, 2^nd^ Edition. Chapman and Hall/CRC
+
+-   MOOCs
+
+    -   Bayesian statistics specialization sur [coursera](https://www.coursera.org/specializations/bayesian-statistics) et d'autres cours sur la même plateforme
+
+    -   Cours sur d'autres plateformes [datacamp](https://www.datacamp.com/), [ed~X~](https://www.edx.org/), ...
+
+-   Documentation, forums, manuels des différents logiciels
+
+##  {background-image="../Bayes_files/img/thinker.jpg" background-opacity="0.1"}
+
+\
+\
+
+::: r-fit-text
+[***Bayesian statistics is difficult in the sense***]{style="color:#8B8682"}
+:::
+
+::: r-fit-text
+[***that***]{style="color:#8B8682"} [***thinking***]{style="color:#F5B12E"} ***is difficult.***
+:::
+
+::: aside
+Donald A. Berry
+
+‘Teaching Elementary Bayesian Statistics with Real Applications in Science’
+:::
