@@ -80,7 +80,7 @@ L'EMA n'en est pour l'instant qu'au stade du [*concept paper*](https://www.ema.e
 
 -   Documentation, forums, manuels des différents logiciels
 
-##  {background-image="../Bayes_files/img/thinker.jpg" background-opacity="0.1"}
+##  {background-image="img/thinker.jpg" background-opacity="0.1"}
 
 \
 \

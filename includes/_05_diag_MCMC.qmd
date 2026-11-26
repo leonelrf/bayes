@@ -109,7 +109,7 @@ gelman.diag(simul)
 
 ::::: columns
 ::: {.column width="20%"}
-![](../Bayes_files/img/twins.svg){.no-lightbox width="85%"}
+![](img/twins.svg){.no-lightbox width="85%"}
 :::
 
 ::: {.column width="80%"}

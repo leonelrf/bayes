@@ -29,7 +29,7 @@ source: Agresti 2002, Categorical Data Analysis
 
 :::::: columns
 ::: {.column width="20%"}
-![](../Bayes_files/img/Diagram21_2.svg){width="95%"}
+![](img/Diagram21_2.svg){width="95%"}
 :::
 
 ::: {.column width="25%"}

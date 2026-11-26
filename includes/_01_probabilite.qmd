@@ -43,7 +43,7 @@ x |> ggplot() + aes(x = Trial, y = Prob) +
 
 ::::: columns
 ::: {.column width="50%"}
-![](../Bayes_files/img/idea.svg){.no-lightbox width="85%"}
+![](img/idea.svg){.no-lightbox width="85%"}
 :::
 
 ::: {.column width="50%"}

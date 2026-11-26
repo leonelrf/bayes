@@ -253,7 +253,7 @@ ggplot(t, aes(x = mu1)) + xlim(-1.5,3) + ylim(0, 1.3) +
 
 ::::: columns
 ::: {.column width="20%"}
-![](../Bayes_files/img/balance.svg){.no-lightbox width="85%"}
+![](img/balance.svg){.no-lightbox width="85%"}
 :::
 
 ::: {.column width="80%"}

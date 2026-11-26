@@ -42,7 +42,7 @@ Ce qui implique de définir des [distributions a priori]{style="color:#F5B12E"} 
 
 ::::: columns
 ::: {.column width="20%"}
-![](../Bayes_files/img/Diagram8_2.svg){width="80%"}
+![](img/Diagram8_2.svg){width="80%"}
 :::
 
 ::: {.column width="80%"}
